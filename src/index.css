@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #e17055;
+  --color-secondary: #6c5ce7;
+  --color-lightgray: #D9D9D9;
+}
+
+@layer base {
+  body {
+    font-family: 'Geologica', system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+}
+
+/* Remove custom cursor styling */
+body {
+  cursor: default;
+}
+
+/* Remove any cursor: none properties */
+a, button, [role="button"], input, label, select, textarea {
+  cursor: pointer;
+}
+
+/* Add smooth scrolling to the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sparkle animation for keywords */
+@keyframes ping-slow {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+/* Add some subtle shine effects on cards */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(-45deg);
+  z-index: 1;
+  transition: all 0.8s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card-shine:hover::before {
+  animation: shine 1.5s forwards;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-300%) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300%) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+/* Special hover effect for buttons */
+.btn-hover-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hover-effect:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  animation: slide-in 0.5s forwards;
+}
+
+@keyframes slide-in {
+  100% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+}
+
+/* Remove the spotlight-text class that hides cursor */
+.spotlight-text {
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .spotlight-text {
+    cursor: default;
+  }
+}
+
+/* Additional gradient text support */
+.bg-gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+/* Additional gradient text support */
+.bg-gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Custom scrollbar for modal details */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+.scrollbar-thumb-violet-200 {
+  scrollbar-color: #c4b5fd #f5f3ff;
+}
+.scrollbar-track-violet-50 {
+  /* fallback for track color */
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background: #a78bfa;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f5f3ff;
+  border-radius: 8px;
+}
+
+/* --- GLOBAL SCROLLBAR FOR THE WHOLE PAGE --- */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: #c4b5fd #f5f3ff;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  width: 8px;
+}
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+html:hover::-webkit-scrollbar-thumb, body:hover::-webkit-scrollbar-thumb {
+  background: #a78bfa;
+}
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+  background: #f5f3ff;
+  border-radius: 8px;
+}
+
