@@ -19,6 +19,72 @@ function TechBorderCorners() {
 }
 
 
+function Particles({ radius, color, position }) {
+    const pointsRef = useRef();
+    // Responsive particle count based on screen size
+    const getParticleCount = () => {
+        const w = window.innerWidth;
+        if (w < 768) return 90;
+        if (w < 1280) return 140;
+        return 180;
+    };
+    const [particleCount, setParticleCount] = useState(getParticleCount());
+
+    useEffect(() => {
+        const handleResize = () => setParticleCount(getParticleCount());
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const positions = useMemo(() => {
+        const arr = [];
+        // Responsive gap based on radius and screen size
+        const w = window.innerWidth;
+        let gapBase = 0.35, gapRand = 2;
+        if (w < 768) { gapBase = 0.18; gapRand = 1.1; }
+        else if (w < 1280) { gapBase = 0.28; gapRand = 1.5; }
+        for (let i = 0; i < particleCount; i++) {
+            const phi = Math.acos(1 - 2 * (i + 0.5) / particleCount);
+            const theta = Math.PI * (1 + Math.sqrt(5)) * (i + 0.5);
+            const r = radius + gapBase + Math.random() * gapRand;
+            arr.push(
+                r * Math.sin(phi) * Math.cos(theta),
+                r * Math.sin(phi) * Math.sin(theta),
+                r * Math.cos(phi)
+            );
+        }
+        return new Float32Array(arr);
+    }, [radius, particleCount]);
+
+    useFrame(({ clock }) => {
+        if (pointsRef.current) {
+            pointsRef.current.rotation.y = clock.getElapsedTime() * 0.18;
+            pointsRef.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.12) * 0.2;
+            pointsRef.current.position.copy(position);
+        }
+    });
+
+    return (
+        <points ref={pointsRef}>
+            <bufferGeometry>
+                <bufferAttribute
+                    attach="attributes-position"
+                    count={positions.length / 3}
+                    array={positions}
+                    itemSize={3}
+                />
+            </bufferGeometry>
+            <pointsMaterial
+                size={radius * 0.025}
+                color={color}
+                transparent
+                opacity={0.7}
+                sizeAttenuation
+            />
+        </points>
+    );
+}
+
 export default function SectionSphere({ activeSection, mouse }) {
     const meshRef = useRef();
     const materialRef = useRef();
@@ -27,9 +93,9 @@ export default function SectionSphere({ activeSection, mouse }) {
     // Responsive radius calculation
     function getResponsiveRadius() {
         const w = window.innerWidth;
-        if (w < 768) return 2.0;
-        if (w < 1280) return 2.8;
-        return 3.5;
+        if (w < 768) return 1.5;
+        if (w < 1280) return 2.3;
+        return 3.2;
     }
 
     useEffect(() => {
@@ -39,14 +105,19 @@ export default function SectionSphere({ activeSection, mouse }) {
     }, []);
 
     // --- Define positions, colors, and target rotations for each section ---
-    const sectionProps = useMemo(() => ({
-        hero:       { pos: new THREE.Vector3(0, 0, 0), color: new THREE.Color('#60a5fa'), rot: new THREE.Euler(0, 0, 0) },
-        experience: { pos: new THREE.Vector3(3.5, -1, 0), color: new THREE.Color('#a855f7'), rot: new THREE.Euler(0.2, 0.8, 0.1) },
-        projects:   { pos: new THREE.Vector3(-3.5, 0, 0), color: new THREE.Color('#22d3ee'), rot: new THREE.Euler(-0.3, -0.7, 0.2) },
-        skills:     { pos: new THREE.Vector3(0, 0, 0), color: new THREE.Color('#f59e42'), rot: new THREE.Euler(0.5, 0.2, -0.2) },
-        aboutme:    { pos: new THREE.Vector3(3.5, 0, 0), color: new THREE.Color('#10b981'), rot: new THREE.Euler(-0.2, 0.5, 0.3) },
-        contact:    { pos: new THREE.Vector3(0, -1, 0), color: new THREE.Color('#ef4444'), rot: new THREE.Euler(0.7, -0.3, 0.5) },
-    }), []);
+    const sectionProps = useMemo(() => {
+        const w = window.innerWidth;
+        // Responsive positions for sections
+        const offset = w < 768 ? 1.8 : w < 1280 ? 2.6 : 3.5;
+        return {
+            hero:       { pos: new THREE.Vector3(0, 0, 0), color: new THREE.Color('#60a5fa'), rot: new THREE.Euler(0, 0, 0) },
+            experience: { pos: new THREE.Vector3(offset, -0.7, 0), color: new THREE.Color('#a855f7'), rot: new THREE.Euler(0.2, 0.8, 0.1) },
+            projects:   { pos: new THREE.Vector3(-offset, 0, 0), color: new THREE.Color('#22d3ee'), rot: new THREE.Euler(-0.3, -0.7, 0.2) },
+            skills:     { pos: new THREE.Vector3(0, 0, 0), color: new THREE.Color('#f59e42'), rot: new THREE.Euler(0.5, 0.2, -0.2) },
+            aboutme:    { pos: new THREE.Vector3(offset, 0, 0), color: new THREE.Color('#10b981'), rot: new THREE.Euler(-0.2, 0.5, 0.3) },
+            contact:    { pos: new THREE.Vector3(0, -0.7, 0), color: new THREE.Color('#ef4444'), rot: new THREE.Euler(0.7, -0.3, 0.5) },
+        };
+    }, []);
 
     // --- Animation loop ---
     useFrame((state, delta) => {
@@ -155,10 +226,19 @@ export default function SectionSphere({ activeSection, mouse }) {
         depthWrite: false,
     }), []);
 
+    // Get current color for particles
+    const particleColor = sectionProps[activeSection]?.color || sectionProps.hero.color;
+
+    // Get sphere position for particles
+    const spherePosition = meshRef.current?.position || new THREE.Vector3(0, 0, 0);
+
     return (
-        <mesh ref={meshRef}>
-            <sphereGeometry args={[radius, 128, 128]} />
-            <primitive object={shaderMaterial} ref={materialRef} attach="material" />
-        </mesh>
+        <>
+            <mesh ref={meshRef}>
+                <sphereGeometry args={[radius, 128, 128]} />
+                <primitive object={shaderMaterial} ref={materialRef} attach="material" />
+            </mesh>
+            <Particles radius={radius} color={particleColor} position={spherePosition} />
+        </>
     );
 }
