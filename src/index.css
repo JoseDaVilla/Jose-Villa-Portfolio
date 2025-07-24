@@ -206,4 +206,65 @@ html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
   background: #f5f3ff;
   border-radius: 8px;
 }
+/* Custom styles for Ant Design Select in the Contact Form */
 
+/* Style for the select box itself */
+.contact-ant-select .ant-select-selector {
+    background-color: rgb(17 24 39 / 0.5) !important;
+    border: 2px solid rgb(105, 27, 195) !important; /* Main purple border */
+    border-radius: 0.5rem !important;
+    padding: 0 11px !important;
+    height: 50px !important;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover state - Updated to a lighter purple */
+.contact-ant-select .ant-select-selector:hover {
+    border-color: rgb(128, 58, 219) !important;
+}
+
+/* Focus state - Updated to a purple shadow */
+.contact-ant-select.ant-select-focused .ant-select-selector {
+    border-color: rgb(128, 58, 219) !important;
+    box-shadow: 0 0 0 2px rgb(105 27 195 / 0.5) !important; /* Purple focus ring */
+}
+
+/* Color for the selected item's text (remains white) */
+.contact-ant-select .ant-select-selection-item {
+    color: #E5E7EB !important;
+}
+
+/* Color for the dropdown arrow (remains light gray) */
+.contact-ant-select .ant-select-arrow {
+    color: #9CA3AF !important;
+}
+
+/* ---- Dropdown Menu Styling ---- */
+
+/* Main dropdown panel - Updated to a purple border */
+.contact-ant-dropdown .ant-select-dropdown {
+    background-color: #101727 !important; /* Dark background */
+    border: 1px solid rgb(105 27 195 / 0.3) !important; /* Transparent purple border */
+    border-radius: 0.5rem !important;
+    padding: 4px !important;
+}
+
+/* Style for individual options (remains white) */
+.contact-ant-dropdown .ant-select-item {
+    color: #D1D5DB !important;
+    border-radius: 0.375rem !important;
+}
+
+/* Style for hovered or selected options - Updated to a purple background */
+.contact-ant-dropdown .ant-select-item-option-active,
+.contact-ant-dropdown .ant-select-item-option-selected {
+    background-color: rgb(105 27 195 / 0.25) !important; /* Transparent purple background */
+    color: #F9FAFB !important; /* White text */
+}
+
+/* Remove default checkmark on selected item */
+.contact-ant-dropdown .ant-select-item-option-selected .ant-select-item-option-state {
+    display: none;
+}

@@ -71,7 +71,7 @@ function useActiveSection() {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
+                    if (entry.isIntersecting && entry.target.id !== activeSection) {
                         setActiveSection(entry.target.id);
                     }
                 });
@@ -90,7 +90,8 @@ function useActiveSection() {
                 if (element) observer.unobserve(element);
             });
         };
-    }, []);
+    // Add activeSection as a dependency so we only update when it changes
+    }, [activeSection]);
 
     return activeSection;
 }
