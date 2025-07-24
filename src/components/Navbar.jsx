@@ -76,28 +76,46 @@ export default function Navbar() {
 
     return (
         <motion.div
-            className="fixed top-0 inset-x-0 z-50 p-4"
+            className="fixed top-0 inset-x-0 z-50"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ type: 'spring', stiffness: 120, damping: 20, delay: 1.5 }}
         >
-            <header 
-                className={`max-w-2xl mx-auto rounded-xl transition-all duration-300 ${scrolled || isOpen ? 'bg-[#0a0f19]/70 backdrop-blur-lg border border-blue-400/10' : 'bg-transparent border-transparent'}`}
+            <header
+                className={
+                    // Desktop: show bg when scrolled or open
+                    // Mobile: show bg ONLY when open
+                    `max-w-3xl mx-auto mt-4 rounded-2xl shadow-lg transition-all duration-300
+                    ${
+                        (scrolled || isOpen)
+                            ? 'md:bg-[#101828]/80 md:backdrop-blur-lg md:border md:border-blue-400/10'
+                            : 'md:bg-transparent md:border-transparent'
+                    }
+                    ${
+                        isOpen
+                            ? 'bg-[#101828]/80 backdrop-blur-lg border border-blue-400/10'
+                            : 'bg-transparent border-transparent'
+                    }`
+                }
             >
-                <div className="flex items-center justify-center px-6 py-3">
-                    {/* --- Desktop Navigation Centered --- */}
-                    <nav className="hidden md:flex items-center gap-2 justify-center w-full">
+                <div className="flex items-center justify-between px-6 py-3">
+
+                    <nav className="hidden md:flex items-center gap-2 justify-center flex-1">
                         {navItems.map((item) => (
                             <a
                                 key={item.label}
                                 href={`#${item.sectionId}`}
-                                className={`relative px-4 py-2 text-sm font-semibold tracking-wider transition-colors z-10 ${activeSection === item.sectionId ? 'text-white' : 'text-white'}`}
+                                className={`relative px-4 py-2 text-sm font-semibold tracking-wider rounded-lg transition-colors z-10 ${
+                                    activeSection === item.sectionId
+                                        ? 'text-cyan-400 bg-cyan-500/10'
+                                        : 'text-slate-200 hover:bg-slate-700/30'
+                                }`}
                             >
                                 {item.label}
                                 {activeSection === item.sectionId && (
                                     <motion.div
                                         layoutId="activeNavIndicator"
-                                        className="absolute inset-0 bg-blue-500/40 rounded-lg -z-10"
+                                        className="absolute inset-0 bg-cyan-500/20 rounded-lg -z-10"
                                         initial={false}
                                         transition={{type: 'spring', stiffness: 500, damping: 40}}
                                     />
@@ -105,41 +123,47 @@ export default function Navbar() {
                             </a>
                         ))}
                     </nav>
-
                     {/* --- Mobile Navigation Button --- */}
-                    <div className="md:hidden absolute right-6">
-                        <motion.button onClick={() => setIsOpen(!isOpen)} whileTap={{ scale: 0.95 }} className="p-1">
+                    <div className="md:hidden flex items-center">
+                        <motion.button
+                            onClick={() => setIsOpen(!isOpen)}
+                            whileTap={{ scale: 0.95 }}
+                            className="p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700/80 transition"
+                        >
                             <AnimatePresence mode="wait">
                                 {isOpen ? (
                                     <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                                        <XIcon className="h-6 w-6 text-gray-200" />
+                                        <XIcon className="h-6 w-6 text-cyan-400" />
                                     </motion.div>
                                 ) : (
                                     <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                                        <MenuIcon className="h-6 w-6 text-gray-200" />
+                                        <MenuIcon className="h-6 w-6 text-cyan-400" />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
                         </motion.button>
                     </div>
                 </div>
-                
                 {/* --- Mobile Menu --- */}
                 <AnimatePresence>
                     {isOpen && (
                         <motion.div
-                            className="md:hidden overflow-hidden"
+                            className="md:hidden overflow-hidden px-4 pb-4"
                             variants={menuVariants}
                             initial="closed"
                             animate="open"
                             exit="closed"
                         >
-                            <nav className="flex flex-col items-center py-2 border-t border-blue-400/10">
+                            <nav className="flex flex-col items-center gap-2 py-2 border-t border-blue-400/10">
                                 {navItems.map((item) => (
                                     <motion.a
                                         key={item.label}
                                         href={`#${item.sectionId}`}
-                                        className={`block w-full text-center py-3 font-semibold ${activeSection === item.sectionId ? 'text-blue-400' : 'text-gray-300'}`}
+                                        className={`block w-full text-center py-3 font-semibold rounded-lg transition ${
+                                            activeSection === item.sectionId
+                                                ? 'text-cyan-400 bg-cyan-500/10'
+                                                : 'text-slate-200 hover:bg-slate-700/30'
+                                        }`}
                                         onClick={() => setIsOpen(false)}
                                         variants={menuItemVariants}
                                     >
