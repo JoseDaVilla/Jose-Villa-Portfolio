@@ -92,7 +92,7 @@ export default function Contact() {
         setStatus('sending');
         setErrorMsg('');
         try {
-            await fetch('http://localhost:3000/send-mail', {
+            await fetch('https://villa-portfolio-backend-4vau.vercel.app/send-mail', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
