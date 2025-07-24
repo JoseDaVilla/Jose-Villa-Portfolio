@@ -82,7 +82,7 @@ export default function Navbar() {
             transition={{ type: 'spring', stiffness: 120, damping: 20, delay: 1.5 }}
         >
             <header 
-                className={`max-w-5xl mx-auto rounded-xl transition-all duration-300 ${scrolled || isOpen ? 'bg-[#0a0f19]/70 backdrop-blur-lg border border-blue-400/10' : 'bg-transparent border-transparent'}`}
+                className={`max-w-2xl mx-auto rounded-xl transition-all duration-300 ${scrolled || isOpen ? 'bg-[#0a0f19]/70 backdrop-blur-lg border border-blue-400/10' : 'bg-transparent border-transparent'}`}
             >
                 <div className="flex items-center justify-center px-6 py-3">
                     {/* --- Desktop Navigation Centered --- */}
@@ -91,7 +91,7 @@ export default function Navbar() {
                             <a
                                 key={item.label}
                                 href={`#${item.sectionId}`}
-                                className={`relative px-4 py-2 text-sm font-semibold tracking-wider transition-colors z-10 ${activeSection === item.sectionId ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+                                className={`relative px-4 py-2 text-sm font-semibold tracking-wider transition-colors z-10 ${activeSection === item.sectionId ? 'text-white' : 'text-white'}`}
                             >
                                 {item.label}
                                 {activeSection === item.sectionId && (

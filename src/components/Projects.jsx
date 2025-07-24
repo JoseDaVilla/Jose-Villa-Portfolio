@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ProjectModal from './ProjectModal';
-import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
-import { useImagePreloader } from '../hooks/useImagePreloader';
+import ProjectModal from './ProjectModal'; // Assuming this component exists
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'; // Assuming this hook exists
+import { useImagePreloader } from '../hooks/useImagePreloader'; // Assuming this hook exists
 
+// --- DATA ---
+// This data remains unchanged from the previous version.
 const projectsData = [
-    // The project data remains the same...
     {
         id: 1,
         title: "Spa Management Dashboard",
@@ -18,6 +19,19 @@ const projectsData = [
         features: ["Real-time multi-location availability", "Advanced sales analytics", "Automated payroll processing", "Employee management and scheduling", "Integrated Point of Sale", "Dynamic financial reporting", "Biometric time tracking", "HIPAA-compliant data management"],
         links: { github: null, live: null },
         privacyNote: "Due to client confidentiality, the source code and live demo are not public."
+    },
+    {
+        id: 6,
+        title: "ProAxis",
+        category: "SaaS Platform",
+        summary: "A 'Marketing Agency in a Box' SaaS for digital marketing partners.",
+        description: "An all-in-one, white-label platform that empowers entrepreneurs to launch their own digital marketing agencies. ProAxis includes a comprehensive Training Academy, a built-in CRM for client management, team and service management tools, Stripe connected accounts for seamless payment processing, and a powerful drag-and-drop form builder. It also features integrated calendars with automated Zoom link generation and a robust commission tracking system for partners.",
+        image: "images/projects/proaxis.jpg",
+        images: ["images/projects/proaxis.jpg", "images/projects/proaxis-2.jpg", "images/projects/proaxis-3.jpg"],
+        technologies: ["Next.js", "React", "Node.js", "PostgreSQL", "Stripe Connect", "Google Calendar API", "Zoom API", "Tailwind CSS", "Prisma"],
+        features: ["White-Label SaaS Platform", "Integrated CRM System", "Partner Training Academy", "Stripe Connected Accounts", "Drag-and-Drop Form Builder", "Employee & Service Management", "Automated Commission System", "Google Calendar & Zoom Integration", "User Authentication & Roles"],
+        links: { github: null, live: null },
+        privacyNote: "The platform is proprietary, so the source code and a live demo are available only upon request."
     },
     {
         id: 2,
@@ -42,10 +56,7 @@ const projectsData = [
         images: ["images/projects/galaxy-generator.jpg", "images/projects/galaxy-generator-2.jpg", "images/projects/galaxy-generator-3.jpg"],
         technologies: ["Three.js", "GLSL Shaders", "WebGL", "JavaScript", "HTML5", "CSS3"],
         features: ["Real-time galaxy generation", "Custom GLSL vertex and fragment shaders", "Interactive parameter controls", "Optimized for performance", "Dynamic spin and color customization"],
-        links: {
-            github: "https://github.com/josevilla/galaxy-generator",
-            live: "https://galaxy-generator-demo.com"
-        }
+        links: { github: "https://github.com/josevilla/galaxy-generator", live: "https://galaxy-generator-demo.com" }
     },
     {
         id: 4,
@@ -57,10 +68,7 @@ const projectsData = [
         images: ["images/projects/3d-gallery.jpg", "images/projects/3d-gallery-2.jpg", "images/projects/3d-gallery-3.jpg"],
         technologies: ["Three.js", "JavaScript", "GLSL Shaders", "HTML5", "CSS3"],
         features: ["Immersive 3D environment", "Custom GLSL shaders", "Intuitive navigation", "Dynamic content loading", "Mobile-optimized performance"],
-        links: {
-            github: "https://github.com/josevilla/3d-gallery",
-            live: "https://3d-gallery-demo.com"
-        }
+        links: { github: "https://github.com/josevilla/3d-gallery", live: "https://3d-gallery-demo.com" }
     },
     {
         id: 5,
@@ -72,153 +80,144 @@ const projectsData = [
         images: ["images/projects/summarizer.jpg", "images/projects/summarizer-2.jpg", "images/projects/summarizer-3.jpg"],
         technologies: ["React", "Tailwind CSS", "Node.js", "OpenAI API", "Vercel"],
         features: ["URL and text input summarization", "Adjustable summary length", "Secure API handling", "User authentication", "History of summarized articles"],
-        links: {
-            github: "https://github.com/josevilla/ai-summarizer",
-            live: "https://ai-summarizer-demo.com"
-        }
+        links: { github: "https://github.com/josevilla/ai-summarizer", live: "https://ai-summarizer-demo.com" }
     },
 ];
 
+// --- CHILD COMPONENTS ---
 const FilterButton = ({ label, isActive, onClick }) => (
     <motion.button
         onClick={onClick}
-        className={`relative px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 overflow-hidden ${
-            isActive ? 'text-white' : 'text-cyan-300 bg-gray-900/50 ring-1 ring-cyan-400/30 hover:text-white'
+        className={`relative px-5 py-2 text-sm font-medium rounded-full transition-colors duration-300 ${
+            isActive ? 'text-white' : 'text-cyan-300 bg-transparent hover:bg-cyan-500/10'
         }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
     >
-        <AnimatePresence>
-            {isActive && (
-                <motion.div
-                    layoutId="filter-active-bg"
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-teal-500 z-0"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                />
-            )}
-        </AnimatePresence>
+        {isActive && (
+            <motion.div
+                layoutId="active-filter-pill"
+                className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full"
+                style={{ borderRadius: 9999 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+        )}
         <span className="relative z-10">{label}</span>
     </motion.button>
 );
 
+// UPDATED: ProjectCard is now more flexible for bento grids
+const ProjectCard = ({ project, onSelect, className = "" }) => (
+    <motion.div
+        layout
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className={`group relative flex flex-col bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-cyan-400/60 transition-all duration-300 cursor-pointer shadow-lg ${className}`}
+        onClick={() => onSelect(project)}
+    >
+        <div className="relative overflow-hidden flex-grow">
+            <img
+                src={project.image}
+                alt={`${project.title} preview`}
+                className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        </div>
+        <div className="p-6 bg-slate-800/50">
+            <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400 mb-2">{project.category}</p>
+            <h3 className="text-xl font-bold text-slate-100 mb-2 truncate">{project.title}</h3>
+            <p className="text-slate-400 text-sm mb-4 h-10">{project.summary}</p>
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-700/50">
+                {project.technologies.slice(0, 4).map(tech => (
+                    <span key={tech} className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-700/70 text-slate-300">
+                        {tech}
+                    </span>
+                ))}
+                {project.technologies.length > 4 && (
+                    <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-600/70 text-slate-200">
+                        +{project.technologies.length - 4} more
+                    </span>
+                )}
+            </div>
+        </div>
+    </motion.div>
+);
 
-function ProjectCard({ project, onSelect }) {
-    return (
-        <motion.div
-            layout
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="group relative bg-[#101727]/40 backdrop-blur-lg rounded-2xl overflow-hidden border border-cyan-400/20 shadow-lg hover:shadow-cyan-900/40 hover:border-cyan-400/50 transition-all duration-300 cursor-pointer"
-            onClick={() => onSelect(project)}
-        >
-            <div className="overflow-hidden">
-                <motion.img
-                    src={project.image}
-                    alt={`${project.title} preview`}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                />
-            </div>
-            <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-100 mb-1">{project.title}</h3>
-                <p className="text-gray-400 text-sm mb-4 h-10">{project.summary}</p>
-                <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map(tech => (
-                        <span key={tech} className="px-2.5 py-1 text-xs font-medium rounded-full bg-cyan-900/50 text-cyan-200">
-                            {tech}
-                        </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                        <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-gray-700/50 text-gray-300">
-                            +{project.technologies.length - 3}
-                        </span>
-                    )}
-                </div>
-            </div>
-            <div className="absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full bg-black/50 text-white backdrop-blur-sm">
-                {project.category}
-            </div>
-        </motion.div>
-    );
-}
-
+// --- MAIN COMPONENT ---
 export default function Projects() {
     const [selectedProject, setSelectedProject] = useState(null);
-    const [activeFilter, setActiveFilter] = useState("All");
 
-    useImagePreloader(projectsData);
+    useImagePreloader(projectsData.flatMap(p => p.images));
     useBodyScrollLock(!!selectedProject);
 
-    const projectCategories = useMemo(() => ["All", ...new Set(projectsData.map(p => p.category))], []);
+    const filteredProjects = projectsData; // Always show all projects
 
-    const filteredProjects = useMemo(() =>
-        activeFilter === "All"
-            ? projectsData
-            : projectsData.filter(p => p.category === activeFilter),
-        [activeFilter]
-    );
+    const handleSelectProject = (project) => setSelectedProject(project);
+    const handleCloseModal = () => setSelectedProject(null);
+
+    // Function to determine grid span for bento layout
+    const getGridSpan = (index) => {
+        const patternIndex = index % 6; // Create a repeatable pattern
+        switch (patternIndex) {
+            case 0: return "lg:col-span-2 lg:row-span-2";
+            case 1: return "lg:col-span-1 lg:row-span-1";
+            case 2: return "lg:col-span-1 lg:row-span-1";
+            case 3: return "lg:col-span-2 lg:row-span-1";
+            case 4: return "lg:col-span-3 lg:row-span-1";
+            case 5: return "lg:col-span-1 lg:row-span-1";
+            default: return "lg:col-span-1 lg:row-span-1";
+        }
+    };
+
+    const headerVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" }}
+    };
 
     return (
-        // FIXED: Removed the opaque `bg-[#0a0f19]` class from this section
-        <section id="projects" className="py-24 sm:py-32 text-white relative overflow-hidden">
-            {/* Background glow element, now with a z-index to sit behind content */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-cyan-500/10 rounded-full blur-3xl opacity-50 pointer-events-none z-5"></div>
-
+        // UPDATED: Removed background color and glow effects for external background handling
+        <section id="projects" className="py-24 sm:py-32 text-white relative">
             <div className="container px-4 mx-auto relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6 }}
+                <motion.div 
                     className="text-center mb-16"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.5 }}
+                    variants={headerVariants}
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-gray-100" style={{textShadow: '0 0 15px rgba(34, 211, 238, 0.5)'}}>
-                        My Projects
+                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400">
+                        Featured Projects
                     </h2>
-                    <p className="mt-4 text-md text-gray-400 max-w-2xl mx-auto font-light tracking-wider opacity-80">
-                        Here's a selection of my work. Feel free to explore the details of each project.
+                    <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+                        A curated selection of my work, showcasing my skills in web development, automation, and 3D graphics.
                     </p>
                 </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="flex justify-center flex-wrap gap-3 mb-12"
+                <motion.div 
+                    layout
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-[22rem] gap-6"
                 >
-                    {projectCategories.map(category => (
-                        <FilterButton
-                            key={category}
-                            label={category}
-                            isActive={activeFilter === category}
-                            onClick={() => setActiveFilter(category)}
-                        />
-                    ))}
-                </motion.div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <AnimatePresence>
-                        {filteredProjects.map(project => (
+                        {filteredProjects.map((project, index) => (
                             <ProjectCard
                                 key={project.id}
                                 project={project}
-                                onSelect={setSelectedProject}
+                                onSelect={handleSelectProject}
+                                className={getGridSpan(index)} // Assigns dynamic grid span
                             />
                         ))}
                     </AnimatePresence>
-                </div>
+                </motion.div>
             </div>
 
             <AnimatePresence>
                 {selectedProject && (
                     <ProjectModal
                         project={selectedProject}
-                        onClose={() => setSelectedProject(null)}
+                        onClose={handleCloseModal}
                     />
                 )}
             </AnimatePresence>
