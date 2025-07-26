@@ -124,8 +124,8 @@ function App() {
                     />
                 </Canvas>
             </div>
-            
-            <Navbar />
+
+            <Navbar className="relative z-20" />
             <main className="relative z-10">
                 <Hero />
                 <Experience />
