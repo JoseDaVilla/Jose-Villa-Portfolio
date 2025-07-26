@@ -189,7 +189,7 @@ html {
 /* --- GLOBAL SCROLLBAR FOR THE WHOLE PAGE --- */
 html, body {
   scrollbar-width: thin;
-  scrollbar-color: #c4b5fd #f5f3ff;
+  scrollbar-color: #534689 #00000000;
 }
 html::-webkit-scrollbar, body::-webkit-scrollbar {
   width: 8px;

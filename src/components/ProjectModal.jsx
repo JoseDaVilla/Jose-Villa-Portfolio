@@ -180,13 +180,14 @@ function ProjectModal({ project, onClose }) {
                     </div>
                 </div>
 
-                {/* --- Close Button (moved to be last child of modal content) --- */}
+                {/* --- Close Button (always last, always on top) --- */}
                 <button
                     onClick={onClose}
                     type="button"
-                    className="absolute top-4 right-4 p-2 bg-slate-800/60 text-slate-200 rounded-full hover:bg-slate-700/80 hover:scale-110 transition-all z-50 shadow-md"
+                    className="fixed md:absolute top-6 right-6 md:top-4 md:right-4 p-2 bg-slate-800/80 text-slate-200 rounded-full hover:bg-slate-700/80 hover:scale-110 transition-all z-50 shadow-md"
                     aria-label="Close modal"
                     tabIndex={0}
+                    style={{ zIndex: 100 }}
                 >
                     <CloseIcon />
                 </button>
