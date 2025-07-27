@@ -97,13 +97,13 @@ function ProjectModal({ project, onClose }) {
                         flex-shrink-0
                         flex flex-col
                         min-h-[40vh]
-                        h-[45vh]
+                        h-full
                         sm:h-[50vh]
                         md:h-auto
                         md:min-h-0
                         "
                     style={{
-                        maxHeight: '60vh',
+                        maxHeight: '100vh',
                         minHeight: '40vh',
                         ...(window.innerWidth < 768 ? { height: '50vh', minHeight: '40vh', maxHeight: '60vh' } : {})
                     }}
@@ -118,7 +118,7 @@ function ProjectModal({ project, onClose }) {
                             style={{
                                 minHeight: '40vh',
                                 height: '100%',
-                                maxHeight: '60vh',
+                                maxHeight: '100vh',
                                 borderRadius: 0
                             }}
                         ></iframe>
