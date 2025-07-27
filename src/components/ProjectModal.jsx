@@ -73,7 +73,7 @@ function ProjectModal({ project, onClose }) {
     return (
         // The single AnimatePresence in Projects.jsx will handle this component's exit animation correctly.
         <motion.div
-            className="fixed inset-0 z-30 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md"
+            className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 bg-slate-900/40 backdrop-blur-md"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -84,12 +84,30 @@ function ProjectModal({ project, onClose }) {
         >
             <motion.div
                 ref={modalRef}
-                className="relative w-full max-w-6xl max-h-[90vh] bg-slate-800/80 backdrop-blur-xl border border-slate-700 rounded-lg shadow-2xl shadow-cyan-500/10 flex flex-col md:flex-row overflow-hidden"
+                className="relative w-full max-w-6xl max-h-[100vh] sm:max-h-[90vh] bg-slate-800/80 backdrop-blur-xl border border-slate-700 rounded-none sm:rounded-lg shadow-2xl shadow-cyan-500/10 flex flex-col md:flex-row overflow-hidden"
                 variants={modalVariants}
                 onClick={e => e.stopPropagation()}
             >
                 {/* --- Content Area: Renders Iframe or Image Carousel --- */}
-                <div className="relative w-full md:w-3/5 bg-slate-900/50">
+                <div
+                    className="
+                        relative w-full
+                        md:w-3/5
+                        bg-slate-900/50
+                        flex-shrink-0
+                        flex flex-col
+                        min-h-[40vh]
+                        h-[45vh]
+                        sm:h-[50vh]
+                        md:h-auto
+                        md:min-h-0
+                        "
+                    style={{
+                        maxHeight: '60vh',
+                        minHeight: '40vh',
+                        ...(window.innerWidth < 768 ? { height: '50vh', minHeight: '40vh', maxHeight: '60vh' } : {})
+                    }}
+                >
                     {project.iframeUrl ? (
                         <iframe
                             src={project.iframeUrl}
@@ -97,6 +115,12 @@ function ProjectModal({ project, onClose }) {
                             className="w-full h-full border-0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
+                            style={{
+                                minHeight: '40vh',
+                                height: '100%',
+                                maxHeight: '60vh',
+                                borderRadius: 0
+                            }}
                         ></iframe>
                     ) : (
                         <>
@@ -105,11 +129,16 @@ function ProjectModal({ project, onClose }) {
                                     key={currentImageIndex}
                                     src={images[currentImageIndex]}
                                     alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                                    className="w-full h-[40vh] md:h-full object-cover"
+                                    className="w-full h-full object-cover"
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                    style={{
+                                        minHeight: '40vh',
+                                        maxHeight: '60vh',
+                                        borderRadius: 0
+                                    }}
                                 />
                             </AnimatePresence>
 
@@ -133,7 +162,21 @@ function ProjectModal({ project, onClose }) {
                 </div>
 
                 {/* --- Project Details --- */}
-                <div className="flex-1 md:w-2/5 p-6 sm:p-8 text-slate-300 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800/50">
+                <div className="
+                    flex-1
+                    md:w-2/5
+                    p-4 sm:p-6 md:p-8
+                    text-slate-300
+                    overflow-y-auto
+                    scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800/50
+                    bg-slate-800/80
+                    max-h-[55vh] md:max-h-none
+                    "
+                    style={{
+                        minHeight: 'auto',
+                        ...(window.innerWidth < 768 ? { maxHeight: '45vh' } : {})
+                    }}
+                >
                     <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-300 mb-2">{project.title}</h2>
                     <p className="text-slate-400 mb-6 leading-relaxed">{project.description}</p>
 
