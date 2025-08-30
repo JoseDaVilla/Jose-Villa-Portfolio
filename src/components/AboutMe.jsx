@@ -92,13 +92,14 @@ export default function AboutMe() {
                         transition={{ duration: 0.7 }}
                     >
                         <div ref={card3d.ref} className="relative w-full max-w-sm mx-auto">
-                            <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-3xl opacity-50"></div>
+                            {/* decorative background behind the card */}
+                            <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-3xl opacity-50 -z-10"></div>
                             <motion.div
                                 style={card3d.style}
-                                className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] bg-[#101727]/40 backdrop-blur-lg border border-emerald-400/20 shadow-emerald-900/40"
+                                className="relative z-10 rounded-full overflow-hidden w-full shadow-2xl  bg-[#101727]/40 backdrop-blur-lg border border-emerald-400/20 shadow-emerald-900/40"
                             >
                                 <img 
-                                    src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                                    src="/images/projects/avatar.png" 
                                     alt="A creative workspace representing Jose Villa's work" 
                                     className="w-full h-full object-cover"
                                 />
@@ -118,7 +119,7 @@ export default function AboutMe() {
                             I build digital tools that are effective, engaging, and easy to use.
                         </h3>
 
-                        <div className="space-y-4 mb-8 text-gray-400 leading-relaxed font-light">
+                        <div className="space-y-4 mb-8 text-gray-300 leading-relaxed font-light">
                             <p>
                                 I'm <strong className="font-semibold text-gray-200">Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
                                     <span className="text-amber-400">Co</span>
@@ -127,31 +128,32 @@ export default function AboutMe() {
                                 </strong>. I love bringing ideas to life through technology, especially by building digital tools that are both useful and intuitive.
                             </p>
                             <p>
-                                Lately, I've become fully passionate about 3D experiences and how they can solve real needs and elevate website interactions to a whole new level.
+                                Lately, I've become fully passionate about 3D experiences and how they can solve real needs and elevate website interactions to a whole new level. I also enjoy designing and tailoring automations — composing workflows that combine APIs, webhooks, serverless functions and no-code platforms — to automate repetitive routines, provide configurable options, and solve recurring problems across systems.
                             </p>
                             <p>
-                                When I'm not coding, you'll find me drawing, painting, or making music. I enjoy going to the gym, learning new languages, and I'm always curious to explore something new—whether it's a creative hobby or a fresh tech challenge.
+                                When I'm not coding, you'll find me drawing, painting, or making music. I enjoy going to the gym, learning new languages, and I'm always curious to explore something new—whether it's a creative hobby, a fresh tech challenge, or prototyping an automation to streamline daily work.
                             </p>
                         </div>
                         
                         <div className="bg-[#101727]/40 backdrop-blur-lg p-6 rounded-xl border border-emerald-400/20 shadow-2xl shadow-emerald-900/20">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
                                 {[
-                                    { icon: GlobeIcon, label: "Languages", value: "Spanish (Native), English (C1), French (A2)" },
-                                    { icon: BrainIcon, label: "Mindset", value: "Creative Problem-Solver" },
-                                    { icon: ZapIcon, label: "Core Trait", value: "Proactive & Disciplined" },
-                                    { icon: LayersIcon, label: "Workflow", value: "Efficient & Multitasking" },
+                                    { icon: GlobeIcon, label: "Languages", value: "Spanish (Native) · English (C1) · French (A2)" },
+                                    { icon: BrainIcon, label: "Problem Solving", value: "Analytical thinker — breaks down complex problems, prototypes fast, and iterates until solutions scale." },
+                                    { icon: ZapIcon, label: "Leadership & Ownership", value: "Leads by example, takes responsibility for outcomes, mentors teammates and drives projects to delivery." },
+                                    { icon: LayersIcon, label: "Collaboration & Workflow", value: "Clear communicator across teams — efficient multitasking, prioritization, and cross-functional coordination." },
+                                    { icon: GlobeIcon, label: "Adaptability & Growth", value: "Quick to learn new stacks and pivot when requirements change; focused on continuous improvement." },
                                 ].map((item) => (
-                                    <div key={item.label} className="flex items-center gap-4">
-                                        <div className="p-2 bg-emerald-900/30 border border-emerald-500/30 rounded-lg">
-                                            <item.icon className="w-6 h-6 text-emerald-400"/>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-gray-100">{item.label}</h4>
-                                            <p className="text-sm text-gray-400">{item.value}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                                     <div key={item.label} className="flex items-center gap-4">
+                                         <div className="p-2 bg-emerald-900/30 border border-emerald-500/30 rounded-lg">
+                                             <item.icon className="w-6 h-6 text-emerald-400"/>
+                                         </div>
+                                         <div>
+                                             <h4 className="font-semibold text-gray-100">{item.label}</h4>
+                                             <p className="text-sm text-gray-400">{item.value}</p>
+                                         </div>
+                                     </div>
+                                 ))}
                             </div>
                         </div>
                     </motion.div>
