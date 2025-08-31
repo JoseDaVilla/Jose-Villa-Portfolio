@@ -48,10 +48,10 @@ export default function Hero() {
                             Get in Touch
                         </a>
                         <div className="flex items-center gap-4 pointer-events-auto">
-                            <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors" title="GitHub">
+                            <a href="https://github.com/JoseDaVilla" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors" title="GitHub">
                                 <GitHubIcon className="w-8 h-8"/>
                             </a>
-                            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors" title="LinkedIn">
+                            <a href="https://www.linkedin.com/in/jose-daniel-villa-712133204" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors" title="LinkedIn">
                                 <LinkedInIcon className="w-8 h-8"/>
                             </a>
                         </div>

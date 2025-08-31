@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- Icon Imports ---
+
+
 import {
     SiReact, SiThreedotjs, SiTypescript, SiTailwindcss, SiJavascript, SiNextdotjs, SiHtml5, SiCss3,
-    SiNodedotjs, SiPython, SiExpress, SiPostgresql, SiMongodb, SiDocker, SiWebgl,
-    SiGit, SiSelenium, SiBlender, SiFigma, SiOpengl, SiStripe, SiWordpress,
-    SiFirebase, SiTwilio, SiOpenai
+    SiNodedotjs, SiExpress, SiPostgresql, SiMongodb, SiDocker, SiWebgl,
+    SiGit, SiSelenium, /* SiBlender removed */ SiOpengl, SiStripe, SiWordpress,
+    SiTwilio, SiOpenai
 } from 'react-icons/si';
+import { GiBrain } from 'react-icons/gi'; 
 
-// --- Category Icon Components ---
+import { RiTimerFill } from 'react-icons/ri'; 
+
+import { FiServer } from 'react-icons/fi'; 
+
+
+
+
 const CodeIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
         <polyline points="16 18 22 12 16 6"></polyline>
@@ -29,62 +37,124 @@ const WrenchIcon = (props) => (
     </svg>
 );
 
-// --- Custom SVG/Component Icons ---
+
+
 const PlaywrightIcon = () => (
     <img src="/logos/playwright.svg" alt="Playwright" className="w-full h-full object-contain" />
 );
-const RestApiIcon = () => (
-    <span className="font-bold text-gray-300 text-lg tracking-tighter">API</span>
+const RestApiIcon = (props) => (
+    <FiServer {...props} />
 );
 
-// New small/custom icons for services without a react-icon available locally
+
+
 const SendGridIcon = () => (
     <img src="/logos/sendgrid.svg" alt="SendGrid" className="w-full h-full object-contain" />
 );
 const CommioIcon = () => (
-    <img src="/logos/commio.svg" alt="Commio" className="w-full h-full object-contain" />
+    <img src="/logos/commio.png" alt="Commio" className="w-full h-full object-contain" />
+);
+
+
+const BlenderIcon = () => (
+    <img src="/logos/blender.svg" alt="Blender" className="w-full h-full object-contain" />
+);
+
+
+const PostgresIcon = () => (
+    <img src="/logos/postgre.svg" alt="PostgreSQL" className="w-full h-full object-contain" />
+);
+
+
+const FigmaIcon = () => (
+    <img src="/logos/figma.svg" alt="Figma" className="w-full h-full object-contain" />
 );
 const ZendeskIcon = () => (
-    <img src="/logos/zendesk.svg" alt="Zendesk" className="w-full h-full object-contain" />
+    <img src="/logos/zendesk.svg" alt="Zendesk" className="w-full h-full object-contain   " />
 );
-const ShadcnIcon = () => (
-    <span className="font-semibold text-gray-200 text-sm tracking-tight">shadcn/ui</span>
+
+
+
+const PythonIcon = () => (
+    <img src="/logos/python.svg" alt="Python" className="w-full h-full object-contain" />
 );
-const PayArcIcon = () => (
-    <img src="/logos/payarc.svg" alt="PayArc" className="w-full h-full object-contain" />
+
+const ShadcnIcon = (props) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 256 256"
+		className="w-full h-full object-contain"
+		fill="none"
+		stroke="currentColor"N
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		strokeWidth="32"
+		{...props}
+	>
+		<line x1="208" y1="128" x2="128" y2="208" />
+		<line x1="192" y1="40" x2="40" y2="192" />
+	</svg>
+);
+
+
+const PaypalIcon = () => (
+    <img src="/logos/paypal.svg" alt="PayPal" className="w-full h-full object-contain" />
 );
 const OpenAIIcon = () => (
     <img src="/logos/openai.svg" alt="OpenAI" className="w-full h-full object-contain" />
 );
 
-// New small/custom icons for automation platforms
-const ZapierIcon = () => (
-	<span className="font-semibold text-yellow-300 text-sm">Zapier</span>
-);
-const MakeIcon = () => (
-	<span className="font-semibold text-pink-300 text-sm">Make</span>
-);
-const WebhookIcon = () => (
-	<span className="font-bold text-gray-300 text-sm">WH</span>
+
+
+const FirebaseIcon = (props) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 73 91"
+		className="w-full h-full object-contain"
+		fill="none"
+		{...props}
+	>
+		<path d="M22.5752 87.933C26.3634 89.4568 30.4722 90.3615 34.7873 90.5132C40.6261 90.717 46.1816 89.5089 51.1455 87.2147C45.1923 84.8757 39.8009 81.4554 35.1974 77.2024C32.2171 81.9798 27.805 85.7506 22.5752 87.933Z" fill="#FF9100" />
+		<path d="M35.1996 77.2049C24.6952 67.4909 18.3219 53.4295 18.8613 38.0059C18.8787 37.5063 18.906 37.0042 18.9359 36.5046C17.0542 36.0174 15.0905 35.7216 13.0697 35.6495C10.1764 35.5476 7.37501 35.908 4.73026 36.6512C1.92643 41.5629 0.233686 47.1979 0.0224039 53.2356C-0.521958 68.8158 8.90619 82.4273 22.5749 87.9331C27.8047 85.7532 32.2168 81.9849 35.1996 77.2049Z" fill="#FFC400" />
+		<path d="M35.1998 77.2047C37.6433 73.2973 39.1222 68.7137 39.2962 63.7772C39.7486 50.792 31.019 39.6214 18.9361 36.5044C18.9063 37.004 18.8789 37.5061 18.8615 38.0057C18.3246 53.4268 24.6954 67.4883 35.1998 77.2047Z" fill="#FF9100" />
+		<path d="M37.9435 0C31.0632 5.51321 25.6271 12.7813 22.341 21.1555C20.4594 25.9529 19.2762 31.1032 18.9307 36.5045C31.0135 39.6216 39.7432 50.7922 39.2883 63.7798C39.1168 68.7163 37.6304 73.2949 35.1919 77.2074C39.7929 81.4653 45.1868 84.8806 51.14 87.2196C63.0911 81.6965 71.5697 69.81 72.0594 55.7511C72.3775 46.6411 68.8777 38.5229 63.9337 31.6699C58.7113 24.4242 37.9435 0 37.9435 0Z" fill="#DD2C00" />
+	</svg>
 );
 
-// --- Data for Skills ---
+
+
+const ZapierIcon = () => (
+    <img src="/logos/zapier.svg" alt="Zapier" className="w-full h-full object-contain" />
+);
+const MakeIcon = () => (
+    <img src="/logos/make.webp" alt="Make (Integromat)" className="w-full h-full object-contain" />
+);
+const WebhookIcon = () => (
+    <img src="/logos/webhook.png" alt="Webhooks" className="w-full h-full object-contain " />
+);
+
+
+
 const skillCategories = [
     {
         title: "Frontend & UI/UX",
         icon: CodeIcon,
-        description: "Building responsive, accessible, and beautiful user interfaces with a focus on seamless 3D integration and performance.",
+        description: "Building responsive, accessible, and beautiful user interfaces focused on performance and great user experience.",
         skills: [
             { name: "React", logo: SiReact, color: "#61DAFB" },
             { name: "Next.js", logo: SiNextdotjs, color: "#FFFFFF" },
             { name: "Three.js", logo: SiThreedotjs, color: "#FFFFFF" },
             { name: "TypeScript", logo: SiTypescript, color: "#3178C6" },
+            { name: "Figma", logo: FigmaIcon, color: "#F24E1E", use: "Design handoff and prototyping" }, 
+            
+
             { name: "Tailwind CSS", logo: SiTailwindcss, color: "#06B6D4" },
             { name: "JavaScript", logo: SiJavascript, color: "#F7DF1E" },
             { name: "HTML5", logo: SiHtml5, color: "#E34F26" },
             { name: "CSS3", logo: SiCss3, color: "#1572B6" },
             { name: "Wordpress", logo: SiWordpress, color: "#21759B" },
-            { name: "shadcn/ui", logo: ShadcnIcon, color: "#E6E7EA" }, // lightweight UI primitives
+            { name: "shadcn/ui", logo: ShadcnIcon, color: "#E6E7EA" }, 
+            
         ]
     },
     {
@@ -93,15 +163,17 @@ const skillCategories = [
         description: "Developing robust server-side logic and scalable data solutions that power complex applications with security and efficiency.",
         skills: [
             { name: "Node.js", logo: SiNodedotjs, color: "#339933" },
-            { name: "Python", logo: SiPython, color: "#3776AB" },
+            { name: "Python", logo: PythonIcon, color: "#3776AB" },
             { name: "Express", logo: SiExpress, color: "#FFFFFF" },
-            { name: "PostgreSQL", logo: SiPostgresql, color: "#4169E1" },
+            { name: "PostgreSQL", logo: PostgresIcon, color: "#4169E1" }, 
+            
             { name: "MongoDB", logo: SiMongodb, color: "#47A248" },
             { name: "Docker", logo: SiDocker, color: "#2496ED" },
             { name: "REST APIs", logo: RestApiIcon, color: "#d1d5db" },
             { name: "WebGL", logo: SiWebgl, color: "#990000" },
-            { name: "Firebase", logo: SiFirebase, color: "#FFCA28" }, // realtime / serverless options
-            { name: "AI Integrations", logo: OpenAIIcon, color: "#FFFFFF" }, // OpenAI and other LLM integrations
+            { name: "Firebase", logo: FirebaseIcon, color: "#FFCA28" },
+            { name: "AI Integrations", logo: GiBrain, color: "#FFFFFF" }, 
+            
         ]
     },
     {
@@ -112,16 +184,17 @@ const skillCategories = [
             { name: "Git", logo: SiGit, color: "#F05032", use: "Version control, PR workflows, release management" },
             { name: "Playwright", logo: PlaywrightIcon, color: "#2EAD33", use: "End-to-end testing & CI automation" },
             { name: "Selenium", logo: SiSelenium, color: "#43B02A", use: "Browser automation for legacy flows" },
-            { name: "Blender", logo: SiBlender, color: "#F5792A", use: "3D assets for interactive experiences" },
-            { name: "Figma", logo: SiFigma, color: "#F24E1E", use: "Design handoff and prototyping" },
+            { name: "Blender", logo: BlenderIcon, color: "#F5792A", use: "3D assets for interactive experiences" },
+            { name: "Figma", logo: FigmaIcon, color: "#F24E1E", use: "Design handoff and prototyping" }, 
+            
             { name: "GLSL", logo: SiOpengl, color: "#5586A4", use: "Custom shader logic for visuals" },
-            { name: "Stripe", logo: SiStripe, color: "#635BFF", use: "Payment flows & recurring billing automations" },
+            { name: "Stripe", logo: SiStripe, color: "#635BFF", use: "Payment flows & recurring billing aNutomations" },
             { name: "SendGrid", logo: SendGridIcon, color: "#0069FF", use: "Transactional emails & notification pipelines" },
             { name: "Twilio", logo: SiTwilio, color: "#FF2D55", use: "SMS/voice workflows, 2FA and message routing" },
             { name: "Commio", logo: CommioIcon, color: "#00A3A3", use: "Telephony & messaging integrations" },
-            { name: "Zendesk", logo: ZendeskIcon, color: "#00A884", use: "Support ticket automations & routing" },
-            { name: "PayArc", logo: PayArcIcon, color: "#1F8FFF", use: "Alternative gateway automation & reconciliation" },
-            { name: "AI / LLMs", logo: OpenAIIcon, color: "#FFFFFF", use: "Assistants, summarization & RAG (retrieval-augmented generation)" },
+            { name: "PayPal", logo: PaypalIcon, color: "#003087", use: "Payments, payouts & gateway integrations" },
+            { name: "AI / LLMs", logo: GiBrain, color: "#FFFFFF", use: "Assistants, summarization & RAG (retrieval-augmented generation)" }, 
+            
         ]
     },
     {
@@ -132,13 +205,14 @@ const skillCategories = [
             { name: "Zapier", logo: ZapierIcon, color: "#F5A623", use: "No-code automation chains connecting apps & triggers" },
             { name: "Make (Integromat)", logo: MakeIcon, color: "#FF7AB6", use: "Complex multi-step integrations and data transformations" },
             { name: "Webhooks / REST", logo: WebhookIcon, color: "#d1d5db", use: "Event-driven integrations, inbound/outbound webhooks" },
-            { name: "Firebase Functions", logo: SiFirebase, color: "#FFCA28", use: "Serverless event handlers and background jobs" },
-            { name: "Cron / Workers", logo: RestApiIcon, color: "#9CA3AF", use: "Scheduled jobs, batch processing, maintenance tasks" },
+            { name: "Firebase Functions", logo: FirebaseIcon, color: "#FFCA28", use: "Serverless event handlers and background jobs" },
+            { name: "Cron / Workers", logo: RiTimerFill, color: "#FFFFFF", use: "Scheduled jobs, batch processing, maintenance tasks" },
             { name: "SendGrid", logo: SendGridIcon, color: "#0069FF", use: "Automated email workflows, retries and templates" },
             { name: "Twilio", logo: SiTwilio, color: "#FF2D55", use: "Programmable SMS/Voice flows, alerts and IVR automations" },
             { name: "Zendesk", logo: ZendeskIcon, color: "#00A884", use: "Auto-ticket creation, routing and SLA enforcement" },
-            { name: "Payments (Stripe/PayArc)", logo: SiStripe, color: "#635BFF", use: "Webhook-driven billing, disputes handling and payouts" },
-            { name: "AI / LLMs", logo: OpenAIIcon, color: "#FFFFFF", use: "Automated triage, content generation, smart suggestions & agents" },
+            { name: "Payments (Stripe/PayPal)", logo: SiStripe, color: "#635BFF", use: "Webhook-driven billing, disputes handling and payouts" },
+            { name: "AI / LLMs", logo: GiBrain, color: "#FFFFFF", use: "Automated triage, content generation, smart suggestions & agents" }, 
+            
         ]
     }
 ];
@@ -147,7 +221,7 @@ function SkillIcon({ skill }) {
 	const LogoComponent = skill.logo;
 	return (
 		<div className="group relative flex flex-col items-center text-center gap-2" title={skill.use || skill.name}>
-			<div className="w-16 h-16 p-3 bg-gray-900/50 rounded-2xl flex items-center justify-center transition-all duration-300 ring-1 ring-orange-400/20 group-hover:ring-orange-400 group-hover:-translate-y-1">
+			<div className="w-20 h-20 p-3 rounded-2xl flex items-center justify-center transition-all duration-300  group-hover:-translate-y-1">
 				<LogoComponent
 					className="w-full h-full object-contain"
 					style={{ color: skill.color }}
