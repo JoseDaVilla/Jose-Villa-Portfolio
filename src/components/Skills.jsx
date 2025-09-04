@@ -244,7 +244,7 @@ export default function Skills() {
     return (
         <section id="skills" className="py-24 sm:py-32 text-white relative overflow-visible">
             {/* Soft glow background */}
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[50rem] w-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-3xl opacity-50" />
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-3xl opacity-50" />
 
             <div className="container relative z-10 mx-auto px-4">
                 <motion.div
