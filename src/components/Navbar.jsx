@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- Icon Components for the mobile menu button ---
+
 const MenuIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
         <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -22,10 +22,10 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
     const [scrolled, setScrolled] = useState(false);
-    // Track modal open state
+    
     const [modalOpen, setModalOpen] = useState(false);
 
-    // Navigation items for the navbar
+    
     const navItems = [
         { label: 'Home', sectionId: 'hero' },
         { label: 'Experience', sectionId: 'experience' },
@@ -35,10 +35,10 @@ export default function Navbar() {
         { label: 'Contact', sectionId: 'contact' }
     ];
 
-    // Effect to handle scroll events for active link highlighting and navbar styling
+    
     useEffect(() => {
         const handleScroll = () => {
-            // Set scrolled state for navbar background effect
+            
             setScrolled(window.scrollY > 50);
             
             let currentSection = '';
@@ -46,7 +46,7 @@ export default function Navbar() {
                 const section = document.getElementById(item.sectionId);
                 if (section) {
                     const rect = section.getBoundingClientRect();
-                    // Check if the section is prominently in view
+                    
                     if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.5) {
                         currentSection = item.sectionId;
                         break;
@@ -60,12 +60,12 @@ export default function Navbar() {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Initial check
+        handleScroll(); 
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, [navItems]);
 
-    // Effect to detect if modal is open by checking body class
+    
     useEffect(() => {
         const checkModal = () => setModalOpen(document.body.classList.contains('modal-open'));
         checkModal();
@@ -74,7 +74,7 @@ export default function Navbar() {
         return () => observer.disconnect();
     }, []);
 
-    // Framer Motion variants for the mobile menu animation
+    
     const menuVariants = {
         open: { opacity: 1, height: 'auto', transition: { staggerChildren: 0.07 } },
         closed: { opacity: 0, height: 0, transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren" } }
@@ -85,19 +85,20 @@ export default function Navbar() {
         closed: { y: 20, opacity: 0, transition: { duration: 0.2 } }
     };
 
-    // Remove animation delay for navbar
+    
     return (
         !modalOpen && (
             <motion.div
-                className="fixed top-0 inset-x-0 z-20"
+                
+                className="hidden md:block fixed top-0 inset-x-0 z-20"
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 120, damping: 20 }}
             >
                 <header
                     className={
-                        // Desktop: show bg when scrolled or open
-                        // Mobile: show bg ONLY when open
+                        
+                        
                         `max-w-3xl mx-auto mt-4 rounded-2xl shadow-lg transition-all duration-300
                         ${
                             (scrolled || isOpen)
