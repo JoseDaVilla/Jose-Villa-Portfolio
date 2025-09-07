@@ -95,7 +95,7 @@ function ProjectModal({ project, onClose }) {
                         md:w-3/5
                         bg-slate-900/50
                         flex-shrink-0
-                        flex flex-col
+                        flex items-center justify-center
                         min-h-[40vh]
                         h-full
                         sm:h-[50vh]
@@ -129,14 +129,16 @@ function ProjectModal({ project, onClose }) {
                                     key={currentImageIndex}
                                     src={images[currentImageIndex]}
                                     alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full object-contain block"
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                                     style={{
-                                        minHeight: '40vh',
-                                        maxHeight: '60vh',
+                                        display: 'block',
+                                        width: '100%',
+                                        maxHeight: '100%',
+                                        objectFit: 'contain',
                                         borderRadius: 0
                                     }}
                                 />

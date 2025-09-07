@@ -25,8 +25,16 @@ const projectsData = [
         category: "SaaS Platform",
         summary: "A 'Marketing Agency in a Box' SaaS for digital marketing partners.",
         description: "An all-in-one, white-label platform that empowers entrepreneurs to launch their own digital marketing agencies. ProAxis includes a comprehensive Training Academy, a built-in CRM for client management, team and service management tools, Stripe connected accounts for seamless payment processing, and a powerful drag-and-drop form builder. It also features integrated calendars with automated Zoom link generation and a robust commission tracking system for partners.",
-        image: "images/projects/proaxis.jpg",
-        images: ["images/projects/proaxis.jpg", "images/projects/proaxis-2.jpg", "images/projects/proaxis-3.jpg"],
+        // Use the provided images (located in public/images/projects/)
+        image: "images/projects/proaxislogo.png",
+        images: [
+            "images/projects/proaxis.png",
+            "images/projects/proaxis2.png",
+            "images/projects/proaxis3.png",
+            "images/projects/proaxis4.png",
+            "images/projects/proaxis5.png",
+            "images/projects/proaxis6.png"
+        ],
         technologies: ["Next.js", "React", "Node.js", "PostgreSQL", "Stripe Connect", "Google Calendar API", "Zoom API", "Tailwind CSS", "Prisma"],
         features: ["White-Label SaaS Platform", "Integrated CRM System", "Partner Training Academy", "Stripe Connected Accounts", "Drag-and-Drop Form Builder", "Employee & Service Management", "Automated Commission System", "Google Calendar & Zoom Integration", "User Authentication & Roles"],
         links: { github: null, live: null },
@@ -38,8 +46,15 @@ const projectsData = [
         category: "Automation",
         summary: "Automated trading bot using Alpaca and EODHD APIs.",
         description: "A Python-based trading bot using Alpaca for real-time trading and EODHD for historical data. It executes momentum strategies across 20+ symbols, analyzing tick data for precision.",
-        image: "images/projects/trading-bot.jpg",
-        images: ["images/projects/trading-bot.jpg", "images/projects/trading-bot-2.jpg", "images/projects/trading-bot-3.jpg"],
+        image: "images/projects/tradingbot.png",
+        images: [
+            // Added alpaca and eodh images for the carousel
+            "images/projects/tradingbot.png",
+            "images/projects/alpaca.png",
+            "images/projects/eodh.png",
+            "images/projects/trading-bot-2.jpg",
+            "images/projects/trading-bot-3.jpg"
+        ],
         technologies: ["Python", "Alpaca API", "EODHD API", "Matplotlib", "Pandas", "NumPy"],
         features: ["Real-time market data processing", "Momentum-based trading strategy", "Supports 20+ trading symbols", "Tick-level data analysis", "Statistical performance tracking", "Automated order execution"],
         links: { github: null, live: null },
@@ -51,7 +66,7 @@ const projectsData = [
         category: "3D & Graphics",
         summary: "Interactive Three.js app to generate animated galaxies with GLSL.",
         description: "A visually stunning Galaxy Generator using Three.js and custom GLSL shaders. It allows users to customize galaxy parameters and demonstrates advanced WebGL techniques.",
-        image: "images/projects/galaxy-generator.jpg",
+        image: "images/projects/galaxy.png",
         images: ["images/projects/galaxy-generator.jpg", "images/projects/galaxy-generator-2.jpg", "images/projects/galaxy-generator-3.jpg"],
         technologies: ["Three.js", "GLSL Shaders", "WebGL", "JavaScript", "HTML5", "CSS3"],
         features: ["Real-time galaxy generation", "Custom GLSL vertex and fragment shaders", "Interactive parameter controls", "Optimized for performance", "Dynamic spin and color customization"],
@@ -65,27 +80,14 @@ const projectsData = [
         category: "3D & Graphics",
         summary: "Immersive 3D gallery to showcase creative projects.",
         description: "A 3D gallery space built with Three.js, allowing users to navigate a virtual environment to view projects. Features custom shaders for an engaging user experience.",
-        image: "images/projects/3d-gallery.jpg",
+        image: "images/projects/portal.png",
         images: ["images/projects/3d-gallery.jpg", "images/projects/3d-gallery-2.jpg", "images/projects/3d-gallery-3.jpg"],
         technologies: ["Three.js", "JavaScript", "GLSL Shaders", "HTML5", "CSS3"],
         features: ["Immersive 3D environment", "Custom GLSL shaders", "Intuitive navigation", "Dynamic content loading", "Mobile-optimized performance"],
         links: { github: "https://github.com/josevilla/3d-gallery", live: "https://3d-gallery-demo.com" },
 
         iframeUrl: "https://portal-chi-five.vercel.app/"
-    },
-    {
-        id: 5,
-        title: "AI Content Summarizer",
-        category: "Web App",
-        summary: "SaaS platform that summarizes long-form content using AI.",
-        description: "A React-based web application that leverages OpenAI's API to provide concise summaries of articles, reports, and other documents, increasing reading efficiency.",
-        image: "images/projects/summarizer.jpg",
-        images: ["images/projects/summarizer.jpg", "images/projects/summarizer-2.jpg", "images/projects/summarizer-3.jpg"],
-        technologies: ["React", "Tailwind CSS", "Node.js", "OpenAI API", "Vercel"],
-        features: ["URL and text input summarization", "Adjustable summary length", "Secure API handling", "User authentication", "History of summarized articles"],
-        links: { github: "https://github.com/josevilla/ai-summarizer", live: "https://ai-summarizer-demo.com" },
-        iframeUrl: "https://ai-summarizer-demo.com" // Example of another iframe
-    },
+    }
 ];
 
 // ... rest of the Projects.jsx component remains unchanged
@@ -175,12 +177,13 @@ export default function Projects() {
     const getGridSpan = (index) => {
         const patternIndex = index % 6;
         switch (patternIndex) {
-            case 0: return "lg:col-span-2 lg:row-span-2";
-            case 1: return "lg:col-span-1 lg:row-span-1";
-            case 2: return "lg:col-span-1 lg:row-span-1";
+            case 0: return "lg:col-span-2 lg:row-span-1";
+            case 1: return "lg:col-span-2 lg:row-span-2";
+            case 2: return "lg:col-span-2 lg:row-span-1";
             case 3: return "lg:col-span-2 lg:row-span-1";
-            case 4: return "lg:col-span-3 lg:row-span-1";
+            case 4: return "lg:col-span-2 lg:row-span-1";
             case 5: return "lg:col-span-1 lg:row-span-1";
+            case 6: return "lg:col-span-1 lg:row-span-1";
             default: return "lg:col-span-1 lg:row-span-1";
         }
     };
@@ -210,7 +213,7 @@ export default function Projects() {
 
                 <motion.div 
                     layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-[22rem] gap-6"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6  lg:auto-rows-[18rem] auto-rows-[28rem] gap-6"
                 >
                     {/* AnimatePresence is correctly wrapping the map function here */}
                     <AnimatePresence>

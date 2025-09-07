@@ -285,7 +285,7 @@ export default function Skills() {
                                         <button
                                             key={category.title}
                                             onClick={() => setActiveCategory(category.title)}
-                                            className={`relative flex w-full items-center justify-center gap-4 overflow-hidden rounded-lg p-4 text-center transition-all duration-300
+                                            className={`relative flex w-full items-center justify-between px-8 text-end gap-4 overflow-hidden rounded-lg p-4 text-center transition-all duration-300
                         ${isActive ? 'text-white shadow-lg' : 'bg-gray-900/50 text-gray-300 hover:bg-gray-800/60 hover:text-white'}`}
                                         >
                                             <AnimatePresence>
