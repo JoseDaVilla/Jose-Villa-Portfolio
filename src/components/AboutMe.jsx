@@ -122,9 +122,9 @@ export default function AboutMe() {
                         <div className="space-y-4 mb-8 text-gray-300 leading-relaxed font-light">
                             <p>
                                 I'm <strong className="font-semibold text-gray-200">Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
-                                    <span className="text-amber-400">Co</span>
-                                    <span className="text-blue-400">lom</span>
-                                    <span className="text-red-400">bia</span>
+                                    <span className="text-amber-400">Colo</span>
+                                    <span className="text-blue-400">mb</span>
+                                    <span className="text-red-400">ia</span>
                                 </strong>. I love bringing ideas to life through technology, especially by building digital tools that are both useful and intuitive.
                             </p>
                             <p>
