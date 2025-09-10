@@ -26,7 +26,7 @@ const projectsData = [
         summary: "A 'Marketing Agency in a Box' SaaS for digital marketing partners.",
         description: "An all-in-one, white-label platform that empowers entrepreneurs to launch their own digital marketing agencies. ProAxis includes a comprehensive Training Academy, a built-in CRM for client management, team and service management tools, Stripe connected accounts for seamless payment processing, and a powerful drag-and-drop form builder. It also features integrated calendars with automated Zoom link generation and a robust commission tracking system for partners.",
         // Use the provided images (located in public/images/projects/)
-        image: "images/projects/proaxislogo.png",
+        image: "images/projects/proaxislogo1.png",
         images: [
             "images/projects/proaxis.png",
             "images/projects/proaxis2.png",
@@ -126,7 +126,7 @@ const ProjectCard = ({ project, onSelect, className = "" }) => (
             <img
                 src={project.image}
                 alt={`${project.title} preview`}
-                className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                className={`w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-105 ${project.image === "images/projects/proaxislogo1.png" ? "object-cover bg-[#c395ba69]" : "object-cover"}`}
                 loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
