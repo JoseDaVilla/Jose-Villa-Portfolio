@@ -112,7 +112,7 @@ function App() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[color:var(--color-background)] text-[color:var(--color-text-primary)] transition-colors duration-300 antialiased">
+        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)] transition-colors duration-300 antialiased">
             {/* Pass activeSection to the borders */}
             <TechBorderCorners activeSection={activeSection} />
 

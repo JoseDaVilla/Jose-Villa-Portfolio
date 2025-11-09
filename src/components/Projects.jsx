@@ -97,7 +97,7 @@ const FilterButton = ({ label, isActive, onClick }) => (
         className={`relative px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
             isActive
                 ? 'text-white bg-[var(--color-button-primary)] shadow-[0_12px_26px_-12px_rgba(37,99,235,0.55)]'
-                : 'text-[color:var(--color-text-muted)] hover:bg-[var(--color-accent-soft)] hover:text-[color:var(--color-text-primary)]'
+                : 'text-[var(--color-text-muted)] hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-text-primary)]'
         }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -198,7 +198,7 @@ export default function Projects() {
     return (
         <section
             id="projects"
-            className="py-24 sm:py-32 relative text-[color:var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#edf2ff] to-[#e4ecfb] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#edf2ff] to-[#e4ecfb] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
         >
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
