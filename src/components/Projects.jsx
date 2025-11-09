@@ -94,10 +94,10 @@ const projectsData = [
 const FilterButton = ({ label, isActive, onClick }) => (
     <motion.button
         onClick={onClick}
-        className={`relative px-5 py-2 text-sm font-medium rounded-full transition-colors duration-300 ${
+        className={`relative px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
             isActive
-                ? 'text-white'
-                : 'text-[var(--color-text-muted)] hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-text-primary)]'
+                ? 'text-white bg-[var(--color-button-primary)] shadow-[0_12px_26px_-12px_rgba(37,99,235,0.55)]'
+                : 'text-[color:var(--color-text-muted)] hover:bg-[var(--color-accent-soft)] hover:text-[color:var(--color-text-primary)]'
         }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -133,7 +133,7 @@ const ProjectCard = ({ project, onSelect, className = "" }) => (
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent dark:from-black/70 dark:via-black/30" />
         </div>
-        <div className="p-6 bg-[var(--color-surface)] dark:bg-slate-800/50 transition-colors duration-300">
+        <div className="p-6 bg-gradient-to-br from-white via-[#f6f8fc] to-[#eaf1ff] dark:bg-slate-800/50 transition-colors duration-300">
             <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2">{project.category}</p>
             <h3 className="text-xl font-bold text-[var(--color-text-primary)] dark:text-slate-100 mb-2 truncate">{project.title}</h3>
             <p className="text-[var(--color-text-muted)] dark:text-slate-400 text-sm mb-4 h-10">{project.summary}</p>
@@ -196,7 +196,10 @@ export default function Projects() {
     };
 
     return (
-        <section id="projects" className="py-24 sm:py-32 relative text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
+        <section
+            id="projects"
+            className="py-24 sm:py-32 relative text-[color:var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#edf2ff] to-[#e4ecfb] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+        >
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
                     className="text-center mb-16"
