@@ -25,7 +25,7 @@ export default function Experience() {
     return (
         <section
             id="experience"
-            className="py-24 sm:py-32 relative overflow-hidden text-[color:var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f5f7fb] to-[#e8f0ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f5f7fb] to-[#e8f0ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
         >
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div

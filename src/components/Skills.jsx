@@ -243,7 +243,7 @@ export default function Skills() {
     return (
         <section
             id="skills"
-            className="py-24 sm:py-32 relative overflow-visible text-[color:var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f6f7fb] to-[#e9f2ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative overflow-visible text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f6f7fb] to-[#e9f2ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
         >
             {/* Soft glow background */}
             <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-400/10 blur-3xl opacity-40" />

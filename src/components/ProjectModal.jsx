@@ -184,9 +184,9 @@ function ProjectModal({ project, onClose }) {
 
                     <div className="mb-6">
                         <h3 className="font-semibold text-lg text-[var(--color-text-primary)] dark:text-slate-200 mb-3 pb-2 border-b border-[var(--color-border)] dark:border-slate-700">Key Features</h3>
-                        <ul className="space-y-2.5 text-[color:var(--color-text-muted)] dark:text-slate-400">
+                        <ul className="space-y-2.5 text-[var(--color-text-muted)] dark:text-slate-400">
                             {project.features?.map((feature, index) => (
-                                <li key={index} className="flex items-start gap-3 text-[color:var(--color-text-primary)] dark:text-slate-200">
+                                <li key={index} className="flex items-start gap-3 text-[var(--color-text-primary)] dark:text-slate-200">
                                     <CheckCircleIcon className="w-5 h-5 mt-0.5 text-[var(--color-accent)] flex-shrink-0" />
                                     <span className="leading-relaxed">{feature}</span>
                                 </li>
