@@ -32,7 +32,10 @@ function CenterGlow() {
 // --- Main Hero Component ---
 export default function Hero() {
     return (
-        <section id="hero" className="relative h-screen overflow-hidden cursor-crosshair text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
+        <section
+            id="hero"
+            className="relative h-screen overflow-hidden cursor-crosshair text-[color:var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#eef2ff] to-[#f7f9fc] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+        >
 
             <CenterGlow />
 
@@ -46,7 +49,7 @@ export default function Hero() {
                     <h1 className="text-4xl sm:text-5xl lg:text-7xl font-thin tracking-[0.5em] sm:tracking-[1em] uppercase">
                         <span style={{ marginRight: '-0.5em' }}>Jose Villa</span>
                     </h1>
-                    <p className="mt-4 text-sm font-light tracking-[0.3em] uppercase opacity-80">
+                    <p className="mt-4 text-sm font-light tracking-[0.3em] uppercase text-[color:var(--color-text-muted)]">
                         Creative <span className="mx-2 opacity-50">|</span> Technologist <span className="mx-2 opacity-50">|</span> Developer
                     </p>
                     <div className="mt-10 flex flex-wrap justify-center items-center gap-4">

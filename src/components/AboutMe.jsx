@@ -64,7 +64,10 @@ export default function AboutMe() {
     const card3d = use3dCardEffect();
 
     return (
-        <section id="aboutme" className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
+        <section
+            id="aboutme"
+            className="py-24 sm:py-32 relative overflow-hidden text-[color:var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f7f8fb] to-[#eaf2ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+        >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-emerald-500/10 rounded-full blur-3xl opacity-50 pointer-events-none z-5"></div>
 
             <div className="container px-4 mx-auto relative z-10">

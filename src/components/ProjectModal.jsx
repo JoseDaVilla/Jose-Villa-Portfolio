@@ -73,7 +73,7 @@ function ProjectModal({ project, onClose }) {
     return (
         // The single AnimatePresence in Projects.jsx will handle this component's exit animation correctly.
         <motion.div
-            className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 bg-slate-900/30 dark:bg-slate-900/60 backdrop-blur-md"
+            className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 bg-slate-900/15 dark:bg-slate-900/60 backdrop-blur-md"
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -84,7 +84,7 @@ function ProjectModal({ project, onClose }) {
         >
             <motion.div
                 ref={modalRef}
-                className="relative w-full max-w-6xl max-h-[100vh] sm:max-h-[90vh] bg-[var(--color-surface-strong)] dark:bg-slate-800/80 backdrop-blur-xl border border-[var(--color-border)] dark:border-slate-700 rounded-none sm:rounded-lg shadow-2xl shadow-slate-500/10 dark:shadow-cyan-500/10 flex flex-col md:flex-row overflow-hidden transition-colors"
+                className="relative w-full max-w-6xl max-h-[100vh] sm:max-h-[90vh] bg-gradient-to-br from-white via-[#f4f7fb] to-[#e4edf9] dark:bg-slate-800/80 backdrop-blur-xl border border-[var(--color-border)] dark:border-slate-700 rounded-none sm:rounded-lg shadow-2xl shadow-slate-400/15 dark:shadow-cyan-500/10 flex flex-col md:flex-row overflow-hidden transition-colors"
                 variants={modalVariants}
                 onClick={e => e.stopPropagation()}
             >
@@ -93,7 +93,7 @@ function ProjectModal({ project, onClose }) {
                     className="
                         relative w-full
                         md:w-3/5
-                        bg-white dark:bg-slate-900/50
+                        bg-gradient-to-br from-white via-[#f5f8fd] to-[#e6effc] dark:bg-slate-900/50
                         flex-shrink-0
                         flex items-center justify-center
                         min-h-[40vh]
@@ -146,10 +146,10 @@ function ProjectModal({ project, onClose }) {
 
                             {images.length > 1 && (
                                 <>
-                                    <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 rounded-full hover:bg-white dark:hover:bg-slate-700/80 hover:scale-110 transition-all shadow-md">
+                            <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700/80 hover:scale-110 transition-all shadow-md">
                                         <ChevronLeftIcon />
                                     </button>
-                                    <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 rounded-full hover:bg-white dark:hover:bg-slate-700/80 hover:scale-110 transition-all shadow-md">
+                            <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700/80 hover:scale-110 transition-all shadow-md">
                                         <ChevronRightIcon />
                                     </button>
                                     <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
@@ -171,7 +171,7 @@ function ProjectModal({ project, onClose }) {
                     text-[var(--color-text-primary)] dark:text-slate-300
                     overflow-y-auto
                     scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800/50
-                    bg-[var(--color-surface)] dark:bg-slate-800/80
+                    bg-white/90 dark:bg-slate-800/80
                     max-h-[55vh] md:max-h-none
                     "
                     style={{
@@ -184,11 +184,11 @@ function ProjectModal({ project, onClose }) {
 
                     <div className="mb-6">
                         <h3 className="font-semibold text-lg text-[var(--color-text-primary)] dark:text-slate-200 mb-3 pb-2 border-b border-[var(--color-border)] dark:border-slate-700">Key Features</h3>
-                        <ul className="space-y-2.5">
+                        <ul className="space-y-2.5 text-[color:var(--color-text-muted)] dark:text-slate-400">
                             {project.features?.map((feature, index) => (
-                                <li key={index} className="flex items-start">
-                                    <CheckCircleIcon className="w-5 h-5 mr-3 mt-0.5 text-[var(--color-accent)] flex-shrink-0" />
-                                    <span>{feature}</span>
+                                <li key={index} className="flex items-start gap-3 text-[color:var(--color-text-primary)] dark:text-slate-200">
+                                    <CheckCircleIcon className="w-5 h-5 mt-0.5 text-[var(--color-accent)] flex-shrink-0" />
+                                    <span className="leading-relaxed">{feature}</span>
                                 </li>
                             ))}
                         </ul>
@@ -198,7 +198,7 @@ function ProjectModal({ project, onClose }) {
                         <h3 className="font-semibold text-lg text-[var(--color-text-primary)] dark:text-slate-200 mb-3 pb-2 border-b border-[var(--color-border)] dark:border-slate-700">Technologies</h3>
                         <div className="flex flex-wrap gap-2">
                             {project.technologies.map(tech => (
-                                <span key={tech} className="px-3 py-1 text-sm font-medium rounded-full bg-slate-200 text-slate-700 border border-[var(--color-border)] dark:bg-cyan-900/60 dark:text-cyan-300 dark:border-cyan-800/80">
+                                <span key={tech} className="px-3 py-1 text-sm font-medium rounded-full bg-[#e6ecf8] text-slate-700 border border-[var(--color-border)] dark:bg-cyan-900/60 dark:text-cyan-300 dark:border-cyan-800/80">
                                     {tech}
                                 </span>
                             ))}
@@ -211,7 +211,7 @@ function ProjectModal({ project, onClose }) {
                         ) : (
                             <div className="flex flex-wrap gap-4">
                                 {project.links?.github && (
-                                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg border border-[var(--color-border)] bg-white text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors dark:bg-slate-700/80 dark:text-slate-200">
+                                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg border border-[var(--color-border)] bg-gradient-to-r from-white via-[#eef3ff] to-[#e2eaff] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors dark:bg-slate-700/80 dark:text-slate-200">
                                         <GitHubIcon className="text-[var(--color-text-muted)] dark:text-slate-400" /> View Code
                                     </a>
                                 )}
