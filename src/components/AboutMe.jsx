@@ -64,9 +64,9 @@ export default function AboutMe() {
     const card3d = use3dCardEffect();
 
     return (
-        <section id="aboutme" className="py-24 sm:py-32 text-white relative overflow-hidden">
+        <section id="aboutme" className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-emerald-500/10 rounded-full blur-3xl opacity-50 pointer-events-none z-5"></div>
-            
+
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -75,10 +75,10 @@ export default function AboutMe() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-gray-100" style={{textShadow: '0 0 15px rgba(16, 185, 129, 0.5)'}}>
+                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white" style={{textShadow: '0 0 15px rgba(16, 185, 129, 0.25)'}}>
                         About Me
                     </h2>
-                    <p className="mt-4 text-md text-gray-400 max-w-2xl mx-auto font-light tracking-wider opacity-80">
+                    <p className="mt-4 text-md text-[var(--color-text-muted)] dark:text-gray-400 max-w-2xl mx-auto font-light tracking-wider opacity-80">
                         Here’s a little bit about my journey and passions.
                     </p>
                 </motion.div>
@@ -96,11 +96,11 @@ export default function AboutMe() {
                             <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-3xl opacity-50 -z-10"></div>
                             <motion.div
                                 style={card3d.style}
-                                className="relative z-10 rounded-full overflow-hidden w-full shadow-2xl  bg-[#101727]/40 backdrop-blur-lg border border-emerald-400/20 shadow-emerald-900/40"
+                                className="relative z-10 rounded-full overflow-hidden w-full shadow-2xl bg-[var(--color-surface)] dark:bg-[#101727]/40 backdrop-blur-lg border border-[var(--color-border)] dark:border-emerald-400/20 shadow-emerald-900/20"
                             >
-                                <img 
-                                    src="/images/projects/avatar.png" 
-                                    alt="A creative workspace representing Jose Villa's work" 
+                                <img
+                                    src="/images/projects/avatar.png"
+                                    alt="A creative workspace representing Jose Villa's work"
                                     className="w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
@@ -115,13 +115,13 @@ export default function AboutMe() {
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
                     >
-                        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-100 leading-snug">
+                        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-[var(--color-text-primary)] dark:text-gray-100 leading-snug">
                             I build digital tools that are effective, engaging, and easy to use.
                         </h3>
 
-                        <div className="space-y-4 mb-8 text-gray-300 leading-relaxed font-light">
+                        <div className="space-y-4 mb-8 text-[var(--color-text-muted)] dark:text-gray-300 leading-relaxed font-light">
                             <p>
-                                I'm <strong className="font-semibold text-gray-200">Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
+                                I'm <strong className="font-semibold text-[var(--color-text-primary)] dark:text-gray-200">Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
                                     <span className="text-amber-400">Colo</span>
                                     <span className="text-blue-400">mb</span>
                                     <span className="text-red-400">ia</span>
@@ -135,7 +135,7 @@ export default function AboutMe() {
                             </p>
                         </div>
                         
-                        <div className="bg-[#101727]/40 backdrop-blur-lg p-6 rounded-xl border border-emerald-400/20 shadow-2xl shadow-emerald-900/20">
+                        <div className="bg-[var(--color-surface)] dark:bg-[#101727]/40 backdrop-blur-lg p-6 rounded-xl border border-[var(--color-border)] dark:border-emerald-400/20 shadow-2xl shadow-emerald-900/10 transition-colors">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
                                 {[
                                     { icon: GlobeIcon, label: "Languages", value: "Spanish (Native) · English (C1) · French (A2)" },
@@ -145,12 +145,12 @@ export default function AboutMe() {
                                     { icon: GlobeIcon, label: "Adaptability & Growth", value: "Quick to learn new stacks and pivot when requirements change; focused on continuous improvement." },
                                 ].map((item) => (
                                      <div key={item.label} className="flex items-center gap-4">
-                                         <div className="p-2 bg-emerald-900/30 border border-emerald-500/30 rounded-lg">
-                                             <item.icon className="w-6 h-6 text-emerald-400"/>
+                                         <div className="p-2 bg-emerald-100 border border-emerald-300 rounded-lg dark:bg-emerald-900/30 dark:border-emerald-500/30">
+                                             <item.icon className="w-6 h-6 text-emerald-500 dark:text-emerald-400"/>
                                          </div>
                                          <div>
-                                             <h4 className="font-semibold text-gray-100">{item.label}</h4>
-                                             <p className="text-sm text-gray-400">{item.value}</p>
+                                             <h4 className="font-semibold text-[var(--color-text-primary)] dark:text-gray-100">{item.label}</h4>
+                                             <p className="text-sm text-[var(--color-text-muted)] dark:text-gray-400">{item.value}</p>
                                          </div>
                                      </div>
                                  ))}

@@ -23,7 +23,7 @@ const experienceHighlights = [
 
 export default function Experience() {
     return (
-        <section id="experience" className="py-24 sm:py-32 text-white relative overflow-hidden">
+        <section id="experience" className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -32,16 +32,16 @@ export default function Experience() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-gray-100" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.5)'}}>
+                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.2)'}}>
                         Professional Experience
                     </h2>
-                    <p className="mt-4 text-md text-gray-400 max-w-2xl mx-auto font-light tracking-wider opacity-80">
+                    <p className="mt-4 text-md text-[var(--color-text-muted)] dark:text-slate-300 max-w-2xl mx-auto font-light tracking-wider opacity-80">
                         A look at my current role and the key areas where I'm making an impact.
                     </p>
                 </motion.div>
 
                 <motion.div
-                    className="max-w-5xl mx-auto bg-[#101727]/40 backdrop-blur-lg p-8 rounded-2xl border border-purple-400/20 shadow-2xl shadow-purple-900/20"
+                    className="max-w-5xl mx-auto bg-[var(--color-surface)] dark:bg-[var(--color-surface-strong)] backdrop-blur-lg p-8 rounded-2xl border border-[var(--color-border)] dark:border-[var(--color-border-strong)] shadow-2xl shadow-purple-900/10"
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.2 }}
@@ -49,14 +49,14 @@ export default function Experience() {
                 >
                     <div className="grid md:grid-cols-3 gap-8 md:gap-12">
                         <div className="md:col-span-1">
-                            <div className="p-4 bg-gray-900/50 rounded-lg flex items-center justify-center mb-4 h-24">
-                                <img src="/logos/geeks5g.webp" alt="Geeks5G Logo" className="max-h-12 invert brightness-0 opacity-80" />
+                            <div className="p-4 bg-white/80 dark:bg-gray-900/60 rounded-lg flex items-center justify-center mb-4 h-24 border border-[var(--color-border)] dark:border-transparent">
+                                <img src="/logos/geeks5g.webp" alt="Geeks5G Logo" className="max-h-12 dark:invert dark:brightness-0 dark:opacity-80" />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-100">Fullstack Developer</h3>
-                            <p className="text-purple-400 font-semibold text-md">
+                            <h3 className="text-xl font-bold text-[var(--color-text-primary)] dark:text-white">Fullstack Developer</h3>
+                            <p className="text-[var(--color-accent)] font-semibold text-md">
                                 <a href="https://geeks5g.com/" target="_blank" rel="noopener noreferrer" className="hover:underline">@ Geeks5G Marketing Agency</a>
                             </p>
-                            <p className="text-gray-500 text-sm mt-2 font-mono">
+                            <p className="text-[var(--color-text-muted)] dark:text-slate-400 text-sm mt-2 font-mono">
                                 Jan 2025 - Present
                             </p>
                         </div>
@@ -65,18 +65,18 @@ export default function Experience() {
                             <div className="space-y-6 flex-grow">
                                 {experienceHighlights.map((highlight) => (
                                     <div key={highlight.title} className="flex items-start gap-4">
-                                        <div className="p-2 bg-purple-900/30 border border-purple-500/30 rounded-lg mt-1 flex-shrink-0">
-                                            <highlight.icon className="w-6 h-6 text-purple-400" />
+                                        <div className="p-2 bg-[var(--color-accent-soft)] border border-[var(--color-border)] dark:border-[var(--color-border-strong)] rounded-lg mt-1 flex-shrink-0">
+                                            <highlight.icon className="w-6 h-6 text-[var(--color-accent)]" />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-lg text-gray-100">{highlight.title}</h4>
-                                            <p className="text-gray-400 text-sm">{highlight.description}</p>
+                                            <h4 className="font-bold text-lg text-[var(--color-text-primary)] dark:text-white">{highlight.title}</h4>
+                                            <p className="text-[var(--color-text-muted)] dark:text-slate-300 text-sm">{highlight.description}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            <div className="mt-8 pt-6 border-t border-purple-400/20">
-                                <a href="#projects" className="group inline-flex items-center gap-2 text-sm font-semibold text-gray-400 hover:text-purple-400 transition-colors">
+                            <div className="mt-8 pt-6 border-t border-[var(--color-border)] dark:border-[var(--color-border-strong)]">
+                                <a href="#projects" className="group inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors">
                                     See these skills in action in the projects below
                                     <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>

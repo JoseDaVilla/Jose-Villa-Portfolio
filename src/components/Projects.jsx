@@ -95,7 +95,9 @@ const FilterButton = ({ label, isActive, onClick }) => (
     <motion.button
         onClick={onClick}
         className={`relative px-5 py-2 text-sm font-medium rounded-full transition-colors duration-300 ${
-            isActive ? 'text-white' : 'text-cyan-300 bg-transparent hover:bg-cyan-500/10'
+            isActive
+                ? 'text-white'
+                : 'text-[var(--color-text-muted)] hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-text-primary)]'
         }`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -103,7 +105,7 @@ const FilterButton = ({ label, isActive, onClick }) => (
         {isActive && (
             <motion.div
                 layoutId="active-filter-pill"
-                className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full"
+                className="absolute inset-0 bg-gradient-to-r from-[var(--color-accent)] to-emerald-400 rounded-full"
                 style={{ borderRadius: 9999 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
@@ -119,7 +121,7 @@ const ProjectCard = ({ project, onSelect, className = "" }) => (
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className={`group relative flex flex-col bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-cyan-400/60 transition-all duration-300 cursor-pointer shadow-lg ${className}`}
+        className={`group relative flex flex-col bg-[var(--color-surface)] dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-[var(--color-border)] dark:border-slate-700/80 hover:border-[var(--color-accent)] transition-all duration-300 cursor-pointer shadow-lg ${className}`}
         onClick={() => onSelect(project)}
     >
         <div className="relative overflow-hidden flex-grow">
@@ -129,20 +131,20 @@ const ProjectCard = ({ project, onSelect, className = "" }) => (
                 className={`w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-105 ${project.image === "images/projects/proaxislogo1.png" ? "object-cover bg-[#c395ba69]" : "object-cover"}`}
                 loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent dark:from-black/70 dark:via-black/30" />
         </div>
-        <div className="p-6 bg-slate-800/50">
-            <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400 mb-2">{project.category}</p>
-            <h3 className="text-xl font-bold text-slate-100 mb-2 truncate">{project.title}</h3>
-            <p className="text-slate-400 text-sm mb-4 h-10">{project.summary}</p>
-            <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-700/50">
+        <div className="p-6 bg-[var(--color-surface)] dark:bg-slate-800/50 transition-colors duration-300">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2">{project.category}</p>
+            <h3 className="text-xl font-bold text-[var(--color-text-primary)] dark:text-slate-100 mb-2 truncate">{project.title}</h3>
+            <p className="text-[var(--color-text-muted)] dark:text-slate-400 text-sm mb-4 h-10">{project.summary}</p>
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-[var(--color-border)] dark:border-slate-700/50">
                 {project.technologies.slice(0, 4).map(tech => (
-                    <span key={tech} className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-700/70 text-slate-300">
+                    <span key={tech} className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-200 text-slate-700 dark:bg-slate-700/70 dark:text-slate-300">
                         {tech}
                     </span>
                 ))}
                 {project.technologies.length > 4 && (
-                    <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-600/70 text-slate-200">
+                    <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-300 text-slate-700 dark:bg-slate-600/70 dark:text-slate-200">
                         +{project.technologies.length - 4} more
                     </span>
                 )}
@@ -194,19 +196,19 @@ export default function Projects() {
     };
 
     return (
-        <section id="projects" className="py-24 sm:py-32 text-white relative">
+        <section id="projects" className="py-24 sm:py-32 relative text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
             <div className="container px-4 mx-auto relative z-10">
-                <motion.div 
+                <motion.div
                     className="text-center mb-16"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
                     variants={headerVariants}
                 >
-                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-slate-400">
+                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-white transition-colors">
                         Featured Projects
                     </h2>
-                    <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+                    <p className="mt-4 text-lg text-[var(--color-text-muted)] dark:text-slate-400 max-w-2xl mx-auto">
                         A curated selection of my work, showcasing my skills in web development, automation, and 3D graphics.
                     </p>
                 </motion.div>

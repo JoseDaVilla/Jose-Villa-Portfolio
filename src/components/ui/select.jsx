@@ -11,7 +11,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
     <SelectPrimitive.Trigger
         ref={ref}
         className={cn(
-            "flex h-[50px] w-full items-center justify-between rounded-lg border-2 border-purple-800/40 bg-gray-900/50 px-3 py-2 text-sm ring-offset-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-[50px] w-full items-center justify-between rounded-lg border-2 border-[var(--color-border)] bg-white px-3 py-2 text-sm text-[var(--color-text-primary)] ring-offset-white placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-purple-800/40 dark:bg-gray-900/50 dark:text-gray-200 dark:ring-offset-black dark:placeholder:text-gray-400",
             className
         )}
         {...props}
@@ -29,7 +29,7 @@ const SelectContent = React.forwardRef(({ className, children, position = "poppe
         <SelectPrimitive.Content
             ref={ref}
             className={cn(
-                "relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-purple-800/50 bg-[#101727] text-gray-200 shadow-md backdrop-blur-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+                "relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-md backdrop-blur-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-purple-800/50 dark:bg-[#101727] dark:text-gray-200",
                 position === "popper" &&
                 "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
                 className
@@ -55,7 +55,7 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
     <SelectPrimitive.Item
         ref={ref}
         className={cn(
-            "relative flex w-full cursor-default select-none items-center rounded-sm py-2 pl-8 pr-2 text-sm outline-none focus:bg-purple-600/20 focus:text-gray-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+            "relative flex w-full cursor-default select-none items-center rounded-sm py-2 pl-8 pr-2 text-sm outline-none focus:bg-[var(--color-accent-soft)] focus:text-[var(--color-text-primary)] dark:focus:bg-purple-600/20 dark:focus:text-gray-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
             className
         )}
         {...props}

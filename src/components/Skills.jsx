@@ -183,10 +183,10 @@ function SkillIcon({ skill }) {
     const LogoComponent = skill.logo;
     return (
         <div className="group relative flex flex-col items-center text-center gap-2" title={skill.use || skill.name}>
-            <div className="w-20 h-20 p-3 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1">
+            <div className="w-20 h-20 p-3 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1 bg-white shadow-sm dark:bg-slate-900/60">
                 <LogoComponent className="w-full h-full object-contain" style={{ color: skill.color }} />
             </div>
-            <p className="text-sm font-semibold text-gray-300 transition-colors group-hover:text-white">{skill.name}</p>
+            <p className="text-sm font-semibold text-[var(--color-text-muted)] dark:text-gray-300 transition-colors group-hover:text-[var(--color-accent)] dark:group-hover:text-white">{skill.name}</p>
         </div>
     );
 }
@@ -195,8 +195,7 @@ function SkillIcon({ skill }) {
 function MobileCategoryNav({ activeCategory, setActiveCategory }) {
     return (
         <div
-            className="md:hidden sticky top-0 z-40 border-b border-orange-400/20
-                 bg-[#0b1222]/70 backdrop-blur supports-[backdrop-filter]:bg-[#0b1222]/50"
+            className="md:hidden sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-[#0b1222]/70 dark:border-orange-400/20 dark:supports-[backdrop-filter]:bg-[#0b1222]/50"
             style={{ top: 'calc(env(safe-area-inset-top, 0px) + 0px)' }}
         >
             <div className="container mx-auto px-2">
@@ -224,7 +223,7 @@ function MobileCategoryNav({ activeCategory, setActiveCategory }) {
                                         />
                                     )}
                                 </AnimatePresence>
-                                <category.icon className={`relative z-10 w-7 h-7 ${isActive ? 'text-white' : 'text-orange-400'}`} />
+                                <category.icon className={`relative z-10 w-7 h-7 ${isActive ? 'text-white' : 'text-orange-500 dark:text-orange-400'}`} />
                                 {/* keep label for screen readers only */}
                                 <span className="sr-only">{category.title}</span>
                             </button>
@@ -242,9 +241,9 @@ export default function Skills() {
     const currentCategory = skillCategories.find((cat) => cat.title === activeCategory) || skillCategories[0];
 
     return (
-        <section id="skills" className="py-24 sm:py-32 text-white relative overflow-visible">
+        <section id="skills" className="py-24 sm:py-32 relative overflow-visible text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
             {/* Soft glow background */}
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-3xl opacity-50" />
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-400/10 blur-3xl opacity-40" />
 
             <div className="container relative z-10 mx-auto px-4">
                 <motion.div
@@ -255,12 +254,12 @@ export default function Skills() {
                     transition={{ duration: 0.6 }}
                 >
                     <h2
-                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-gray-100"
-                        style={{ textShadow: '0 0 15px rgba(245, 158, 66, 0.5)' }}
+                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white"
+                        style={{ textShadow: '0 0 15px rgba(245, 158, 66, 0.2)' }}
                     >
                         My Tech Arsenal
                     </h2>
-                    <p className="mt-4 max-w-3xl mx-auto text-md font-light tracking-wider text-gray-400 opacity-80">
+                    <p className="mt-4 max-w-3xl mx-auto text-md font-light tracking-wider text-[var(--color-text-muted)] dark:text-gray-400 opacity-80">
                         An interactive look at the languages, frameworks, and tools I use to bring ideas to life.
                     </p>
                 </motion.div>
@@ -286,7 +285,7 @@ export default function Skills() {
                                             key={category.title}
                                             onClick={() => setActiveCategory(category.title)}
                                             className={`relative flex w-full items-center justify-between px-8 text-end gap-4 overflow-hidden rounded-lg p-4 text-center transition-all duration-300
-                        ${isActive ? 'text-white shadow-lg' : 'bg-gray-900/50 text-gray-300 hover:bg-gray-800/60 hover:text-white'}`}
+                        ${isActive ? 'text-white shadow-lg bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-white text-[var(--color-text-muted)] border border-[var(--color-border)] hover:text-[var(--color-text-primary)] dark:bg-gray-900/60 dark:text-gray-300 dark:hover:bg-gray-800/60 dark:border-transparent'}`}
                                         >
                                             <AnimatePresence>
                                                 {isActive && (
@@ -321,8 +320,8 @@ export default function Skills() {
                                 exit={{ opacity: 0, y: -12 }}
                                 transition={{ duration: 0.35 }}
                             >
-                                <div className="rounded-2xl border border-orange-400/20 bg-[#101727]/40 p-8 shadow-2xl shadow-orange-900/20 backdrop-blur-lg">
-                                    <p className="mb-8 text-base leading-relaxed text-gray-400">{currentCategory.description}</p>
+                                <div className="rounded-2xl border border-[var(--color-border)] dark:border-orange-400/20 bg-[var(--color-surface)] dark:bg-[#101727]/40 p-8 shadow-2xl shadow-orange-900/10 backdrop-blur-lg transition-colors">
+                                    <p className="mb-8 text-base leading-relaxed text-[var(--color-text-muted)] dark:text-gray-400">{currentCategory.description}</p>
                                     <div className="grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                                         {currentCategory.skills.map((skill) => (
                                             <SkillIcon key={skill.name} skill={skill} />
