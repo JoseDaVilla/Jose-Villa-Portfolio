@@ -36,7 +36,7 @@ const FormField = ({ id, label, type = 'text', placeholder, value, onChange, ico
     >
         <label htmlFor={id} className="sr-only">{label}</label>
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Icon className="h-5 w-5 text-gray-500" />
+            <Icon className="h-5 w-5 text-[var(--color-text-muted)] dark:text-gray-500" />
         </div>
         {/* Updated input styling to match the new select trigger */}
         <input
@@ -46,7 +46,7 @@ const FormField = ({ id, label, type = 'text', placeholder, value, onChange, ico
             value={value}
             onChange={onChange}
             required={required}
-            className="flex h-[50px] w-full items-center rounded-lg border-2 border-purple-800/40 bg-gray-900/50 pl-12 pr-4 py-2 text-sm text-gray-200 placeholder:text-gray-400 ring-offset-black focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-1 transition-all"
+            className="flex h-[50px] w-full items-center rounded-lg border-2 border-[var(--color-border)] bg-white pl-12 pr-4 py-2 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] ring-offset-white focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-1 transition-all dark:border-purple-800/40 dark:bg-gray-900/50 dark:text-gray-200 dark:placeholder:text-gray-400 dark:ring-offset-black"
             placeholder={placeholder}
         />
     </motion.div>
@@ -118,7 +118,7 @@ export default function Contact() {
     };
 
     return (
-        <section id="contact" className="py-24 sm:py-32 text-white relative overflow-hidden">
+        <section id="contact" className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-purple-500/10 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
             <div className="container px-4 mx-auto relative z-10">
@@ -129,10 +129,10 @@ export default function Contact() {
                     transition={{ duration: 0.6 }}
                     className="mb-16 text-center"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-gray-100" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.5)'}}>
+                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.25)'}}>
                         Let's Work Together
                     </h2>
-                    <p className="mx-auto mt-4 max-w-2xl text-md text-gray-400 font-light tracking-wider opacity-80">
+                    <p className="mx-auto mt-4 max-w-2xl text-md text-[var(--color-text-muted)] dark:text-gray-400 font-light tracking-wider opacity-80">
                         Have a project in mind or just want to say hello? I'd love to hear from you.
                     </p>
                 </motion.div>
@@ -142,25 +142,25 @@ export default function Contact() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.7 }}
-                    className="max-w-2xl mx-auto bg-[#101727]/40 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-purple-800/20 shadow-purple-900/20"
+                    className="max-w-2xl mx-auto bg-[var(--color-surface)] dark:bg-[#101727]/40 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-[var(--color-border)] dark:border-purple-800/20 shadow-purple-900/10 transition-colors"
                 >
                     <AnimatePresence mode="wait">
                         {status === 'success' ? (
                             <motion.div key="success" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} className="text-center py-10">
                                 <CheckCircle2 className="text-purple-500 mx-auto mb-4 h-20 w-20" strokeWidth={1.5}/>
-                                <h3 className="text-2xl font-bold text-gray-100 mb-2">Message Sent!</h3>
-                                <p className="text-gray-400">Thank you for reaching out. I'll get back to you as soon as possible.</p>
+                                <h3 className="text-2xl font-bold text-[var(--color-text-primary)] dark:text-gray-100 mb-2">Message Sent!</h3>
+                                <p className="text-[var(--color-text-muted)] dark:text-gray-400">Thank you for reaching out. I'll get back to you as soon as possible.</p>
                             </motion.div>
                         ) : (
                             <motion.div key="form" variants={formVariants} initial="hidden" animate="visible" exit={{ opacity: 0, y: -20 }}>
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl sm:text-2xl font-bold text-gray-100">Send a Message</h3>
-                                        <p className="text-gray-400 text-sm">Or connect on social media</p>
+                                        <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] dark:text-gray-100">Send a Message</h3>
+                                        <p className="text-[var(--color-text-muted)] dark:text-gray-400 text-sm">Or connect on social media</p>
                                     </div>
                                     <div className="flex gap-4">
-                                        <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors"><Linkedin className="h-6 w-6"/></a>
-                                        <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors"><Github className="h-6 w-6"/></a>
+                                        <a href="#" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"><Linkedin className="h-6 w-6"/></a>
+                                        <a href="#" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"><Github className="h-6 w-6"/></a>
                                     </div>
                                 </div>
                                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -169,7 +169,7 @@ export default function Contact() {
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
                                         <Select onValueChange={handleSubjectChange} defaultValue={formData.subject} required>
                                             <SelectTrigger aria-label="Subject">
-                                                <div className="flex items-center gap-3 text-gray-200">
+                                                <div className="flex items-center gap-3 text-[var(--color-text-primary)] dark:text-gray-200">
                                                     <SelectValue />
                                                 </div>
                                             </SelectTrigger>
@@ -195,16 +195,16 @@ export default function Contact() {
                                             required
                                             rows="4"
                                             placeholder="Tell me about your project..."
-                                            className="flex min-h-[80px] w-full rounded-lg border-2 border-purple-800/40 bg-gray-900/50 px-4 py-3 text-sm text-gray-200 placeholder:text-gray-400 ring-offset-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-1 resize-y"
+                                            className="flex min-h-[80px] w-full rounded-lg border-2 border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 resize-y dark:border-purple-800/40 dark:bg-gray-900/50 dark:text-gray-200 dark:placeholder:text-gray-400 dark:ring-offset-black"
                                         ></textarea>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-                                        <button type="submit" disabled={status === 'sending'} className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        <button type="submit" disabled={status === 'sending'} className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-[var(--color-button-primary)] text-white font-semibold rounded-lg shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
                                             {status === 'sending' ? 'Sending...' : 'Send Message'}
                                             <Send className="h-5 w-5" />
                                         </button>
-                                        {errorMsg && <p className="mt-2 text-red-400 text-sm text-center">{errorMsg}</p>}
-                                        {status === 'error' && !errorMsg && <p className="mt-2 text-red-400 text-sm text-center">Sorry, something went wrong. Please try again later.</p>}
+                                        {errorMsg && <p className="mt-2 text-red-500 text-sm text-center dark:text-red-400">{errorMsg}</p>}
+                                        {status === 'error' && !errorMsg && <p className="mt-2 text-red-500 text-sm text-center dark:text-red-400">Sorry, something went wrong. Please try again later.</p>}
                                     </motion.div>
                                 </form>
                             </motion.div>

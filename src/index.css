@@ -8,9 +8,54 @@
   --color-lightgray: #D9D9D9;
 }
 
+:root {
+  color-scheme: light;
+  --color-background: #f7f9fc;
+  --color-surface: rgba(255, 255, 255, 0.86);
+  --color-surface-strong: #ffffff;
+  --color-border: rgba(148, 163, 184, 0.35);
+  --color-border-strong: rgba(148, 163, 184, 0.55);
+  --color-text-primary: #0f172a;
+  --color-text-muted: #475569;
+  --color-accent: #2563eb;
+  --color-accent-soft: rgba(37, 99, 235, 0.12);
+  --color-navbar: rgba(255, 255, 255, 0.9);
+  --color-navbar-border: rgba(148, 163, 184, 0.35);
+  --color-button-primary: #2563eb;
+  --color-button-primary-hover: #1d4ed8;
+  --color-hero-glow-start: rgba(37, 99, 235, 0.2);
+  --color-hero-glow-middle: rgba(37, 99, 235, 0.1);
+  --color-hero-glow-end: rgba(247, 249, 252, 0);
+  --color-spotlight: rgba(250, 204, 21, 0.12);
+}
+
+.dark {
+  color-scheme: dark;
+  --color-background: #0a0f19;
+  --color-surface: rgba(16, 24, 40, 0.75);
+  --color-surface-strong: #101727;
+  --color-border: rgba(59, 130, 246, 0.2);
+  --color-border-strong: rgba(56, 189, 248, 0.35);
+  --color-text-primary: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-accent: #22d3ee;
+  --color-accent-soft: rgba(34, 211, 238, 0.16);
+  --color-navbar: rgba(16, 24, 40, 0.75);
+  --color-navbar-border: rgba(34, 211, 238, 0.22);
+  --color-button-primary: #38bdf8;
+  --color-button-primary-hover: #0ea5e9;
+  --color-hero-glow-start: rgba(96, 165, 250, 0.33);
+  --color-hero-glow-middle: rgba(37, 99, 235, 0.18);
+  --color-hero-glow-end: rgba(10, 15, 25, 0);
+  --color-spotlight: rgba(250, 204, 21, 0.18);
+}
+
 @layer base {
   body {
     font-family: 'Geologica', system-ui, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1,

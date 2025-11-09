@@ -112,10 +112,10 @@ function App() {
     }, []);
 
     return (
-        <div className="bg-[#0a0f19] antialiased">
+        <div className="min-h-screen bg-[color:var(--color-background)] text-[color:var(--color-text-primary)] transition-colors duration-300 antialiased">
             {/* Pass activeSection to the borders */}
             <TechBorderCorners activeSection={activeSection} />
-            
+
             <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
                 <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
                     <SectionSphere

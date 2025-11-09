@@ -16,7 +16,14 @@ const LinkedInIcon = (props) => (
 function CenterGlow() {
     return (
         <div className="pointer-events-none absolute inset-0 z-5 flex items-center justify-center" aria-hidden="true">
-            <div className="w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full" style={{background: 'radial-gradient(circle, #60a5fa55 0%, #2563eb33 40%, #0a0f1900 80%)', filter: 'blur(60px)', animation: 'pulseGlow 4s ease-in-out infinite alternate'}} />
+            <div
+                className="w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full"
+                style={{
+                    background: 'radial-gradient(circle, var(--color-hero-glow-start) 0%, var(--color-hero-glow-middle) 45%, var(--color-hero-glow-end) 80%)',
+                    filter: 'blur(60px)',
+                    animation: 'pulseGlow 4s ease-in-out infinite alternate'
+                }}
+            />
             <style>{`@keyframes pulseGlow { 0% { opacity: 0.7; } 100% { opacity: 1; } }`}</style>
         </div>
     );
@@ -25,7 +32,7 @@ function CenterGlow() {
 // --- Main Hero Component ---
 export default function Hero() {
     return (
-        <section id="hero" className="relative h-screen text-white overflow-hidden cursor-crosshair">
+        <section id="hero" className="relative h-screen overflow-hidden cursor-crosshair text-[var(--color-text-primary)] dark:text-white transition-colors duration-300">
 
             <CenterGlow />
 
@@ -43,15 +50,18 @@ export default function Hero() {
                         Creative <span className="mx-2 opacity-50">|</span> Technologist <span className="mx-2 opacity-50">|</span> Developer
                     </p>
                     <div className="mt-10 flex flex-wrap justify-center items-center gap-4">
-                        <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 pointer-events-auto">
+                        <a
+                            href="#contact"
+                            className="inline-flex items-center justify-center gap-2 bg-[var(--color-button-primary)] text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all duration-300 transform hover:scale-105 pointer-events-auto"
+                        >
                             <MailIcon />
                             Get in Touch
                         </a>
                         <div className="flex items-center gap-4 pointer-events-auto">
-                            <a href="https://github.com/JoseDaVilla" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors" title="GitHub">
+                            <a href="https://github.com/JoseDaVilla" target="_blank" rel="noopener noreferrer" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors" title="GitHub">
                                 <GitHubIcon className="w-8 h-8"/>
                             </a>
-                            <a href="https://www.linkedin.com/in/jose-daniel-villa-712133204" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors" title="LinkedIn">
+                            <a href="https://www.linkedin.com/in/jose-daniel-villa-712133204" target="_blank" rel="noopener noreferrer" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors" title="LinkedIn">
                                 <LinkedInIcon className="w-8 h-8"/>
                             </a>
                         </div>

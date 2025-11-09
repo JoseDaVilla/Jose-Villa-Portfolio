@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext.jsx';
 
 
 const MenuIcon = (props) => (
@@ -18,12 +19,33 @@ const XIcon = (props) => (
 );
 
 
+const SunIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+    </svg>
+);
+
+const MoonIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79z" />
+    </svg>
+);
+
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
     const [scrolled, setScrolled] = useState(false);
-    
+
     const [modalOpen, setModalOpen] = useState(false);
+    const { theme, toggleTheme } = useTheme();
 
     
     const navItems = [
@@ -86,31 +108,32 @@ export default function Navbar() {
     };
 
     
+    const headerBackground = useMemo(() => {
+        const base = 'transition-all duration-300 max-w-3xl mx-auto mt-4 rounded-2xl shadow-lg backdrop-saturate-150';
+        const desktopState = scrolled || isOpen
+            ? 'md:bg-[var(--color-navbar)] md:backdrop-blur-lg md:border md:border-[var(--color-navbar-border)]'
+            : 'md:bg-transparent md:border-transparent';
+        const mobileState = isOpen
+            ? 'bg-[var(--color-navbar)] backdrop-blur-lg border border-[var(--color-navbar-border)]'
+            : 'bg-transparent border-transparent';
+        return `${base} ${desktopState} ${mobileState}`;
+    }, [isOpen, scrolled]);
+
+    const linkBaseClasses = 'relative px-4 py-2 text-sm font-semibold tracking-wider rounded-lg transition-colors z-10';
+    const linkInactiveClasses = 'text-[var(--color-text-muted)] hover:bg-[var(--color-accent-soft)] hover:text-[var(--color-text-primary)]';
+    const linkActiveClasses = 'text-[var(--color-accent)] bg-[var(--color-accent-soft)]';
+
     return (
         !modalOpen && (
             <motion.div
-                
-                className="hidden md:block fixed top-0 inset-x-0 z-20"
+
+                className="fixed top-0 inset-x-0 z-20"
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 120, damping: 20 }}
             >
                 <header
-                    className={
-                        
-                        
-                        `max-w-3xl mx-auto mt-4 rounded-2xl shadow-lg transition-all duration-300
-                        ${
-                            (scrolled || isOpen)
-                                ? 'md:bg-[#101828]/80 md:backdrop-blur-lg md:border md:border-blue-400/10'
-                                : 'md:bg-transparent md:border-transparent'
-                        }
-                        ${
-                            isOpen
-                                ? 'bg-[#101828]/80 backdrop-blur-lg border border-blue-400/10'
-                                : 'bg-transparent border-transparent'
-                        }`
-                    }
+                    className={headerBackground}
                 >
                     <div className="flex items-center justify-between px-6 py-3">
 
@@ -119,17 +142,17 @@ export default function Navbar() {
                                 <a
                                     key={item.label}
                                     href={`#${item.sectionId}`}
-                                    className={`relative px-4 py-2 text-sm font-semibold tracking-wider rounded-lg transition-colors z-10 ${
+                                    className={`${linkBaseClasses} ${
                                         activeSection === item.sectionId
-                                            ? 'text-cyan-400 bg-cyan-500/10'
-                                            : 'text-slate-200 hover:bg-slate-700/30'
+                                            ? linkActiveClasses
+                                            : linkInactiveClasses
                                     }`}
                                 >
                                     {item.label}
                                     {activeSection === item.sectionId && (
                                         <motion.div
                                             layoutId="activeNavIndicator"
-                                            className="absolute inset-0 bg-cyan-500/20 rounded-lg -z-10"
+                                            className="absolute inset-0 rounded-lg -z-10 bg-[var(--color-accent-soft)]"
                                             initial={false}
                                             transition={{type: 'spring', stiffness: 500, damping: 40}}
                                         />
@@ -137,21 +160,29 @@ export default function Navbar() {
                                 </a>
                             ))}
                         </nav>
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            className="hidden md:flex items-center justify-center w-10 h-10 rounded-full border border-[var(--color-border)] text-[var(--color-text-primary)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+                            aria-label="Toggle theme"
+                        >
+                            {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+                        </button>
                         {/* --- Mobile Navigation Button --- */}
                         <div className="md:hidden flex items-center">
                             <motion.button
                                 onClick={() => setIsOpen(!isOpen)}
                                 whileTap={{ scale: 0.95 }}
-                                className="p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700/80 transition"
+                                className="p-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] transition"
                             >
                                 <AnimatePresence mode="wait">
                                     {isOpen ? (
                                         <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                                            <XIcon className="h-6 w-6 text-cyan-400" />
+                                            <XIcon className="h-6 w-6 text-[var(--color-accent)]" />
                                         </motion.div>
                                     ) : (
                                         <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                                            <MenuIcon className="h-6 w-6 text-cyan-400" />
+                                            <MenuIcon className="h-6 w-6 text-[var(--color-accent)]" />
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
@@ -168,15 +199,33 @@ export default function Navbar() {
                                 animate="open"
                                 exit="closed"
                             >
-                                <nav className="flex flex-col items-center gap-2 py-2 border-t border-blue-400/10">
+                                <div className="flex items-center justify-between py-3">
+                                    <span className="text-sm font-semibold text-[var(--color-text-muted)]">Appearance</span>
+                                    <button
+                                        type="button"
+                                        onClick={toggleTheme}
+                                        className="flex items-center gap-2 rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                                    >
+                                        {theme === 'dark' ? (
+                                            <>
+                                                <SunIcon className="w-4 h-4" /> Light mode
+                                            </>
+                                        ) : (
+                                            <>
+                                                <MoonIcon className="w-4 h-4" /> Dark mode
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                                <nav className="flex flex-col items-center gap-2 py-2 border-t border-[var(--color-border)]">
                                     {navItems.map((item) => (
                                         <motion.a
                                             key={item.label}
                                             href={`#${item.sectionId}`}
                                             className={`block w-full text-center py-3 font-semibold rounded-lg transition ${
                                                 activeSection === item.sectionId
-                                                    ? 'text-cyan-400 bg-cyan-500/10'
-                                                    : 'text-slate-200 hover:bg-slate-700/30'
+                                                    ? linkActiveClasses
+                                                    : linkInactiveClasses
                                             }`}
                                             onClick={() => setIsOpen(false)}
                                             variants={menuItemVariants}

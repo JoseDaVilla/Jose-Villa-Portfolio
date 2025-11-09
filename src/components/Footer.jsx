@@ -35,7 +35,7 @@ export default function Footer() {
     };
 
     return (
-        <footer className="relative bg-[#0a0f19] text-white border-t-2 border-red-500/20 shadow-[0_-10px_40px_-15px_rgba(239,68,68,0.2)]">
+        <footer className="relative bg-[var(--color-background)] text-[var(--color-text-primary)] dark:bg-[#0a0f19] dark:text-white border-t-2 border-[var(--color-border)] dark:border-red-500/20 shadow-[0_-10px_40px_-15px_rgba(239,68,68,0.05)] dark:shadow-[0_-10px_40px_-15px_rgba(239,68,68,0.2)] transition-colors">
             
             {/* Background Grid and Scanline Effect */}
             <div className="absolute inset-0 w-full h-full pointer-events-none">
@@ -62,10 +62,10 @@ export default function Footer() {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
                     {/* Logo and Tagline */}
                     <div>
-                        <h2 className="text-3xl font-bold text-gray-100">
+                        <h2 className="text-3xl font-bold text-[var(--color-text-primary)] dark:text-gray-100">
                             JV<span className="text-blue-400">.</span>
                         </h2>
-                        <p className="mt-2 text-gray-500 text-sm">
+                        <p className="mt-2 text-[var(--color-text-muted)] dark:text-gray-500 text-sm">
                             Crafting digital experiences that inspire and engage.
                         </p>
                     </div>
@@ -78,7 +78,7 @@ export default function Footer() {
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-blue-400 transition-colors"
+                                className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
                                 title={link.name}
                                 whileHover={{ scale: 1.1, y: -2 }}
                                 transition={{ type: 'spring', stiffness: 300 }}
@@ -90,23 +90,23 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-10 pt-8 border-t border-gray-400/20 flex flex-col sm:flex-row items-center justify-between">
-                    <p className="text-sm text-gray-500 mb-4 sm:mb-0">
+                <div className="mt-10 pt-8 border-t border-[var(--color-border)] dark:border-gray-400/20 flex flex-col sm:flex-row items-center justify-between">
+                    <p className="text-sm text-[var(--color-text-muted)] dark:text-gray-500 mb-4 sm:mb-0">
                         © {currentYear} Jose Daniel Villa. Built with passion in Envigado, Colombia. 🇨🇴
                     </p>
-                    
-                    <motion.a 
-                        href="#hero" 
+
+                    <motion.a
+                        href="#hero"
                         onClick={scrollToTop}
-                        className="group flex items-center justify-center w-12 h-12 bg-gray-800/50 rounded-full ring-1 ring-blue-400/30 transition-all"
+                        className="group flex items-center justify-center w-12 h-12 rounded-full ring-1 ring-[var(--color-border)] bg-[var(--color-surface)] transition-all dark:bg-gray-800/50 dark:ring-blue-400/30"
                         whileHover={{
                             scale: 1.1,
-                            backgroundColor: 'rgba(59, 130, 246, 0.2)', // bg-blue-500/20
-                            boxShadow: '0 0 15px rgba(59, 130, 246, 0.4)'
+                            backgroundColor: 'rgba(59, 130, 246, 0.12)',
+                            boxShadow: '0 0 15px rgba(59, 130, 246, 0.25)'
                         }}
                         title="Back to Top"
                     >
-                        <ArrowUpIcon className="w-5 h-5 text-blue-400 transition-transform group-hover:-translate-y-0.5" />
+                        <ArrowUpIcon className="w-5 h-5 text-[var(--color-accent)] transition-transform group-hover:-translate-y-0.5" />
                     </motion.a>
                 </div>
             </div>
