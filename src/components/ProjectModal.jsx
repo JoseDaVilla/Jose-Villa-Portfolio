@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 // --- Icon Components (No changes needed) ---
 const ChevronLeftIcon = (props) => (
@@ -39,6 +40,8 @@ const CheckCircleIcon = (props) => (
 
 
 function ProjectModal({ project, onClose }) {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const modalRef = useRef(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -71,9 +74,11 @@ function ProjectModal({ project, onClose }) {
     };
 
     return (
-        // The single AnimatePresence in Projects.jsx will handle this component's exit animation correctly.
         <motion.div
-            className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 bg-slate-900/15 dark:bg-slate-900/60 backdrop-blur-md"
+            className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 backdrop-blur-md"
+            style={{
+                backgroundColor: isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(100, 116, 139, 0.25)'
+            }}
             variants={backdropVariants}
             initial="hidden"
             animate="visible"
@@ -84,25 +89,26 @@ function ProjectModal({ project, onClose }) {
         >
             <motion.div
                 ref={modalRef}
-                className="relative w-full max-w-6xl max-h-[100vh] sm:max-h-[90vh] bg-gradient-to-br from-white via-[#f4f7fb] to-[#e4edf9] dark:bg-slate-800/80 backdrop-blur-xl border border-[var(--color-border)] dark:border-slate-700 rounded-none sm:rounded-lg shadow-2xl shadow-slate-400/15 dark:shadow-cyan-500/10 flex flex-col md:flex-row overflow-hidden transition-colors"
+                className="relative w-full max-w-6xl max-h-[100vh] sm:max-h-[90vh] backdrop-blur-xl rounded-none sm:rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transition-colors"
+                style={{
+                    background: isDark 
+                        ? 'linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9))' 
+                        : 'linear-gradient(to bottom right, #ffffff, #f8fafc, #f1f5f9)',
+                    border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1',
+                    boxShadow: isDark 
+                        ? '0 25px 50px -12px rgba(6, 182, 212, 0.15)' 
+                        : '0 25px 50px -12px rgba(59, 130, 246, 0.25)'
+                }}
                 variants={modalVariants}
                 onClick={e => e.stopPropagation()}
             >
                 {/* --- Content Area: Renders Iframe or Image Carousel --- */}
                 <div
-                    className="
-                        relative w-full
-                        md:w-3/5
-                        bg-gradient-to-br from-white via-[#f5f8fd] to-[#e6effc] dark:bg-slate-900/50
-                        flex-shrink-0
-                        flex items-center justify-center
-                        min-h-[40vh]
-                        h-full
-                        sm:h-[50vh]
-                        md:h-auto
-                        md:min-h-0
-                        "
+                    className="relative w-full md:w-3/5 flex-shrink-0 flex items-center justify-center min-h-[40vh] h-full sm:h-[50vh] md:h-auto md:min-h-0"
                     style={{
+                        background: isDark 
+                            ? 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.5), rgba(30, 41, 59, 0.5))' 
+                            : 'linear-gradient(to bottom right, #f8fafc, #e0f2fe, #dbeafe)',
                         maxHeight: '100vh',
                         minHeight: '40vh',
                         ...(window.innerWidth < 768 ? { height: '50vh', minHeight: '40vh', maxHeight: '60vh' } : {})
@@ -146,15 +152,44 @@ function ProjectModal({ project, onClose }) {
 
                             {images.length > 1 && (
                                 <>
-                            <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700/80 hover:scale-110 transition-all shadow-md">
+                                    <button 
+                                        onClick={prevImage} 
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full hover:scale-110 transition-all shadow-lg"
+                                        style={{
+                                            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.95)',
+                                            color: isDark ? '#e2e8f0' : '#1e293b',
+                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1'
+                                        }}
+                                    >
                                         <ChevronLeftIcon />
                                     </button>
-                            <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700/80 hover:scale-110 transition-all shadow-md">
+                                    <button 
+                                        onClick={nextImage} 
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full hover:scale-110 transition-all shadow-lg"
+                                        style={{
+                                            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.95)',
+                                            color: isDark ? '#e2e8f0' : '#1e293b',
+                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1'
+                                        }}
+                                    >
                                         <ChevronRightIcon />
                                     </button>
                                     <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
                                         {images.map((_, index) => (
-                                            <button key={index} onClick={() => setCurrentImageIndex(index)} className={`w-2 h-2 rounded-full transition-all duration-300 ${currentImageIndex === index ? 'bg-[var(--color-accent)] scale-125' : 'bg-slate-400 dark:bg-slate-500'}`} />
+                                            <button 
+                                                key={index} 
+                                                onClick={() => setCurrentImageIndex(index)} 
+                                                className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                                                style={{
+                                                    backgroundColor: currentImageIndex === index 
+                                                        ? (isDark ? '#06b6d4' : '#3b82f6')
+                                                        : (isDark ? '#475569' : '#94a3b8'),
+                                                    transform: currentImageIndex === index ? 'scale(1.3)' : 'scale(1)',
+                                                    boxShadow: currentImageIndex === index 
+                                                        ? (isDark ? '0 0 8px #06b6d4' : '0 0 8px #3b82f6')
+                                                        : 'none'
+                                                }}
+                                            />
                                         ))}
                                     </div>
                                 </>
@@ -164,30 +199,58 @@ function ProjectModal({ project, onClose }) {
                 </div>
 
                 {/* --- Project Details --- */}
-                <div className="
-                    flex-1
-                    md:w-2/5
-                    p-4 sm:p-6 md:p-8
-                    text-[var(--color-text-primary)] dark:text-slate-300
-                    overflow-y-auto
-                    scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800/50
-                    bg-white/90 dark:bg-slate-800/80
-                    max-h-[55vh] md:max-h-none
-                    "
+                <div 
+                    className="flex-1 md:w-2/5 p-4 sm:p-6 md:p-8 overflow-y-auto scrollbar-thin max-h-[55vh] md:max-h-none"
                     style={{
+                        background: isDark 
+                            ? 'rgba(30, 41, 59, 0.8)' 
+                            : 'linear-gradient(to bottom, #ffffff, #fafbfc)',
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: isDark ? '#475569 transparent' : '#cbd5e1 transparent',
                         minHeight: 'auto',
                         ...(window.innerWidth < 768 ? { maxHeight: '45vh' } : {})
                     }}
                 >
-                    <h2 className="text-3xl font-bold text-[var(--color-text-primary)] dark:text-slate-100 mb-2">{project.title}</h2>
-                    <p className="text-[var(--color-text-muted)] dark:text-slate-400 mb-6 leading-relaxed">{project.description}</p>
+                    <h2 
+                        className="text-3xl font-bold mb-3"
+                        style={{ 
+                            color: isDark ? '#f1f5f9' : '#0f172a',
+                            textShadow: isDark ? 'none' : '0 1px 2px rgba(0,0,0,0.05)'
+                        }}
+                    >
+                        {project.title}
+                    </h2>
+                    <p 
+                        className="mb-6 leading-relaxed text-base"
+                        style={{ color: isDark ? '#94a3b8' : '#475569' }}
+                    >
+                        {project.description}
+                    </p>
 
                     <div className="mb-6">
-                        <h3 className="font-semibold text-lg text-[var(--color-text-primary)] dark:text-slate-200 mb-3 pb-2 border-b border-[var(--color-border)] dark:border-slate-700">Key Features</h3>
-                        <ul className="space-y-2.5 text-[var(--color-text-muted)] dark:text-slate-400">
+                        <h3 
+                            className="font-bold text-lg mb-3 pb-2"
+                            style={{ 
+                                color: isDark ? '#e2e8f0' : '#1e293b',
+                                borderBottom: isDark ? '2px solid #334155' : '2px solid #e2e8f0'
+                            }}
+                        >
+                            ✨ Key Features
+                        </h3>
+                        <ul className="space-y-2.5">
                             {project.features?.map((feature, index) => (
-                                <li key={index} className="flex items-start gap-3 text-[var(--color-text-primary)] dark:text-slate-200">
-                                    <CheckCircleIcon className="w-5 h-5 mt-0.5 text-[var(--color-accent)] flex-shrink-0" />
+                                <li 
+                                    key={index} 
+                                    className="flex items-start gap-3"
+                                    style={{ color: isDark ? '#cbd5e1' : '#334155' }}
+                                >
+                                    <CheckCircleIcon 
+                                        className="w-5 h-5 mt-0.5 flex-shrink-0" 
+                                        style={{ 
+                                            color: isDark ? '#06b6d4' : '#3b82f6',
+                                            filter: isDark ? 'none' : 'drop-shadow(0 1px 2px rgba(59,130,246,0.3))'
+                                        }}
+                                    />
                                     <span className="leading-relaxed">{feature}</span>
                                 </li>
                             ))}
@@ -195,28 +258,84 @@ function ProjectModal({ project, onClose }) {
                     </div>
 
                     <div className="mb-6">
-                        <h3 className="font-semibold text-lg text-[var(--color-text-primary)] dark:text-slate-200 mb-3 pb-2 border-b border-[var(--color-border)] dark:border-slate-700">Technologies</h3>
+                        <h3 
+                            className="font-bold text-lg mb-3 pb-2"
+                            style={{ 
+                                color: isDark ? '#e2e8f0' : '#1e293b',
+                                borderBottom: isDark ? '2px solid #334155' : '2px solid #e2e8f0'
+                            }}
+                        >
+                            🛠️ Technologies
+                        </h3>
                         <div className="flex flex-wrap gap-2">
                             {project.technologies.map(tech => (
-                                <span key={tech} className="px-3 py-1 text-sm font-medium rounded-full bg-[#e6ecf8] text-slate-700 border border-[var(--color-border)] dark:bg-cyan-900/60 dark:text-cyan-300 dark:border-cyan-800/80">
+                                <span 
+                                    key={tech} 
+                                    className="px-3 py-1.5 text-sm font-semibold rounded-lg transition-transform hover:scale-105"
+                                    style={{
+                                        background: isDark 
+                                            ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.3))' 
+                                            : 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                                        color: isDark ? '#67e8f9' : '#1e40af',
+                                        border: isDark ? '1px solid rgba(6, 182, 212, 0.3)' : '1px solid #93c5fd',
+                                        boxShadow: isDark ? 'none' : '0 1px 3px rgba(59, 130, 246, 0.2)'
+                                    }}
+                                >
                                     {tech}
                                 </span>
                             ))}
                         </div>
                     </div>
 
-                    <div className="pt-6 border-t border-[var(--color-border)] dark:border-slate-700">
+                    <div 
+                        className="pt-6"
+                        style={{
+                            borderTop: isDark ? '2px solid #334155' : '2px solid #e2e8f0'
+                        }}
+                    >
                         {project.privacyNote && (!project.links?.github && !project.links?.live) ? (
-                            <p className="text-sm text-[var(--color-text-muted)] dark:text-slate-500 italic">{project.privacyNote}</p>
+                            <p 
+                                className="text-sm italic flex items-start gap-2"
+                                style={{ color: isDark ? '#64748b' : '#64748b' }}
+                            >
+                                <span className="text-lg">🔒</span>
+                                <span>{project.privacyNote}</span>
+                            </p>
                         ) : (
-                            <div className="flex flex-wrap gap-4">
+                            <div className="flex flex-wrap gap-3">
                                 {project.links?.github && (
-                                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg border border-[var(--color-border)] bg-gradient-to-r from-white via-[#eef3ff] to-[#e2eaff] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors dark:bg-slate-700/80 dark:text-slate-200">
-                                        <GitHubIcon className="text-[var(--color-text-muted)] dark:text-slate-400" /> View Code
+                                    <a 
+                                        href={project.links.github} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="flex items-center gap-2 px-5 py-2.5 font-semibold rounded-lg transition-all hover:scale-105"
+                                        style={{
+                                            background: isDark 
+                                                ? 'rgba(51, 65, 85, 0.8)' 
+                                                : 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                                            color: isDark ? '#e2e8f0' : '#0f172a',
+                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.3)' : '1px solid #cbd5e1',
+                                            boxShadow: isDark ? 'none' : '0 2px 4px rgba(0, 0, 0, 0.05)'
+                                        }}
+                                    >
+                                        <GitHubIcon /> View Code
                                     </a>
                                 )}
                                 {project.links?.live && (
-                                    <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 font-semibold bg-[var(--color-button-primary)] text-white rounded-lg hover:bg-[var(--color-button-primary-hover)] transition-transform hover:scale-105">
+                                    <a 
+                                        href={project.links.live} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="flex items-center gap-2 px-5 py-2.5 font-semibold text-white rounded-lg transition-all hover:scale-105"
+                                        style={{
+                                            background: isDark 
+                                                ? 'linear-gradient(135deg, #3b82f6, #2563eb)' 
+                                                : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                                            boxShadow: isDark 
+                                                ? '0 4px 12px rgba(59, 130, 246, 0.3)' 
+                                                : '0 4px 12px rgba(59, 130, 246, 0.4)'
+                                        }}
+                                    >
                                         <ExternalLinkIcon /> Live Demo
                                     </a>
                                 )}
@@ -225,14 +344,19 @@ function ProjectModal({ project, onClose }) {
                     </div>
                 </div>
 
-                {/* --- Close Button (always last, always on top) --- */}
+                {/* --- Close Button --- */}
                 <button
                     onClick={onClose}
                     type="button"
-                    className="fixed md:absolute top-6 right-6 md:top-4 md:right-4 p-2 bg-white text-slate-700 rounded-full border border-[var(--color-border)] hover:bg-slate-100 hover:scale-110 transition-all z-50 shadow-md dark:bg-slate-800/80 dark:text-slate-200 dark:border-transparent dark:hover:bg-slate-700/80"
+                    className="fixed md:absolute top-6 right-6 md:top-4 md:right-4 p-2.5 rounded-full hover:scale-110 transition-all z-50 shadow-lg"
+                    style={{
+                        backgroundColor: isDark ? 'rgba(30, 41, 59, 0.9)' : 'rgba(255, 255, 255, 0.95)',
+                        color: isDark ? '#e2e8f0' : '#1e293b',
+                        border: isDark ? '1px solid rgba(148, 163, 184, 0.3)' : '1px solid #cbd5e1',
+                        zIndex: 100
+                    }}
                     aria-label="Close modal"
                     tabIndex={0}
-                    style={{ zIndex: 100 }}
                 >
                     <CloseIcon />
                 </button>

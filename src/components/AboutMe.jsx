@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 // --- Custom Hook for the 3D Card Effect (Unchanged) ---
 const use3dCardEffect = () => {
@@ -62,14 +63,23 @@ const ZapIcon = (props) => (
 
 export default function AboutMe() {
     const card3d = use3dCardEffect();
-
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+ 
     return (
         <section
             id="aboutme"
-            className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f7f8fb] to-[#eaf2ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative overflow-hidden transition-colors duration-300"
+            style={{
+                background: isDark ? 'transparent' : 'transparent',
+                color: isDark ? '#ffffff' : 'var(--color-text-primary)'
+            }}
         >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-emerald-500/10 rounded-full blur-3xl opacity-50 pointer-events-none z-5"></div>
-
+            <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] rounded-full blur-3xl opacity-50 pointer-events-none z-5"
+                style={{ background: isDark ? 'rgba(6,182,129,0.06)' : 'rgba(16,185,129,0.06)' }}
+            />
+ 
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -78,14 +88,20 @@ export default function AboutMe() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white" style={{textShadow: '0 0 15px rgba(16, 185, 129, 0.25)'}}>
+                    <h2 
+                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase"
+                        style={{ textShadow: '0 0 15px rgba(16, 185, 129, 0.25)', color: isDark ? '#ffffff' : '#0f172a' }}
+                    >
                         About Me
                     </h2>
-                    <p className="mt-4 text-md text-[var(--color-text-muted)] dark:text-gray-400 max-w-2xl mx-auto font-light tracking-wider opacity-80">
+                    <p
+                        className="mt-4 text-md max-w-2xl mx-auto font-light tracking-wider opacity-80"
+                        style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                    >
                         Here’s a little bit about my journey and passions.
                     </p>
                 </motion.div>
-
+ 
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
                     <motion.div
                         className="lg:w-2/5 w-full"
@@ -96,35 +112,48 @@ export default function AboutMe() {
                     >
                         <div ref={card3d.ref} className="relative w-full max-w-sm mx-auto">
                             {/* decorative background behind the card */}
-                            <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-3xl opacity-50 -z-10"></div>
+                            <div
+                                className="absolute inset-0 rounded-full blur-3xl opacity-50 -z-10"
+                                style={{ background: isDark ? 'rgba(6,182,129,0.06)' : 'rgba(16,185,129,0.06)' }}
+                            />
                             <motion.div
-                                style={card3d.style}
-                                className="relative z-10 rounded-full overflow-hidden w-full shadow-2xl bg-[var(--color-surface)] dark:bg-[#101727]/40 backdrop-blur-lg border border-[var(--color-border)] dark:border-emerald-400/20 shadow-emerald-900/20"
+                                style={{ ...card3d.style, borderRadius: '9999px' }}
+                                className="relative z-10 overflow-hidden w-full shadow-2xl"
+                                role="img"
+                                aria-label="Profile artwork"
                             >
                                 <img
                                     src="/images/projects/avatar.png"
                                     alt="A creative workspace representing Jose Villa's work"
+                                    title="A creative workspace representing Jose Villa's work"
+                                    aria-label="A creative workspace representing Jose Villa's work"
                                     className="w-full h-full object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                                <div className="absolute inset-0" style={{ background: isDark ? 'linear-gradient(to top, rgba(0,0,0,0.25), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.12), transparent)' }} />
                             </motion.div>
                         </div>
-                    </motion.div>
-
-                    <motion.div
+                     </motion.div>
+ 
+                     <motion.div
                         className="lg:w-3/5"
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
                     >
-                        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-[var(--color-text-primary)] dark:text-gray-100 leading-snug">
+                        <h3
+                            className="text-2xl md:text-3xl font-bold mb-6 leading-snug"
+                            style={{ color: isDark ? '#ffffff' : '#0f172a' }}
+                        >
                             I build digital tools that are effective, engaging, and easy to use.
                         </h3>
-
-                        <div className="space-y-4 mb-8 text-[var(--color-text-muted)] dark:text-gray-300 leading-relaxed font-light">
+ 
+                        <div
+                            className="space-y-4 mb-8 leading-relaxed font-light"
+                            style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                        >
                             <p>
-                                I'm <strong className="font-semibold text-[var(--color-text-primary)] dark:text-gray-200">Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
+                                I'm <strong className="font-semibold" style={{ color: isDark ? '#ffffff' : '#0f172a' }}>Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
                                     <span className="text-amber-400">Colo</span>
                                     <span className="text-blue-400">mb</span>
                                     <span className="text-red-400">ia</span>
@@ -138,8 +167,15 @@ export default function AboutMe() {
                             </p>
                         </div>
                         
-                        <div className="bg-[var(--color-surface)] dark:bg-[#101727]/40 backdrop-blur-lg p-6 rounded-xl border border-[var(--color-border)] dark:border-emerald-400/20 shadow-2xl shadow-emerald-900/10 transition-colors">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
+                        <div
+                            className="backdrop-blur-lg p-6 rounded-xl transition-colors"
+                            style={{
+                                background: isDark ? 'rgba(16,23,39,0.45)' : '#ffffff',
+                                border: isDark ? '1px solid rgba(16,185,129,0.12)' : '1px solid rgba(15,23,42,0.04)',
+                                boxShadow: isDark ? '0 10px 30px rgba(6,182,129,0.06)' : '0 6px 20px rgba(12,16,27,0.06)'
+                            }}
+                        >
+                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
                                 {[
                                     { icon: GlobeIcon, label: "Languages", value: "Spanish (Native) · English (C1) · French (A2)" },
                                     { icon: BrainIcon, label: "Problem Solving", value: "Analytical thinker — breaks down complex problems, prototypes fast, and iterates until solutions scale." },
@@ -148,20 +184,26 @@ export default function AboutMe() {
                                     { icon: GlobeIcon, label: "Adaptability & Growth", value: "Quick to learn new stacks and pivot when requirements change; focused on continuous improvement." },
                                 ].map((item) => (
                                      <div key={item.label} className="flex items-center gap-4">
-                                         <div className="p-2 bg-emerald-100 border border-emerald-300 rounded-lg dark:bg-emerald-900/30 dark:border-emerald-500/30">
-                                             <item.icon className="w-6 h-6 text-emerald-500 dark:text-emerald-400"/>
+                                         <div
+                                             className="p-2 rounded-lg"
+                                             style={{
+                                                 background: isDark ? 'rgba(6,182,129,0.06)' : '#ecfdf5',
+                                                 border: isDark ? '1px solid rgba(6,182,129,0.12)' : '1px solid rgba(16,185,129,0.12)'
+                                             }}
+                                         >
+                                             <item.icon className="w-6 h-6" style={{ color: isDark ? '#34d399' : '#059669' }} />
                                          </div>
                                          <div>
-                                             <h4 className="font-semibold text-[var(--color-text-primary)] dark:text-gray-100">{item.label}</h4>
-                                             <p className="text-sm text-[var(--color-text-muted)] dark:text-gray-400">{item.value}</p>
+                                             <h4 style={{ color: isDark ? '#f8fafc' : '#0f172a' }} className="font-semibold">{item.label}</h4>
+                                             <p className="text-sm" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>{item.value}</p>
                                          </div>
                                      </div>
                                  ))}
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
-}
+                             </div>
+                         </div>
+                     </motion.div>
+                 </div>
+             </div>
+         </section>
+     );
+ }

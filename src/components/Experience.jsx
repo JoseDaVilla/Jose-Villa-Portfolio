@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 // --- Icon Components (keep these as they were) ---
 const DashboardIcon = (props) => (
@@ -22,10 +23,13 @@ const experienceHighlights = [
 ];
 
 export default function Experience() {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
     return (
         <section
             id="experience"
-            className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f5f7fb] to-[#e8f0ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative overflow-hidden transition-colors duration-300 bg-gradient-to-b from-white via-[#f5f7fb] to-[#e8f0ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
         >
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
@@ -35,10 +39,19 @@ export default function Experience() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.2)'}}>
+                    <h2 
+                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase transition-colors"
+                        style={{ 
+                            color: isDark ? '#ffffff' : '#111827',
+                            textShadow: isDark ? '0 0 15px rgba(168, 85, 247, 0.2)' : 'none'
+                        }}
+                    >
                         Professional Experience
                     </h2>
-                    <p className="mt-4 text-md text-[var(--color-text-muted)] dark:text-slate-300 max-w-2xl mx-auto font-light tracking-wider opacity-80">
+                    <p 
+                        className="mt-4 text-md max-w-2xl mx-auto font-light tracking-wider opacity-80"
+                        style={{ color: isDark ? '#cbd5e1' : '#4b5563' }}
+                    >
                         A look at my current role and the key areas where I'm making an impact.
                     </p>
                 </motion.div>
@@ -55,11 +68,19 @@ export default function Experience() {
                             <div className="p-4 bg-white/80 dark:bg-gray-900/60 rounded-lg flex items-center justify-center mb-4 h-24 border border-[var(--color-border)] dark:border-transparent">
                                 <img src="/logos/geeks5g.webp" alt="Geeks5G Logo" className="max-h-12 dark:invert dark:brightness-0 dark:opacity-80" />
                             </div>
-                            <h3 className="text-xl font-bold text-[var(--color-text-primary)] dark:text-white">Fullstack Developer</h3>
+                            <h3 
+                                className="text-xl font-bold"
+                                style={{ color: isDark ? '#ffffff' : '#111827' }}
+                            >
+                                Fullstack Developer
+                            </h3>
                             <p className="text-[var(--color-accent)] font-semibold text-md">
                                 <a href="https://geeks5g.com/" target="_blank" rel="noopener noreferrer" className="hover:underline">@ Geeks5G Marketing Agency</a>
                             </p>
-                            <p className="text-[var(--color-text-muted)] dark:text-slate-400 text-sm mt-2 font-mono">
+                            <p 
+                                className="text-sm mt-2 font-mono"
+                                style={{ color: isDark ? '#94a3b8' : '#6b7280' }}
+                            >
                                 Jan 2025 - Present
                             </p>
                         </div>
@@ -72,14 +93,32 @@ export default function Experience() {
                                             <highlight.icon className="w-6 h-6 text-[var(--color-accent)]" />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-lg text-[var(--color-text-primary)] dark:text-white">{highlight.title}</h4>
-                                            <p className="text-[var(--color-text-muted)] dark:text-slate-300 text-sm">{highlight.description}</p>
+                                            <h4 
+                                                className="font-bold text-lg"
+                                                style={{ color: isDark ? '#ffffff' : '#111827' }}
+                                            >
+                                                {highlight.title}
+                                            </h4>
+                                            <p 
+                                                className="text-sm"
+                                                style={{ color: isDark ? '#cbd5e1' : '#4b5563' }}
+                                            >
+                                                {highlight.description}
+                                            </p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                             <div className="mt-8 pt-6 border-t border-[var(--color-border)] dark:border-[var(--color-border-strong)]">
-                                <a href="#projects" className="group inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors">
+                                <a 
+                                    href="#projects" 
+                                    className="group inline-flex items-center gap-2 text-sm font-semibold transition-colors"
+                                    style={{ 
+                                        color: isDark ? '#94a3b8' : '#6b7280'
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = isDark ? '#94a3b8' : '#6b7280'}
+                                >
                                     See these skills in action in the projects below
                                     <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                 </a>

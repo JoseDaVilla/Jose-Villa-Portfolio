@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 // Import the new Select component
 import {
@@ -28,29 +29,42 @@ import {
 } from 'lucide-react';
 
 
-// --- Reusable Form Field Component (now with lucide-react) ---
-const FormField = ({ id, label, type = 'text', placeholder, value, onChange, icon: Icon, required = false }) => (
-    <motion.div
-        className="relative"
-        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-    >
-        <label htmlFor={id} className="sr-only">{label}</label>
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Icon className="h-5 w-5 text-[var(--color-text-muted)] dark:text-gray-500" />
-        </div>
-        {/* Updated input styling to match the new select trigger */}
-        <input
-            type={type}
-            id={id}
-            name={id}
-            value={value}
-            onChange={onChange}
-            required={required}
-            className="flex h-[50px] w-full items-center rounded-lg border-2 border-[var(--color-border)] bg-white pl-12 pr-4 py-2 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] ring-offset-white focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-1 transition-all dark:border-purple-800/40 dark:bg-gray-900/50 dark:text-gray-200 dark:placeholder:text-gray-400 dark:ring-offset-black"
-            placeholder={placeholder}
-        />
-    </motion.div>
-);
+// --- Reusable Form Field Component (theme-aware) ---
+const FormField = ({ id, label, type = 'text', placeholder, value, onChange, icon: Icon, required = false }) => {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
+    const inputStyle = {
+        backgroundColor: isDark ? 'rgba(17,24,39,0.6)' : '#ffffff',
+        borderColor: isDark ? 'rgba(124,58,237,0.08)' : 'rgba(226,232,240,0.9)',
+        color: isDark ? '#e6eef8' : '#0f172a',
+        boxShadow: isDark ? 'none' : '0 1px 3px rgba(2,6,23,0.06)'
+    };
+
+    return (
+        <motion.div
+            className="relative"
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+        >
+            <label htmlFor={id} className="sr-only">{label}</label>
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Icon className="h-5 w-5" style={{ color: isDark ? '#94a3b8' : '#94a3b8' }} />
+            </div>
+            <input
+                type={type}
+                id={id}
+                name={id}
+                value={value}
+                onChange={onChange}
+                required={required}
+                className="flex h-[50px] w-full items-center rounded-lg pl-12 pr-4 py-2 text-sm placeholder:text-[var(--color-text-muted)] transition-all"
+                style={inputStyle}
+                placeholder={placeholder}
+            />
+        </motion.div>
+    );
+};
+
 
 // Updated with lucide-react icons
 const SUBJECT_OPTIONS = [
@@ -70,9 +84,15 @@ export default function Contact() {
         message: '',
         subject: SUBJECT_OPTIONS[0].label
     });
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const [status, setStatus] = useState('idle');
     const [errorMsg, setErrorMsg] = useState('');
-
+    // Accent used for light-mode emphasis (indigo). Dark mode keeps softer text.
+    const accent = '#4f46e5';
+    const lightMuted = '#6b7280';
+    const darkMuted = '#cbd5e1';
+ 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -120,9 +140,16 @@ export default function Contact() {
     return (
         <section
             id="contact"
-            className="py-24 sm:py-32 relative overflow-hidden text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f3f7ff] to-[#e3ecfb] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative overflow-hidden transition-colors duration-300"
+            style={{
+                background: isDark ? 'transparent' : 'transparent',
+                color: isDark ? '#ffffff' : 'var(--color-text-primary)'
+            }}
         >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] bg-purple-500/10 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+            <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] rounded-full blur-3xl opacity-50 pointer-events-none"
+                style={{ background: isDark ? 'rgba(168,85,247,0.10)' : 'rgba(168,85,247,0.06)' }}
+            />
 
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
@@ -132,10 +159,19 @@ export default function Contact() {
                     transition={{ duration: 0.6 }}
                     className="mb-16 text-center"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white" style={{textShadow: '0 0 15px rgba(168, 85, 247, 0.25)'}}>
+                    <h2
+                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase"
+                        style={{
+                            textShadow: isDark ? '0 0 15px rgba(168, 85, 247, 0.25)' : '0 0 6px rgba(168,85,247,0.08)',
+                            color: isDark ? '#ffffff' : '#111827'
+                        }}
+                    >
                         Let's Work Together
                     </h2>
-                    <p className="mx-auto mt-4 max-w-2xl text-md text-[var(--color-text-muted)] dark:text-gray-400 font-light tracking-wider opacity-80">
+                    <p
+                        className="mx-auto mt-4 max-w-2xl text-md font-light tracking-wider opacity-80"
+                        style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                    >
                         Have a project in mind or just want to say hello? I'd love to hear from you.
                     </p>
                 </motion.div>
@@ -145,7 +181,21 @@ export default function Contact() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.7 }}
-                    className="max-w-2xl mx-auto bg-[var(--color-surface)] dark:bg-[#101727]/40 backdrop-blur-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-[var(--color-border)] dark:border-purple-800/20 shadow-purple-900/10 transition-colors"
+                    className="max-w-2xl mx-auto p-6 sm:p-8 rounded-2xl transition-colors"
+                    style={{
+                        // Theme-aware, layered card look
+                        ...(isDark
+                            ? {
+                                background: 'linear-gradient(180deg, rgba(17,24,39,0.72), rgba(15,23,42,0.6))',
+                                border: '1px solid rgba(148,163,184,0.06)',
+                                boxShadow: '0 20px 50px -20px rgba(6, 78, 59, 0.45), inset 0 1px 0 rgba(255,255,255,0.02)'
+                              }
+                            : {
+                                background: 'linear-gradient(180deg,#ffffff 0%, #fbfdff 60%)',
+                                border: '1px solid rgba(226,232,240,0.9)',
+                                boxShadow: '0 10px 30px rgba(12,16,27,0.06)'
+                              })
+                    }}
                 >
                     <AnimatePresence mode="wait">
                         {status === 'success' ? (
@@ -158,12 +208,39 @@ export default function Contact() {
                             <motion.div key="form" variants={formVariants} initial="hidden" animate="visible" exit={{ opacity: 0, y: -20 }}>
                                 <div className="flex justify-between items-center mb-6">
                                     <div>
-                                        <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-text-primary)] dark:text-gray-100">Send a Message</h3>
-                                        <p className="text-[var(--color-text-muted)] dark:text-gray-400 text-sm">Or connect on social media</p>
+                                        <h3
+                                            className="text-xl sm:text-2xl font-bold"
+                                            // Use indigo accent in light mode for stronger contrast; keep light text in dark mode
+                                            style={{ color: isDark ? '#f8fafc' : accent }}
+                                        >
+                                            Send a Message
+                                        </h3>
+                                        <p
+                                            className="text-sm"
+                                            style={{ color: isDark ? darkMuted : lightMuted }}
+                                        >
+                                            Or connect on social media
+                                        </p>
                                     </div>
                                     <div className="flex gap-4">
-                                        <a href="#" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"><Linkedin className="h-6 w-6"/></a>
-                                        <a href="#" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"><Github className="h-6 w-6"/></a>
+                                        <a
+                                            href="#"
+                                            onMouseEnter={e => e.currentTarget.style.color = accent}
+                                            onMouseLeave={e => e.currentTarget.style.color = isDark ? darkMuted : lightMuted}
+                                            style={{ color: isDark ? darkMuted : lightMuted }}
+                                            className="transition-colors"
+                                        >
+                                            <Linkedin className="h-6 w-6"/>
+                                        </a>
+                                        <a
+                                            href="#"
+                                            onMouseEnter={e => e.currentTarget.style.color = accent}
+                                            onMouseLeave={e => e.currentTarget.style.color = isDark ? darkMuted : lightMuted}
+                                            style={{ color: isDark ? darkMuted : lightMuted }}
+                                            className="transition-colors"
+                                        >
+                                            <Github className="h-6 w-6"/>
+                                        </a>
                                     </div>
                                 </div>
                                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -171,8 +248,16 @@ export default function Contact() {
                                     <FormField id="email" label="Email" type="email" placeholder="your.email@example.com" value={formData.email} onChange={handleChange} icon={Mail} required />
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
                                         <Select onValueChange={handleSubjectChange} defaultValue={formData.subject} required>
-                                            <SelectTrigger aria-label="Subject">
-                                                <div className="flex items-center gap-3 text-[var(--color-text-primary)] dark:text-gray-200">
+                                            <SelectTrigger
+                                                aria-label="Subject"
+                                                style={{
+                                                    backgroundColor: isDark ? 'rgba(17,24,39,0.6)' : '#ffffff',
+                                                    border: isDark ? '1px solid rgba(124,58,237,0.08)' : '1px solid rgba(226,232,240,0.9)',
+                                                    padding: '0.4rem 0.75rem',
+                                                    borderRadius: '0.5rem'
+                                                }}
+                                            >
+                                                <div className="flex items-center gap-3" style={{ color: isDark ? '#e6eef8' : '#0f172a' }}>
                                                     <SelectValue />
                                                 </div>
                                             </SelectTrigger>
@@ -198,7 +283,13 @@ export default function Contact() {
                                             required
                                             rows="4"
                                             placeholder="Tell me about your project..."
-                                            className="flex min-h-[80px] w-full rounded-lg border-2 border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 resize-y dark:border-purple-800/40 dark:bg-gray-900/50 dark:text-gray-200 dark:placeholder:text-gray-400 dark:ring-offset-black"
+                                            className="flex min-h-[80px] w-full rounded-lg px-4 py-3 text-sm placeholder:text-[var(--color-text-muted)] ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 resize-y transition-all"
+                                            style={{
+                                                backgroundColor: isDark ? 'rgba(17,24,39,0.6)' : '#ffffff',
+                                                border: isDark ? '1px solid rgba(124,58,237,0.08)' : '1px solid rgba(226,232,240,0.9)',
+                                                color: isDark ? '#e6eef8' : '#0f172a',
+                                                boxShadow: isDark ? 'none' : '0 1px 3px rgba(2,6,23,0.06)'
+                                            }}
                                         ></textarea>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>

@@ -1,10 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
+import { useTheme } from '../context/ThemeContext';
 
 function Cube({ position, size = 2 }) {
     const mesh = useRef();
     const [hovered, setHovered] = useState(false);
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
 
     // Enhanced rotation for centered layout
     useFrame((state, delta) => {
@@ -24,13 +27,29 @@ function Cube({ position, size = 2 }) {
                 scale={hovered ? 1.05 : 1}
             >
                 <boxGeometry args={[size, size, size]} />
-                {[...Array(6)].map((_, index) => (
-                    <meshBasicMaterial
-                        key={index}
-                        attach={`material-${index}`}
-                        color={index % 2 === 0 ? '#C44AD4' : '#CBFF9D'}
-                    />
-                ))}
+                {/*
+                    Dark mode: colorful faces (original look).
+                    Light mode: wireframe-style materials for a sleeker, low-contrast presentation.
+                */}
+                {isDark
+                    ? [...Array(6)].map((_, index) => (
+                        <meshBasicMaterial
+                            key={index}
+                            attach={`material-${index}`}
+                            color={index % 2 === 0 ? '#C44AD4' : '#CBFF9D'}
+                        />
+                      ))
+                    : [...Array(6)].map((_, index) => (
+                        <meshBasicMaterial
+                            key={index}
+                            attach={`material-${index}`}
+                            color={'#0b1222'}
+                            wireframe={true}
+                            opacity={0.95}
+                            transparent={false}
+                        />
+                      ))
+                }
             </mesh>
         </group>
     );

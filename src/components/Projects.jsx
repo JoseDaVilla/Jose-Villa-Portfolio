@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ProjectModal from './ProjectModal'; // Assuming this component exists
-import { useBodyScrollLock } from '../hooks/useBodyScrollLock'; // Assuming this hook exists
-import { useImagePreloader } from '../hooks/useImagePreloader'; // Assuming this hook exists
+import ProjectModal from './ProjectModal';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
+import { useImagePreloader } from '../hooks/useImagePreloader';
+import { useTheme } from '../context/ThemeContext';
 
 // --- DATA ---
 const projectsData = [
@@ -114,46 +115,211 @@ const FilterButton = ({ label, isActive, onClick }) => (
     </motion.button>
 );
 
-const ProjectCard = ({ project, onSelect, className = "" }) => (
-    <motion.div
-        layout
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-        className={`group relative flex flex-col bg-[var(--color-surface)] dark:bg-slate-800/50 rounded-2xl overflow-hidden border border-[var(--color-border)] dark:border-slate-700/80 hover:border-[var(--color-accent)] transition-all duration-300 cursor-pointer shadow-lg ${className}`}
-        onClick={() => onSelect(project)}
-    >
-        <div className="relative overflow-hidden flex-grow">
-            <img
-                src={project.image}
-                alt={`${project.title} preview`}
-                className={`w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-105 ${project.image === "images/projects/proaxislogo1.png" ? "object-cover bg-[#c395ba69]" : "object-cover"}`}
-                loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent dark:from-black/70 dark:via-black/30" />
-        </div>
-        <div className="p-6 bg-gradient-to-br from-white via-[#f6f8fc] to-[#eaf1ff] dark:bg-slate-800/50 transition-colors duration-300">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2">{project.category}</p>
-            <h3 className="text-xl font-bold text-[var(--color-text-primary)] dark:text-slate-100 mb-2 truncate">{project.title}</h3>
-            <p className="text-[var(--color-text-muted)] dark:text-slate-400 text-sm mb-4 h-10">{project.summary}</p>
-            <div className="flex flex-wrap gap-2 pt-2 border-t border-[var(--color-border)] dark:border-slate-700/50">
+const ProjectCard = ({ project, onSelect, className = "" }) => {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
+    // --- Light-mode color variants (rotate per project) ---
+    const variants = [
+		{ // Indigo
+			cardBg: 'linear-gradient(135deg,#eef2ff 0%, #e0e7ff 100%)',
+			contentBg: 'linear-gradient(180deg, rgba(255,255,255,0.92), rgba(239,246,255,0.82))',
+			footerBg: '#4338ca',
+			accentColor: '#4f46e5', // indigo-600
+			textColor: '#0f172a',
+			border: '#c7d2fe',
+			badgeBg: '#ffffff'
+		},
+		{ // Coral
+			cardBg: 'linear-gradient(135deg,#fff5f4 0%, #ffe7e0 100%)',
+			contentBg: 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,245,240,0.9))',
+			footerBg: '#fb7185',
+			accentColor: '#fb7185',
+			textColor: '#042029',
+			border: '#fecaca',
+			badgeBg: '#ffffff'
+		},
+		{ // Teal
+			cardBg: 'linear-gradient(135deg,#ecfeff 0%, #dffafe 100%)',
+			contentBg: 'linear-gradient(180deg, rgba(255,255,255,0.94), rgba(237,253,250,0.88))',
+			footerBg: '#0d9488',
+			accentColor: '#14b8a6',
+			textColor: '#042029',
+			border: '#99f6e4',
+			badgeBg: '#ffffff'
+		},
+		{ // Amber
+			cardBg: 'linear-gradient(135deg,#fff7ed 0%, #fff1d6 100%)',
+			contentBg: 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,250,235,0.9))',
+			footerBg: '#d97706',
+			accentColor: '#f59e0b',
+			textColor: '#1f2937',
+			border: '#fde68a',
+			badgeBg: '#ffffff'
+		}
+	];
+
+    // --- Dark-mode variants (matching tones, subtle glows) ---
+    const darkVariants = [
+        { // Indigo dark
+            cardBg: 'linear-gradient(135deg, rgba(31,41,255,0.06), rgba(79,70,229,0.06))',
+            contentBg: 'linear-gradient(180deg, rgba(17,24,39,0.6), rgba(15,23,42,0.65))',
+            footerBg: '#4338ca',
+            accentColor: '#60a5fa', // indigo-400 glow
+            textColor: '#e6eef8',
+            border: 'rgba(79,70,229,0.18)',
+            badgeBg: 'rgba(79,70,229,0.08)'
+        },
+        { // Coral dark
+            cardBg: 'linear-gradient(135deg, rgba(255,203,213,0.03), rgba(251,113,133,0.04))',
+            contentBg: 'linear-gradient(180deg, rgba(8,10,14,0.6), rgba(15,23,42,0.65))',
+            footerBg: '#fb7185',
+            accentColor: '#fb7185',
+            textColor: '#fdecef',
+            border: 'rgba(251,113,133,0.12)',
+            badgeBg: 'rgba(251,113,133,0.06)'
+        },
+        { // Teal dark
+            cardBg: 'linear-gradient(135deg, rgba(20,184,166,0.03), rgba(20,184,166,0.04))',
+            contentBg: 'linear-gradient(180deg, rgba(6,8,10,0.6), rgba(15,23,42,0.65))',
+            footerBg: '#0d9488',
+            accentColor: '#2dd4bf',
+            textColor: '#dffaf6',
+            border: 'rgba(20,184,166,0.12)',
+            badgeBg: 'rgba(20,184,166,0.06)'
+        },
+        { // Amber dark
+            cardBg: 'linear-gradient(135deg, rgba(245,158,11,0.03), rgba(245,158,11,0.04))',
+            contentBg: 'linear-gradient(180deg, rgba(10,12,15,0.6), rgba(15,23,42,0.65))',
+            footerBg: '#d97706',
+            accentColor: '#fbbf24',
+            textColor: '#fff7e6',
+            border: 'rgba(245,158,11,0.12)',
+            badgeBg: 'rgba(245,158,11,0.06)'
+        }
+    ];
+
+    // --- Special variant for ProAxis (project.id === 6) ---
+    const specialLightVariant = {
+        cardBg: 'linear-gradient(135deg,#f5f3ff 0%, #efe6ff 100%)',
+        contentBg: 'linear-gradient(180deg, rgba(255,255,255,0.95), rgba(245,238,255,0.9))',
+        footerBg: '#7c3aed', // violet
+        accentColor: '#7c3aed',
+        textColor: '#0f172a',
+        border: '#d6bbfb',
+        badgeBg: '#ffffff'
+    };
+
+    const specialDarkVariant = {
+        cardBg: 'linear-gradient(135deg, rgba(124,58,237,0.04), rgba(99,102,241,0.04))',
+        contentBg: 'linear-gradient(180deg, rgba(17,24,39,0.6), rgba(15,23,42,0.65))',
+        footerBg: '#7c3aed',
+        accentColor: '#a78bfa',
+        textColor: '#f6f2ff',
+        border: 'rgba(124,58,237,0.12)',
+        badgeBg: 'rgba(124,58,237,0.06)'
+    };
+
+    // Use special variant for ProAxis (id 6), otherwise rotating variants
+    let variant;
+    if (project.id === 6) {
+        variant = isDark ? specialDarkVariant : specialLightVariant;
+    } else {
+        variant = !isDark ? variants[project.id % variants.length] : darkVariants[project.id % darkVariants.length];
+    }
+
+    return (
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className={`group relative flex flex-col rounded-2xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-lg ${className}`}
+            onClick={() => onSelect(project)}
+            style={{
+                background: variant.cardBg,
+                borderColor: variant.border,
+                boxShadow: isDark ? '0 10px 30px rgba(2,6,23,0.6)' : undefined
+            }}
+        >
+            {/* --- Image: make this area larger by using flex-auto and full-height image --- */}
+            <div className="relative overflow-hidden flex-auto">
+                <img
+                    src={project.image}
+                    alt={`${project.title} preview`}
+                    // fill the container and crop (object-cover) so image appears larger
+                    className={`w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105 ${project.image === "images/projects/proaxislogo1.png" ? "bg-[#c395ba69]" : ""}`}
+                    loading="lazy"
+                />
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        background: isDark
+                            ? 'linear-gradient(to top, rgba(2,6,23,0.6), rgba(2,6,23,0.15))'
+                            : 'linear-gradient(to top, rgba(2,6,23,0.03), rgba(2,6,23,0.00))'
+                    }}
+                />
+            </div>
+
+            {/* --- Content panel: reduce height by making it flex-none and limiting maxHeight --- */}
+            <div
+                className="p-4 transition-colors duration-300 flex-none"
+                style={{ background: variant.contentBg, maxHeight: '6rem', overflow: 'hidden' }}
+            >
+                <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: variant.accentColor }}>
+                    {project.category}
+                </p>
+                <h3 className="text-lg font-bold mb-1 truncate" style={{ color: variant.textColor }}>
+                    {project.title}
+                </h3>
+                <p className="text-sm mb-0 leading-tight" style={{ color: isDark ? '#94a3b8' : '#475569' }}>
+                    {project.summary}
+                </p>
+            </div>
+
+            {/* Footer: technologies + badges, unchanged aside from slightly reduced padding */}
+            <div
+                className="p-3 border-t transition-all duration-300 flex flex-wrap items-center gap-2"
+                style={{
+                    background: variant.footerBg,
+                    borderTop: `1px solid ${variant.border}`,
+                    alignItems: 'center',
+                    color: variant.textColor
+                }}
+            >
                 {project.technologies.slice(0, 4).map(tech => (
-                    <span key={tech} className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-200 text-slate-700 dark:bg-slate-700/70 dark:text-slate-300">
+                    <span
+                        key={tech}
+                        className="px-2.5 py-1 text-xs font-medium rounded-full"
+                        style={{
+                            backgroundColor: variant.badgeBg,
+                            color: isDark ? '#e6eef8' : 'black',
+                        }}
+                    >
                         {tech}
                     </span>
                 ))}
                 {project.technologies.length > 4 && (
-                    <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-slate-300 text-slate-700 dark:bg-slate-600/70 dark:text-slate-200">
+                    <span
+                        className="px-2.5 py-1 text-xs font-medium rounded-full"
+                        style={{
+                            backgroundColor: variant.badgeBg,
+                            color: isDark ? '#e2e8f0' : '#1e293b',
+                            border: !isDark ? `1px solid white` : `1px solid rgba(255,255,255,0.03)`
+                        }}
+                    >
                         +{project.technologies.length - 4} more
                     </span>
                 )}
             </div>
-        </div>
-    </motion.div>
-);
+        </motion.div>
+    );
+};
 
 export default function Projects() {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const [selectedProject, setSelectedProject] = useState(null);
 
     useImagePreloader(projectsData.flatMap(p => p.images));
@@ -180,7 +346,7 @@ export default function Projects() {
         const patternIndex = index % 6;
         switch (patternIndex) {
             case 0: return "lg:col-span-2 lg:row-span-1";
-            case 1: return "lg:col-span-2 lg:row-span-2";
+            case 1: return "lg:col-span-2 lg:row-span-1";
             case 2: return "lg:col-span-2 lg:row-span-1";
             case 3: return "lg:col-span-2 lg:row-span-1";
             case 4: return "lg:col-span-2 lg:row-span-1";
@@ -198,7 +364,7 @@ export default function Projects() {
     return (
         <section
             id="projects"
-            className="py-24 sm:py-32 relative text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#edf2ff] to-[#e4ecfb] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative transition-colors duration-300 bg-gradient-to-b from-white via-[#edf2ff] to-[#e4ecfb] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
         >
             <div className="container px-4 mx-auto relative z-10">
                 <motion.div
@@ -208,10 +374,16 @@ export default function Projects() {
                     viewport={{ once: true, amount: 0.5 }}
                     variants={headerVariants}
                 >
-                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--color-text-primary)] dark:text-white transition-colors">
+                    <h2 
+                        className="text-4xl sm:text-5xl font-bold tracking-tight transition-colors"
+                        style={{ color: isDark ? '#ffffff' : '#111827' }}
+                    >
                         Featured Projects
                     </h2>
-                    <p className="mt-4 text-lg text-[var(--color-text-muted)] dark:text-slate-400 max-w-2xl mx-auto">
+                    <p 
+                        className="mt-4 text-lg max-w-2xl mx-auto"
+                        style={{ color: isDark ? '#94a3b8' : '#4b5563' }}
+                    >
                         A curated selection of my work, showcasing my skills in web development, automation, and 3D graphics.
                     </p>
                 </motion.div>

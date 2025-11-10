@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 import {
     SiReact, SiThreedotjs, SiTypescript, SiTailwindcss, SiJavascript, SiNextdotjs, SiHtml5, SiCss3,
@@ -56,9 +57,12 @@ const PostgresIcon = () => (
 const FigmaIcon = () => (
     <img src="/logos/figma.svg" alt="Figma" className="w-full h-full object-contain" />
 );
-const ZendeskIcon = () => (
-    <img src="/logos/zendesk.svg" alt="Zendesk" className="w-full h-full object-contain" />
-);
+const ZendeskIcon = (props) => {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+    const src = isDark ? '/logos/zendesk.svg' : '/logos/zendesk-black.svg';
+    return <img src={src} alt="Zendesk" className="w-full h-full object-contain" {...props} />;
+};
 const PythonIcon = () => (
     <img src="/logos/python.svg" alt="Python" className="w-full h-full object-contain" />
 );
@@ -156,7 +160,7 @@ const skillCategories = [
             { name: "Twilio", logo: SiTwilio, color: "#FF2D55", use: "SMS/voice workflows, 2FA and message routing" },
             { name: "Commio", logo: CommioIcon, color: "#00A3A3", use: "Telephony & messaging integrations" },
             { name: "PayPal", logo: PaypalIcon, color: "#003087", use: "Payments, payouts & gateway integrations" },
-            { name: "AI / LLMs", logo: GiBrain, color: "#FFFFFF", use: "Assistants, summarization & RAG" },
+            { name: "AI / LLMs", logo: GiBrain, color: "#FFFFFF" },
         ]
     },
     {
@@ -181,22 +185,60 @@ const skillCategories = [
 /* ---------------- Small components ---------------- */
 function SkillIcon({ skill }) {
     const LogoComponent = skill.logo;
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
+    // Names that should render black in light mode
+    const forceBlackNames = new Set([
+        'Three.js',
+        'Zendesk',
+        'Next.js',
+        'shadcn/ui',
+        'Express',
+        'AI Integrations',
+        'REST APIs',
+        'AI / LLMs',
+        'Cron / Workers'
+    ]);
+
+    // Determine the color to pass to the logo: prefer black in light mode for listed names
+    const logoColor = !isDark && (forceBlackNames.has(skill.name) || skill.color === '#FFFFFF') ? '#0a0f19' : skill.color;
+
+    // For image-based logos that need forcing to black (Zendesk), apply a filter
+    const imageFilter = (!isDark && skill.name === 'Zendesk') ? 'brightness(0) saturate(100%)' : undefined;
+
+    const containerStyle = {
+        backgroundColor: isDark ? 'rgba(15,23,42,0.6)' : '#ffffff',
+        boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.06)'
+    };
+    const labelColor = isDark ? '#cbd5e1' : '#475569';
+
     return (
         <div className="group relative flex flex-col items-center text-center gap-2" title={skill.use || skill.name}>
-            <div className="w-20 h-20 p-3 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1 bg-white shadow-sm dark:bg-slate-900/60">
-                <LogoComponent className="w-full h-full object-contain" style={{ color: skill.color }} />
+            <div className="w-20 h-20 p-3 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1" style={containerStyle}>
+                <LogoComponent
+                    className="w-full h-full object-contain"
+                    style={{ color: logoColor, filter: imageFilter }}
+                />
             </div>
-            <p className="text-sm font-semibold text-[var(--color-text-muted)] dark:text-gray-300 transition-colors group-hover:text-[var(--color-accent)] dark:group-hover:text-white">{skill.name}</p>
+            <p className="text-sm font-semibold transition-colors group-hover:text-[var(--color-accent)]" style={{ color: labelColor }}>
+                {skill.name}
+            </p>
         </div>
     );
 }
 
 /** Mobile sticky, grid-based category bar for mobile */
 function MobileCategoryNav({ activeCategory, setActiveCategory }) {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+    const mobileBg = isDark ? 'rgba(11,18,34,0.7)' : 'rgba(255,255,255,0.92)';
+    const borderColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(226,232,240,0.8)';
+
     return (
         <div
-            className="md:hidden sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-[#0b1222]/70 dark:border-orange-400/20 dark:supports-[backdrop-filter]:bg-[#0b1222]/50"
-            style={{ top: 'calc(env(safe-area-inset-top, 0px) + 0px)' }}
+            className="md:hidden sticky top-0 z-40 backdrop-blur"
+            style={{ top: 'calc(env(safe-area-inset-top, 0px) + 0px)', background: mobileBg, borderBottom: `1px solid ${borderColor}` }}
         >
             <div className="container mx-auto px-2">
                 {/* Grid with 4 equal columns (one per category) */}
@@ -223,7 +265,7 @@ function MobileCategoryNav({ activeCategory, setActiveCategory }) {
                                         />
                                     )}
                                 </AnimatePresence>
-                                <category.icon className={`relative z-10 w-7 h-7 ${isActive ? 'text-white' : 'text-orange-500 dark:text-orange-400'}`} />
+                                <category.icon className={`relative z-10 w-7 h-7 ${isActive ? 'text-white' : 'text-orange-500'}`} />
                                 {/* keep label for screen readers only */}
                                 <span className="sr-only">{category.title}</span>
                             </button>
@@ -237,13 +279,19 @@ function MobileCategoryNav({ activeCategory, setActiveCategory }) {
 
 /* ---------------- Main component ---------------- */
 export default function Skills() {
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
     const [activeCategory, setActiveCategory] = useState(skillCategories[0].title);
     const currentCategory = skillCategories.find((cat) => cat.title === activeCategory) || skillCategories[0];
 
     return (
         <section
             id="skills"
-            className="py-24 sm:py-32 relative overflow-visible text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#f6f7fb] to-[#e9f2ff] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="py-24 sm:py-32 relative overflow-visible transition-colors duration-300"
+            style={{
+                color: isDark ? '#ffffff' : 'var(--color-text-primary)',
+                background: isDark ? 'transparent' : 'transparent'
+            }}
         >
             {/* Soft glow background */}
             <div className="pointer-events-none absolute left-1/2 top-1/2 z-[5] h-[50rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-400/10 blur-3xl opacity-40" />
@@ -257,7 +305,7 @@ export default function Skills() {
                     transition={{ duration: 0.6 }}
                 >
                     <h2
-                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase text-[var(--color-text-primary)] dark:text-white"
+                        className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase"
                         style={{ textShadow: '0 0 15px rgba(245, 158, 66, 0.2)' }}
                     >
                         My Tech Arsenal
@@ -288,7 +336,7 @@ export default function Skills() {
                                             key={category.title}
                                             onClick={() => setActiveCategory(category.title)}
                                             className={`relative flex w-full items-center justify-between px-8 text-end gap-4 overflow-hidden rounded-lg p-4 text-center transition-all duration-300
-                        ${isActive ? 'text-white shadow-lg bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-white text-[var(--color-text-muted)] border border-[var(--color-border)] hover:text-[var(--color-text-primary)] dark:bg-gray-900/60 dark:text-gray-300 dark:hover:bg-gray-800/60 dark:border-transparent'}`}
+                        ${isActive ? 'text-white shadow-lg bg-gradient-to-r from-orange-500 to-amber-500' : (isDark ? 'bg-[#0b1222]/60 text-gray-300' : 'bg-white text-[var(--color-text-muted)] border border-[var(--color-border)] hover:text-[var(--color-text-primary)]')}`}
                                         >
                                             <AnimatePresence>
                                                 {isActive && (
@@ -323,7 +371,13 @@ export default function Skills() {
                                 exit={{ opacity: 0, y: -12 }}
                                 transition={{ duration: 0.35 }}
                             >
-                                <div className="rounded-2xl border border-[var(--color-border)] dark:border-orange-400/20 bg-[var(--color-surface)] dark:bg-[#101727]/40 p-8 shadow-2xl shadow-orange-900/10 backdrop-blur-lg transition-colors">
+                                <div
+                                    className="rounded-2xl border p-8 shadow-2xl shadow-orange-900/10 backdrop-blur-lg transition-colors"
+                                    style={{
+                                        borderColor: isDark ? 'rgba(255,255,255,0.04)' : 'var(--color-border)',
+                                        background: isDark ? 'rgba(16,23,39,0.45)' : 'linear-gradient(180deg,#ffffff,#f6f7fb)'
+                                    }}
+                                >
                                     <p className="mb-8 text-base leading-relaxed text-[var(--color-text-muted)] dark:text-gray-400">{currentCategory.description}</p>
                                     <div className="grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                                         {currentCategory.skills.map((skill) => (
@@ -339,4 +393,3 @@ export default function Skills() {
         </section>
     );
 }
-        

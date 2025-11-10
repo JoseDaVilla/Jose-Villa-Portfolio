@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
@@ -15,6 +16,18 @@ function TechBorderCorners({ activeSection }) {
     const borderLength = '18rem';
     const borderThickness = '0.40rem';
     const blur = '20px';
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
+
+    // Helper to convert hex to rgba with alpha (small and robust)
+    const hexToRgba = (hex, alpha = 1) => {
+        const clean = hex.replace('#', '');
+        const bigint = parseInt(clean, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
 
     const sectionColors = useMemo(() => ({
         hero:       '#60a5fa', // blue
@@ -28,11 +41,17 @@ function TechBorderCorners({ activeSection }) {
     const currentColor = sectionColors[activeSection] || sectionColors.hero;
 
     // Helper function to create the style object with smooth transitions
-    const getStyle = (gradientDirection) => ({
-        background: `linear-gradient(${gradientDirection}, ${currentColor} 60%, transparent 100%)`,
-        filter: `blur(${blur}) drop-shadow(0 0 12px ${currentColor})`,
-        transition: 'background 0.5s ease-in-out, filter 0.5s ease-in-out',
-    });
+    const getStyle = (gradientDirection) => {
+        // stronger, valid alpha values for light mode so corners are visible
+        const stopColor = isDark ? currentColor : hexToRgba(currentColor, 0.88); // ~88% opacity
+        const dropColor = isDark ? currentColor : hexToRgba(currentColor, 0.48); // subtle glow
+        // make the colored segment occupy the initial portion of the gradient for visibility
+        return {
+            background: `linear-gradient(${gradientDirection}, ${stopColor} 0%, ${stopColor} 45%, transparent 100%)`,
+            filter: `blur(${blur}) drop-shadow(0 0 18px ${dropColor})`,
+            transition: 'background 0.5s ease-in-out, filter 0.5s ease-in-out',
+        };
+    };
 
     return (
         <>

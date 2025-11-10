@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 // --- Icon Components (keep these as they were) ---
@@ -13,13 +13,13 @@ const LinkedInIcon = (props) => (
 );
 
 
-function CenterGlow() {
+function CenterGlow({ start = 'rgba(96,165,250,0.20)', middle = 'rgba(96,165,250,0.12)', end = 'rgba(96,165,250,0.06)' }) {
     return (
         <div className="pointer-events-none absolute inset-0 z-5 flex items-center justify-center" aria-hidden="true">
             <div
                 className="w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full"
                 style={{
-                    background: 'radial-gradient(circle, var(--color-hero-glow-start) 0%, var(--color-hero-glow-middle) 45%, var(--color-hero-glow-end) 80%)',
+                    background: `radial-gradient(circle, ${start} 0%, ${middle} 45%, ${end} 80%)`,
                     filter: 'blur(60px)',
                     animation: 'pulseGlow 4s ease-in-out infinite alternate'
                 }}
@@ -31,13 +31,38 @@ function CenterGlow() {
 
 // --- Main Hero Component ---
 export default function Hero() {
+    const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
+
+    useEffect(() => {
+        const observer = new MutationObserver(() => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Use the selected hero color (keeps consistency with App sectionColors)
+    const heroBase = '#60a5fa'; // selected hero color
+    const textColor = isDark ? '#ffffff' : '#111827';
+    const mutedColor = isDark ? '#9ca3af' : '#4b5563';
+    // Compose soft glow stops (lighter for light mode, slightly richer in dark)
+    const glowStart = isDark ? 'rgba(96,165,250,0.14)' : 'rgba(96,165,250,0.22)';
+    const glowMiddle = isDark ? 'rgba(96,165,250,0.09)' : 'rgba(96,165,250,0.12)';
+    const glowEnd = isDark ? 'rgba(96,165,250,0.04)' : 'rgba(96,165,250,0.06)';
+
     return (
         <section
             id="hero"
-            className="relative h-screen overflow-hidden cursor-crosshair text-[var(--color-text-primary)] dark:text-white transition-colors duration-300 bg-gradient-to-b from-white via-[#eef2ff] to-[#f7f9fc] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="relative h-screen overflow-hidden cursor-crosshair transition-colors duration-300 bg-gradient-to-b from-white via-[#eef2ff] to-[#f7f9fc] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
         >
 
-            <CenterGlow />
+            {/* pass theme-aware hero color stops */}
+            <CenterGlow start={glowStart} middle={glowMiddle} end={glowEnd} />
 
             {/* Text and CTA are layered on top and centered */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
@@ -46,10 +71,19 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
                 >
-                    <h1 className="text-4xl sm:text-5xl lg:text-7xl font-thin tracking-[0.5em] sm:tracking-[1em] uppercase">
+                    <h1
+                        className="text-4xl sm:text-5xl lg:text-7xl font-thin tracking-[0.5em] sm:tracking-[1em] uppercase transition-colors duration-300"
+                        style={{
+                            color: textColor,
+                            textShadow: isDark ? `0 0 14px rgba(96,165,250,0.14)` : `0 4px 20px rgba(96,165,250,0.06)`
+                        }}
+                    >
                         <span style={{ marginRight: '-0.5em' }}>Jose Villa</span>
                     </h1>
-                    <p className="mt-4 text-sm font-light tracking-[0.3em] uppercase text-[var(--color-text-muted)]">
+                    <p
+                        className="mt-4 text-sm font-light tracking-[0.3em] uppercase transition-colors duration-300"
+                        style={{ color: mutedColor }}
+                    >
                         Creative <span className="mx-2 opacity-50">|</span> Technologist <span className="mx-2 opacity-50">|</span> Developer
                     </p>
                     <div className="mt-10 flex flex-wrap justify-center items-center gap-4">
@@ -61,11 +95,25 @@ export default function Hero() {
                             Get in Touch
                         </a>
                         <div className="flex items-center gap-4 pointer-events-auto">
-                            <a href="https://github.com/JoseDaVilla" target="_blank" rel="noopener noreferrer" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors" title="GitHub">
-                                <GitHubIcon className="w-8 h-8"/>
+                            <a
+                                href="https://github.com/JoseDaVilla"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-[var(--color-accent)] transition-colors duration-300"
+                                title="GitHub"
+                                style={{ color: mutedColor }}
+                            >
+                                <GitHubIcon className="w-8 h-8" />
                             </a>
-                            <a href="https://www.linkedin.com/in/jose-daniel-villa-712133204" target="_blank" rel="noopener noreferrer" className="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors" title="LinkedIn">
-                                <LinkedInIcon className="w-8 h-8"/>
+                            <a
+                                href="https://www.linkedin.com/in/jose-daniel-villa-712133204"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-[var(--color-accent)] transition-colors duration-300"
+                                title="LinkedIn"
+                                style={{ color: mutedColor }}
+                            >
+                                <LinkedInIcon className="w-8 h-8" />
                             </a>
                         </div>
                     </div>
