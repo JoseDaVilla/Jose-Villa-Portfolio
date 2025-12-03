@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import SplitText from './SplitText';
 
 // --- Icon Components (keep these as they were) ---
 const MailIcon = (props) => (
@@ -32,6 +33,8 @@ function CenterGlow({ start = 'rgba(96,165,250,0.20)', middle = 'rgba(96,165,250
 // --- Main Hero Component ---
 export default function Hero() {
     const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
+    const [showSubtitle, setShowSubtitle] = useState(false);
+    const [showCTA, setShowCTA] = useState(false);
 
     useEffect(() => {
         const observer = new MutationObserver(() => {
@@ -55,6 +58,14 @@ export default function Hero() {
     const glowMiddle = isDark ? 'rgba(96,165,250,0.09)' : 'rgba(96,165,250,0.12)';
     const glowEnd = isDark ? 'rgba(96,165,250,0.04)' : 'rgba(96,165,250,0.06)';
 
+    const handleTitleComplete = () => {
+        setTimeout(() => setShowSubtitle(true), 200);
+    };
+
+    const handleSubtitleComplete = () => {
+        setTimeout(() => setShowCTA(true), 300);
+    };
+
     return (
         <section
             id="hero"
@@ -66,58 +77,98 @@ export default function Hero() {
 
             {/* Text and CTA are layered on top and centered */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
-                >
-                    <h1
-                        className="text-4xl sm:text-5xl lg:text-7xl font-thin tracking-[0.5em] sm:tracking-[1em] uppercase transition-colors duration-300"
+                <div className="max-w-5xl">
+                    <SplitText
+                        text="JOSE VILLA"
+                        className="text-4xl sm:text-5xl lg:text-7xl font-thin tracking-[0.5em] sm:tracking-[0.5em] uppercase transition-colors duration-300"
+                        delay={300}
+                        duration={0.4}
+                        ease="power3.out"
+                        splitType="chars"
+                        from={{ opacity: 0, y: 60, rotateX: -90 }}
+                        to={{ opacity: 1, y: 0, rotateX: 0 }}
+                        threshold={0.1}
+                        rootMargin="-50px"
+                        textAlign="center"
+                        stagger={0.05}
+                        onLetterAnimationComplete={handleTitleComplete}
                         style={{
                             color: textColor,
-                            textShadow: isDark ? `0 0 14px rgba(96,165,250,0.14)` : `0 4px 20px rgba(96,165,250,0.06)`
+                            textShadow: isDark ? `0 0 14px rgba(96,165,250,0.14)` : `0 4px 20px rgba(96,165,250,0.06)`,
+                            marginRight: '-0.5em'
                         }}
-                    >
-                        <span style={{ marginRight: '-0.5em' }}>Jose Villa</span>
-                    </h1>
-                    <p
-                        className="mt-4 text-sm font-light tracking-[0.3em] uppercase transition-colors duration-300"
-                        style={{ color: mutedColor }}
-                    >
-                        Creative <span className="mx-2 opacity-50">|</span> Technologist <span className="mx-2 opacity-50">|</span> Developer
-                    </p>
-                    <div className="mt-10 flex flex-wrap justify-center items-center gap-4">
-                        <a
-                            href="#contact"
-                            className="inline-flex items-center justify-center gap-2 bg-[var(--color-button-primary)] text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all duration-300 transform hover:scale-105 pointer-events-auto"
-                        >
-                            <MailIcon />
-                            Get in Touch
-                        </a>
-                        <div className="flex items-center gap-4 pointer-events-auto">
-                            <a
-                                href="https://github.com/JoseDaVilla"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-[var(--color-accent)] transition-colors duration-300"
-                                title="GitHub"
+                    />
+
+                    {/* Reserve space for subtitle to prevent layout shift */}
+                    <div className="mt-6 overflow-hidden min-h-[2rem]">
+                        <div style={{ opacity: showSubtitle ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+                            <SplitText
+                                text="CREATIVE | TECHNOLOGIST | DEVELOPER"
+                                className="text-sm font-light tracking-[0.3em] uppercase transition-colors duration-300"
+                                delay={0}
+                                duration={0.5}
+                                ease="power2.out"
+                                splitType="chars"
+                                from={{ opacity: 0, y: 20 }}
+                                to={{ opacity: 1, y: 0 }}
+                                threshold={0.1}
+                                rootMargin="-50px"
+                                textAlign="center"
+                                stagger={0.02}
+                                onLetterAnimationComplete={handleSubtitleComplete}
                                 style={{ color: mutedColor }}
-                            >
-                                <GitHubIcon className="w-8 h-8" />
-                            </a>
-                            <a
-                                href="https://www.linkedin.com/in/jose-daniel-villa-712133204"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-[var(--color-accent)] transition-colors duration-300"
-                                title="LinkedIn"
-                                style={{ color: mutedColor }}
-                            >
-                                <LinkedInIcon className="w-8 h-8" />
-                            </a>
+                            />
                         </div>
                     </div>
-                </motion.div>
+
+                    {/* Reserve space for CTA buttons */}
+                    <div className="mt-10 min-h-[4rem]">
+                        {showCTA && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, ease: 'easeOut' }}
+                                className="flex flex-wrap justify-center items-center gap-4"
+                            >
+                                <motion.a
+                                    href="#contact"
+                                    className="inline-flex items-center justify-center gap-2 bg-indigo-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all duration-300 pointer-events-auto"
+                                    whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(96, 165, 250, 0.3)' }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <MailIcon />
+                                    Get in Touch
+                                </motion.a>
+                                <div className="flex items-center gap-4 pointer-events-auto">
+                                    <motion.a
+                                        href="https://github.com/JoseDaVilla"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-[var(--color-accent)] transition-colors duration-300"
+                                        title="GitHub"
+                                        style={{ color: mutedColor }}
+                                        whileHover={{ scale: 1.1, y: -2 }}
+                                        whileTap={{ scale: 0.9 }}
+                                    >
+                                        <GitHubIcon className="w-8 h-8" />
+                                    </motion.a>
+                                    <motion.a
+                                        href="https://www.linkedin.com/in/jose-daniel-villa-712133204"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-[var(--color-accent)] transition-colors duration-300"
+                                        title="LinkedIn"
+                                        style={{ color: mutedColor }}
+                                        whileHover={{ scale: 1.1, y: -2 }}
+                                        whileTap={{ scale: 0.9 }}
+                                    >
+                                        <LinkedInIcon className="w-8 h-8" />
+                                    </motion.a>
+                                </div>
+                            </motion.div>
+                        )}
+                    </div>
+                </div>
             </div>
         </section>
     );

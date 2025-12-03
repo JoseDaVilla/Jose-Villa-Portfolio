@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import {
+    SiReact, SiThreedotjs, SiTypescript, SiTailwindcss, SiJavascript, SiNextdotjs, 
+    SiNodedotjs, SiExpress, SiMongodb, SiDocker, SiWebgl, SiGit, SiStripe,
+    SiHtml5, SiCss3, SiPython, SiNumpy, SiTwilio, SiGooglecalendar, SiPrisma, SiZoom, SiRedis, SiAmazon, SiGoogleads , SiMeta , SiVimeo, SiOpenai, SiAmazons3 ,SiN8N
+} from 'react-icons/si';
 
 // --- Icon Components (No changes needed) ---
 const ChevronLeftIcon = (props) => (
@@ -38,6 +43,241 @@ const CheckCircleIcon = (props) => (
     </svg>
 );
 
+// Add small blender icon if not already present
+const BlenderIcon = () => (
+    <img src="/logos/blender.svg" alt="Blender" className="w-full h-full object-contain" />
+);
+
+// Technology logo mapping — add entries for new tech names
+const techLogoMap = {
+    'React': { icon: SiReact, color: '#61DAFB' },
+    'Next.js': { icon: SiNextdotjs, color: '#FFFFFF' },
+    'Three.js': { icon: SiThreedotjs, color: '#FFFFFF' },
+    'TypeScript': { icon: SiTypescript, color: '#3178C6' },
+    'Tailwind CSS': { icon: SiTailwindcss, color: '#06B6D4' },
+    'JavaScript': { icon: SiJavascript, color: '#F7DF1E' },
+    'Node.js': { icon: SiNodedotjs, color: '#339933' },
+    'Express.js': { icon: SiExpress, color: '#FFFFFF' },
+    'Express': { icon: SiExpress, color: '#FFFFFF' },
+    'MongoDB': { icon: SiMongodb, color: '#47A248' },
+    'Docker': { icon: SiDocker, color: '#2496ED' },
+    'WebGL': { icon: SiWebgl, color: '#990000' },
+    'Git': { icon: SiGit, color: '#F05032' },
+    'Stripe': { icon: SiStripe, color: '#635BFF' },
+    'Stripe Connect': { icon: SiStripe, color: '#635BFF' },
+    'HTML5': { icon: SiHtml5, color: '#E34F26' },
+    'CSS3': { icon: SiCss3, color: '#1572B6' },
+    'Python': { icon: SiPython, color: '#3776AB' },
+    'NumPy': { icon: SiNumpy, color: '#013243' },
+    'Twilio API': { icon: SiTwilio, color: '#FF2D55' },
+    'Google Calendar API': { icon: SiGooglecalendar, color: '#4285F4' },
+    'GLSL Shaders': { icon: SiWebgl, color: '#5586A4' },
+    'PostgreSQL': { src: '/logos/postgre.svg' },
+    'SendGrid': { src: '/logos/sendgrid.svg' },
+    'Prisma': { icon: SiPrisma, color: '#7c3aed' },
+    'Redis': { icon: SiRedis, color: '#DC382D' },
+    'Blender': { icon: BlenderIcon, color: '#F5792A' },
+    'Zoom API': { icon: SiZoom, color: '#0A84FF' },
+    'AWS': { icon: SiAmazon, color: '#FF9900' },
+    'Amazon': { icon: SiAmazon, color: '#FF9900' },
+    'Amazon Web Services': { icon: SiAmazon, color: '#FF9900' },
+    'Cloudinary': { text: 'CL' },
+    'JWT': { text: 'JWT' },
+    'Chart.js': { text: 'Chart' },
+    'Zustand': { text: 'Z' },
+    'React Query': { text: 'RQ' },
+    'Matplotlib': { text: 'MPL' },
+    'Pandas': { text: 'Pandas' },
+    'Alpaca API': { text: 'Alpaca' },
+    'EODHD API': { text: 'EOD' },
+    'Google Ads': { src: '/images/projects/googleads.webp' },
+    'Meta Ads': { icon: SiMeta , color: '#1877F2' },
+    'GHL': { src: '/images/projects/ghl.svg' }, // use provided GHL SVG asset
+    'n8n':  { icon: SiN8N  , color: '#FF2D55' },
+    'S3': { icon: SiAmazon, color: '#FF9900' },
+    'Vimeo API': { icon: SiVimeo, color: '#1AB7EA' },
+    'OpenAI API': { icon: SiOpenai, color: '#FFFFFF' },
+    'Twilio': { icon: SiTwilio, color: '#FF2D55' }, // alias for Twilio API
+};
+
+function TechIcon({ tech, isDark }) {
+    const [showTooltip, setShowTooltip] = useState(false);
+    const techInfo = techLogoMap[tech];
+    
+    if (!techInfo) {
+        return (
+            <div
+                className="relative group"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+            >
+                <div
+                    className="flex items-center justify-center w-12 h-12 rounded-lg text-xs font-bold transition-transform hover:scale-110 cursor-help"
+                    style={{
+                        background: isDark ? 'rgba(51, 65, 85, 0.6)' : '#f1f5f9',
+                        color: isDark ? '#94a3b8' : '#64748b'
+                    }}
+                >
+                    {tech.substring(0, 2).toUpperCase()}
+                </div>
+                <AnimatePresence>
+                    {showTooltip && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
+                            style={{
+                                background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                                color: '#ffffff',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                            }}
+                        >
+                            {tech}
+                            <div
+                                className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
+                                style={{
+                                    borderLeft: '4px solid transparent',
+                                    borderRight: '4px solid transparent',
+                                    borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                }}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        );
+    }
+
+    if (techInfo.src) {
+        return (
+            <div
+                className="relative group"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+            >
+                <div className="flex items-center justify-center w-12 h-12 transition-transform hover:scale-110 cursor-help">
+                    <img src={techInfo.src} alt={tech} className="w-full h-full object-contain" />
+                </div>
+                <AnimatePresence>
+                    {showTooltip && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
+                            style={{
+                                background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                                color: '#ffffff',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                            }}
+                        >
+                            {tech}
+                            <div
+                                className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
+                                style={{
+                                    borderLeft: '4px solid transparent',
+                                    borderRight: '4px solid transparent',
+                                    borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                }}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        );
+    }
+
+    if (techInfo.text) {
+        return (
+            <div
+                className="relative group"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+            >
+                <div
+                    className="flex items-center justify-center w-12 h-12 rounded-lg text-xs font-bold transition-transform hover:scale-110 cursor-help"
+                    style={{
+                        background: isDark ? 'rgba(51, 65, 85, 0.6)' : '#f1f5f9',
+                        color: isDark ? '#94a3b8' : '#64748b'
+                    }}
+                >
+                    {techInfo.text}
+                </div>
+                <AnimatePresence>
+                    {showTooltip && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
+                            style={{
+                                background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                                color: '#ffffff',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                            }}
+                        >
+                            {tech}
+                            <div
+                                className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
+                                style={{
+                                    borderLeft: '4px solid transparent',
+                                    borderRight: '4px solid transparent',
+                                    borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                }}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        );
+    }
+
+    const Icon = techInfo.icon;
+    return (
+        <div
+            className="relative group"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+        >
+            <div className="flex items-center justify-center w-12 h-12 transition-transform hover:scale-110 cursor-help">
+                <Icon
+                    className="w-8 h-8"
+                    style={{ color: isDark ? techInfo.color : (techInfo.color === '#FFFFFF' ? '#0f172a' : techInfo.color) }}
+                />
+            </div>
+            <AnimatePresence>
+                {showTooltip && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
+                        style={{
+                            background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                            color: '#ffffff',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                        }}
+                    >
+                        {tech}
+                        <div
+                            className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
+                            style={{
+                                borderLeft: '4px solid transparent',
+                                borderRight: '4px solid transparent',
+                                borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                            }}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
 
 function ProjectModal({ project, onClose }) {
     const { theme } = useTheme();
@@ -77,7 +317,7 @@ function ProjectModal({ project, onClose }) {
         <motion.div
             className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 backdrop-blur-md"
             style={{
-                backgroundColor: isDark ? 'rgba(15, 23, 42, 0.6)' : 'rgba(100, 116, 139, 0.25)'
+                backgroundColor: isDark ? 'rgba(15, 23, 42, 0.8)' : 'rgba(100, 116, 139, 0.4)'
             }}
             variants={backdropVariants}
             initial="hidden"
@@ -89,29 +329,26 @@ function ProjectModal({ project, onClose }) {
         >
             <motion.div
                 ref={modalRef}
-                className="relative w-full max-w-6xl max-h-[100vh] sm:max-h-[90vh] backdrop-blur-xl rounded-none sm:rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transition-colors"
+                className="relative w-full max-w-7xl max-h-[100vh] sm:max-h-[92vh] backdrop-blur-xl rounded-none sm:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transition-colors"
                 style={{
                     background: isDark 
-                        ? 'linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9))' 
-                        : 'linear-gradient(to bottom right, #ffffff, #f8fafc, #f1f5f9)',
-                    border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1',
+                        ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95))' 
+                        : 'linear-gradient(135deg, #ffffff, #f8fafc)',
+                    border: isDark ? '1px solid rgba(148, 163, 184, 0.1)' : '1px solid #e2e8f0',
                     boxShadow: isDark 
-                        ? '0 25px 50px -12px rgba(6, 182, 212, 0.15)' 
-                        : '0 25px 50px -12px rgba(59, 130, 246, 0.25)'
+                        ? '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
+                        : '0 25px 50px -12px rgba(59, 130, 246, 0.2)'
                 }}
                 variants={modalVariants}
                 onClick={e => e.stopPropagation()}
             >
-                {/* --- Content Area: Renders Iframe or Image Carousel --- */}
+                {/* Image/Iframe Section - Now wider */}
                 <div
-                    className="relative w-full md:w-3/5 flex-shrink-0 flex items-center justify-center min-h-[40vh] h-full sm:h-[50vh] md:h-auto md:min-h-0"
+                    className="relative w-full md:w-[58%] flex-shrink-0 flex items-center justify-center min-h-[45vh] md:min-h-0"
                     style={{
                         background: isDark 
-                            ? 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.5), rgba(30, 41, 59, 0.5))' 
-                            : 'linear-gradient(to bottom right, #f8fafc, #e0f2fe, #dbeafe)',
-                        maxHeight: '100vh',
-                        minHeight: '40vh',
-                        ...(window.innerWidth < 768 ? { height: '50vh', minHeight: '40vh', maxHeight: '60vh' } : {})
+                            ? 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6))' 
+                            : 'linear-gradient(to bottom right, #fafbfc, #f1f5f9)',
                     }}
                 >
                     {project.iframeUrl ? (
@@ -121,12 +358,7 @@ function ProjectModal({ project, onClose }) {
                             className="w-full h-full border-0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
-                            style={{
-                                minHeight: '40vh',
-                                height: '100%',
-                                maxHeight: '100vh',
-                                borderRadius: 0
-                            }}
+                            style={{ minHeight: '45vh', height: '100%' }}
                         ></iframe>
                     ) : (
                         <>
@@ -135,18 +367,11 @@ function ProjectModal({ project, onClose }) {
                                     key={currentImageIndex}
                                     src={images[currentImageIndex]}
                                     alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                                    className="w-full object-contain block"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                                    style={{
-                                        display: 'block',
-                                        width: '100%',
-                                        maxHeight: '100%',
-                                        objectFit: 'contain',
-                                        borderRadius: 0
-                                    }}
+                                    className="w-full h-full object-contain p-8"
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.3 }}
                                 />
                             </AnimatePresence>
 
@@ -154,39 +379,39 @@ function ProjectModal({ project, onClose }) {
                                 <>
                                     <button 
                                         onClick={prevImage} 
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full hover:scale-110 transition-all shadow-lg"
+                                        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full hover:scale-110 transition-all shadow-xl z-10"
                                         style={{
-                                            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.95)',
-                                            color: isDark ? '#e2e8f0' : '#1e293b',
-                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1'
+                                            backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #e2e8f0',
+                                            color: isDark ? '#60a5fa' : '#3b82f6'
                                         }}
                                     >
                                         <ChevronLeftIcon />
                                     </button>
                                     <button 
                                         onClick={nextImage} 
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full hover:scale-110 transition-all shadow-lg"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full hover:scale-110 transition-all shadow-xl z-10"
                                         style={{
-                                            backgroundColor: isDark ? 'rgba(30, 41, 59, 0.8)' : 'rgba(255, 255, 255, 0.95)',
-                                            color: isDark ? '#e2e8f0' : '#1e293b',
-                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1'
+                                            backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #e2e8f0',
+                                            color: isDark ? '#60a5fa' : '#3b82f6'
                                         }}
                                     >
                                         <ChevronRightIcon />
                                     </button>
-                                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                                    <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-10">
                                         {images.map((_, index) => (
                                             <button 
                                                 key={index} 
                                                 onClick={() => setCurrentImageIndex(index)} 
-                                                className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                                                className="w-2 h-2 rounded-full transition-all duration-300"
                                                 style={{
                                                     backgroundColor: currentImageIndex === index 
-                                                        ? (isDark ? '#06b6d4' : '#3b82f6')
-                                                        : (isDark ? '#475569' : '#94a3b8'),
-                                                    transform: currentImageIndex === index ? 'scale(1.3)' : 'scale(1)',
+                                                        ? (isDark ? '#60a5fa' : '#3b82f6')
+                                                        : (isDark ? '#475569' : '#cbd5e1'),
+                                                    transform: currentImageIndex === index ? 'scale(1.4)' : 'scale(1)',
                                                     boxShadow: currentImageIndex === index 
-                                                        ? (isDark ? '0 0 8px #06b6d4' : '0 0 8px #3b82f6')
+                                                        ? `0 0 10px ${isDark ? '#60a5fa' : '#3b82f6'}`
                                                         : 'none'
                                                 }}
                                             />
@@ -198,105 +423,99 @@ function ProjectModal({ project, onClose }) {
                     )}
                 </div>
 
-                {/* --- Project Details --- */}
+                {/* Details Section - Now narrower */}
                 <div 
-                    className="flex-1 md:w-2/5 p-4 sm:p-6 md:p-8 overflow-y-auto scrollbar-thin max-h-[55vh] md:max-h-none"
+                    className="flex-1 md:w-[42%] p-6 md:p-8 overflow-y-auto scrollbar-thin max-h-[50vh] md:max-h-none"
                     style={{
                         background: isDark 
-                            ? 'rgba(30, 41, 59, 0.8)' 
-                            : 'linear-gradient(to bottom, #ffffff, #fafbfc)',
+                            ? 'rgba(15, 23, 42, 0.6)' 
+                            : '#ffffff',
                         scrollbarWidth: 'thin',
-                        scrollbarColor: isDark ? '#475569 transparent' : '#cbd5e1 transparent',
-                        minHeight: 'auto',
-                        ...(window.innerWidth < 768 ? { maxHeight: '45vh' } : {})
+                        scrollbarColor: isDark ? '#475569 transparent' : '#cbd5e1 transparent'
                     }}
                 >
-                    <h2 
-                        className="text-3xl font-bold mb-3"
-                        style={{ 
-                            color: isDark ? '#f1f5f9' : '#0f172a',
-                            textShadow: isDark ? 'none' : '0 1px 2px rgba(0,0,0,0.05)'
-                        }}
-                    >
-                        {project.title}
-                    </h2>
-                    <p 
-                        className="mb-6 leading-relaxed text-base"
-                        style={{ color: isDark ? '#94a3b8' : '#475569' }}
-                    >
-                        {project.description}
-                    </p>
-
+                    {/* Header */}
                     <div className="mb-6">
-                        <h3 
-                            className="font-bold text-lg mb-3 pb-2"
-                            style={{ 
-                                color: isDark ? '#e2e8f0' : '#1e293b',
-                                borderBottom: isDark ? '2px solid #334155' : '2px solid #e2e8f0'
+                        <span 
+                            className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3"
+                            style={{
+                                background: isDark ? 'rgba(96, 165, 250, 0.1)' : '#dbeafe',
+                                color: isDark ? '#60a5fa' : '#1e40af'
                             }}
                         >
-                            ✨ Key Features
-                        </h3>
-                        <ul className="space-y-2.5">
-                            {project.features?.map((feature, index) => (
-                                <li 
-                                    key={index} 
-                                    className="flex items-start gap-3"
-                                    style={{ color: isDark ? '#cbd5e1' : '#334155' }}
-                                >
-                                    <CheckCircleIcon 
-                                        className="w-5 h-5 mt-0.5 flex-shrink-0" 
-                                        style={{ 
-                                            color: isDark ? '#06b6d4' : '#3b82f6',
-                                            filter: isDark ? 'none' : 'drop-shadow(0 1px 2px rgba(59,130,246,0.3))'
-                                        }}
-                                    />
-                                    <span className="leading-relaxed">{feature}</span>
-                                </li>
-                            ))}
-                        </ul>
+                            {project.category}
+                        </span>
+                        <h2 
+                            className="text-3xl font-bold mb-3"
+                            style={{ color: isDark ? '#f1f5f9' : '#0f172a' }}
+                        >
+                            {project.title}
+                        </h2>
+                        <p 
+                            className="leading-relaxed text-base"
+                            style={{ color: isDark ? '#94a3b8' : '#475569' }}
+                        >
+                            {project.description}
+                        </p>
                     </div>
 
-                    <div className="mb-6">
+                    {/* Technologies with Icons */}
+                    <div className="mb-6 pb-6" style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
                         <h3 
-                            className="font-bold text-lg mb-3 pb-2"
-                            style={{ 
-                                color: isDark ? '#e2e8f0' : '#1e293b',
-                                borderBottom: isDark ? '2px solid #334155' : '2px solid #e2e8f0'
-                            }}
+                            className="font-semibold text-sm uppercase tracking-wider mb-4"
+                            style={{ color: isDark ? '#cbd5e1' : '#64748b' }}
                         >
-                            🛠️ Technologies
+                            Tech Stack
                         </h3>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-3">
                             {project.technologies.map(tech => (
-                                <span 
-                                    key={tech} 
-                                    className="px-3 py-1.5 text-sm font-semibold rounded-lg transition-transform hover:scale-105"
-                                    style={{
-                                        background: isDark 
-                                            ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.3))' 
-                                            : 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
-                                        color: isDark ? '#67e8f9' : '#1e40af',
-                                        border: isDark ? '1px solid rgba(6, 182, 212, 0.3)' : '1px solid #93c5fd',
-                                        boxShadow: isDark ? 'none' : '0 1px 3px rgba(59, 130, 246, 0.2)'
-                                    }}
-                                >
-                                    {tech}
-                                </span>
+                                <TechIcon key={tech} tech={tech} isDark={isDark} />
                             ))}
                         </div>
                     </div>
 
-                    <div 
-                        className="pt-6"
-                        style={{
-                            borderTop: isDark ? '2px solid #334155' : '2px solid #e2e8f0'
-                        }}
-                    >
+                    {/* Key Features */}
+                    <div className="mb-6">
+                        <h3 
+                            className="font-semibold text-sm uppercase tracking-wider mb-4"
+                            style={{ color: isDark ? '#cbd5e1' : '#64748b' }}
+                        >
+                            Key Features
+                        </h3>
+                        <ul className="space-y-2">
+                            {project.features?.slice(0, 6).map((feature, index) => (
+                                <li 
+                                    key={index} 
+                                    className="flex items-start gap-2 text-sm"
+                                    style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                                >
+                                    <CheckCircleIcon 
+                                        className="w-4 h-4 mt-0.5 flex-shrink-0" 
+                                        style={{ color: isDark ? '#60a5fa' : '#3b82f6' }}
+                                    />
+                                    <span>{feature}</span>
+                                </li>
+                            ))}
+                            {project.features?.length > 6 && (
+                                <li 
+                                    className="text-sm italic"
+                                    style={{ color: isDark ? '#64748b' : '#94a3b8' }}
+                                >
+                                    + {project.features.length - 6} more features
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+
+                    {/* Links or Privacy Note */}
+                    <div className="mt-6 pt-6" style={{ borderTop: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
                         {project.privacyNote && (!project.links?.github && !project.links?.live) ? (
                             <p 
-                                className="text-sm italic flex items-start gap-2"
-                                style={{ color: isDark ? '#64748b' : '#64748b' }}
+                                className="text-sm flex items-start gap-2 px-4 py-3 rounded-lg"
+                                style={{ 
+                                    background: isDark ? 'rgba(51, 65, 85, 0.3)' : '#f8fafc',
+                                    color: isDark ? '#94a3b8' : '#64748b'
+                                }}
                             >
                                 <span className="text-lg">🔒</span>
                                 <span>{project.privacyNote}</span>
@@ -308,17 +527,14 @@ function ProjectModal({ project, onClose }) {
                                         href={project.links.github} 
                                         target="_blank" 
                                         rel="noopener noreferrer" 
-                                        className="flex items-center gap-2 px-5 py-2.5 font-semibold rounded-lg transition-all hover:scale-105"
+                                        className="flex items-center gap-2 px-5 py-2.5 font-semibold rounded-xl transition-all hover:scale-105"
                                         style={{
-                                            background: isDark 
-                                                ? 'rgba(51, 65, 85, 0.8)' 
-                                                : 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                                            background: isDark ? 'rgba(51, 65, 85, 0.8)' : '#f1f5f9',
                                             color: isDark ? '#e2e8f0' : '#0f172a',
-                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.3)' : '1px solid #cbd5e1',
-                                            boxShadow: isDark ? 'none' : '0 2px 4px rgba(0, 0, 0, 0.05)'
+                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1'
                                         }}
                                     >
-                                        <GitHubIcon /> View Code
+                                        <GitHubIcon /> Code
                                     </a>
                                 )}
                                 {project.links?.live && (
@@ -326,14 +542,10 @@ function ProjectModal({ project, onClose }) {
                                         href={project.links.live} 
                                         target="_blank" 
                                         rel="noopener noreferrer" 
-                                        className="flex items-center gap-2 px-5 py-2.5 font-semibold text-white rounded-lg transition-all hover:scale-105"
+                                        className="flex items-center gap-2 px-5 py-2.5 font-semibold text-white rounded-xl transition-all hover:scale-105"
                                         style={{
-                                            background: isDark 
-                                                ? 'linear-gradient(135deg, #3b82f6, #2563eb)' 
-                                                : 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                                            boxShadow: isDark 
-                                                ? '0 4px 12px rgba(59, 130, 246, 0.3)' 
-                                                : '0 4px 12px rgba(59, 130, 246, 0.4)'
+                                            background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                                            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
                                         }}
                                     >
                                         <ExternalLinkIcon /> Live Demo
@@ -344,19 +556,17 @@ function ProjectModal({ project, onClose }) {
                     </div>
                 </div>
 
-                {/* --- Close Button --- */}
+                {/* Close Button */}
                 <button
                     onClick={onClose}
                     type="button"
-                    className="fixed md:absolute top-6 right-6 md:top-4 md:right-4 p-2.5 rounded-full hover:scale-110 transition-all z-50 shadow-lg"
+                    className="fixed md:absolute top-4 right-4 p-2.5 rounded-full hover:scale-110 transition-all z-50 shadow-xl"
                     style={{
-                        backgroundColor: isDark ? 'rgba(30, 41, 59, 0.9)' : 'rgba(255, 255, 255, 0.95)',
-                        color: isDark ? '#e2e8f0' : '#1e293b',
-                        border: isDark ? '1px solid rgba(148, 163, 184, 0.3)' : '1px solid #cbd5e1',
-                        zIndex: 100
+                        backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                        color: isDark ? '#60a5fa' : '#3b82f6',
+                        border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #e2e8f0'
                     }}
                     aria-label="Close modal"
-                    tabIndex={0}
                 >
                     <CloseIcon />
                 </button>

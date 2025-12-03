@@ -6,7 +6,7 @@ import {
     SiReact, SiThreedotjs, SiTypescript, SiTailwindcss, SiJavascript, SiNextdotjs, SiHtml5, SiCss3,
     SiNodedotjs, SiExpress, SiMongodb, SiDocker, SiWebgl,
     SiGit, SiSelenium, SiOpengl, SiStripe, SiWordpress,
-    SiTwilio,
+    SiTwilio, SiPrisma, SiZoom, SiRedis, SiAmazon 
 } from 'react-icons/si';
 import { GiBrain } from 'react-icons/gi';
 import { RiTimerFill } from 'react-icons/ri';
@@ -142,6 +142,8 @@ const skillCategories = [
             { name: "WebGL", logo: SiWebgl, color: "#990000" },
             { name: "Firebase", logo: FirebaseIcon, color: "#FFCA28" },
             { name: "AI Integrations", logo: GiBrain, color: "#FFFFFF" },
+            { name: "Prisma", logo: SiPrisma, color: "#7c3aed", use: "Type-safe ORM & migrations" },
+            { name: "Redis", logo: SiRedis, color: "#DC382D", use: "Caching & pub/sub" }
         ]
     },
     {
@@ -178,6 +180,8 @@ const skillCategories = [
             { name: "Zendesk", logo: ZendeskIcon, color: "#00A884", use: "Auto-ticket creation, routing and SLA enforcement" },
             { name: "Payments (Stripe/PayPal)", logo: SiStripe, color: "#635BFF", use: "Webhook-driven billing, disputes handling and payouts" },
             { name: "AI / LLMs", logo: GiBrain, color: "#FFFFFF", use: "Automated triage, content generation, smart suggestions & agents" },
+            { name: "Zoom", logo: SiZoom, color: "#0A84FF", use: "Video & meeting integrations" },
+            { name: "AWS", logo: SiAmazon, color: "#FF9900", use: "Cloud infrastructure & services" }
         ]
     }
 ];
