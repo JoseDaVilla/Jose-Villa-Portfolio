@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
 
 import {
     SiReact, SiThreedotjs, SiTypescript, SiTailwindcss, SiJavascript, SiNextdotjs, SiHtml5, SiCss3,
@@ -58,9 +57,7 @@ const FigmaIcon = () => (
     <img src="/logos/figma.svg" alt="Figma" className="w-full h-full object-contain" />
 );
 const ZendeskIcon = (props) => {
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
-    const src = isDark ? '/logos/zendesk.svg' : '/logos/zendesk-black.svg';
+    const src = '/logos/zendesk.svg';
     return <img src={src} alt="Zendesk" className="w-full h-full object-contain" {...props} />;
 };
 const PythonIcon = () => (
@@ -189,33 +186,15 @@ const skillCategories = [
 /* ---------------- Small components ---------------- */
 function SkillIcon({ skill }) {
     const LogoComponent = skill.logo;
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
 
-    // Names that should render black in light mode
-    const forceBlackNames = new Set([
-        'Three.js',
-        'Zendesk',
-        'Next.js',
-        'shadcn/ui',
-        'Express',
-        'AI Integrations',
-        'REST APIs',
-        'AI / LLMs',
-        'Cron / Workers'
-    ]);
-
-    // Determine the color to pass to the logo: prefer black in light mode for listed names
-    const logoColor = !isDark && (forceBlackNames.has(skill.name) || skill.color === '#FFFFFF') ? '#0a0f19' : skill.color;
-
-    // For image-based logos that need forcing to black (Zendesk), apply a filter
-    const imageFilter = (!isDark && skill.name === 'Zendesk') ? 'brightness(0) saturate(100%)' : undefined;
+    const logoColor = skill.color;
+    const imageFilter = undefined;
 
     const containerStyle = {
-        backgroundColor: isDark ? 'rgba(15,23,42,0.6)' : '#ffffff',
-        boxShadow: isDark ? 'none' : '0 1px 3px rgba(0,0,0,0.06)'
+        backgroundColor: 'rgba(15,23,42,0.6)',
+        boxShadow: 'none'
     };
-    const labelColor = isDark ? '#cbd5e1' : '#475569';
+    const labelColor = '#cbd5e1';
 
     return (
         <div className="group relative flex flex-col items-center text-center gap-2" title={skill.use || skill.name}>
@@ -234,10 +213,8 @@ function SkillIcon({ skill }) {
 
 /** Mobile sticky, grid-based category bar for mobile */
 function MobileCategoryNav({ activeCategory, setActiveCategory }) {
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
-    const mobileBg = isDark ? 'rgba(11,18,34,0.7)' : 'rgba(255,255,255,0.92)';
-    const borderColor = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(226,232,240,0.8)';
+    const mobileBg = 'rgba(11,18,34,0.7)';
+    const borderColor = 'rgba(255,255,255,0.04)';
 
     return (
         <div
@@ -283,8 +260,6 @@ function MobileCategoryNav({ activeCategory, setActiveCategory }) {
 
 /* ---------------- Main component ---------------- */
 export default function Skills() {
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
     const [activeCategory, setActiveCategory] = useState(skillCategories[0].title);
     const currentCategory = skillCategories.find((cat) => cat.title === activeCategory) || skillCategories[0];
 
@@ -293,8 +268,8 @@ export default function Skills() {
             id="skills"
             className="py-24 sm:py-32 relative overflow-visible transition-colors duration-300"
             style={{
-                color: isDark ? '#ffffff' : 'var(--color-text-primary)',
-                background: isDark ? 'transparent' : 'transparent'
+                color: '#ffffff',
+                background: 'transparent'
             }}
         >
             {/* Soft glow background */}
@@ -340,7 +315,7 @@ export default function Skills() {
                                             key={category.title}
                                             onClick={() => setActiveCategory(category.title)}
                                             className={`relative flex w-full items-center justify-between px-8 text-end gap-4 overflow-hidden rounded-lg p-4 text-center transition-all duration-300
-                        ${isActive ? 'text-white shadow-lg bg-gradient-to-r from-orange-500 to-amber-500' : (isDark ? 'bg-[#0b1222]/60 text-gray-300' : 'bg-white text-[var(--color-text-muted)] border border-[var(--color-border)] hover:text-[var(--color-text-primary)]')}`}
+                        ${isActive ? 'text-white shadow-lg bg-gradient-to-r from-orange-500 to-amber-500' : 'bg-[#0b1222]/60 text-gray-300'}`}
                                         >
                                             <AnimatePresence>
                                                 {isActive && (
@@ -378,8 +353,8 @@ export default function Skills() {
                                 <div
                                     className="rounded-2xl border p-8 shadow-2xl shadow-orange-900/10 backdrop-blur-lg transition-colors"
                                     style={{
-                                        borderColor: isDark ? 'rgba(255,255,255,0.04)' : 'var(--color-border)',
-                                        background: isDark ? 'rgba(16,23,39,0.45)' : 'linear-gradient(180deg,#ffffff,#f6f7fb)'
+                                        borderColor: 'rgba(255,255,255,0.04)',
+                                        background: 'rgba(16,23,39,0.45)'
                                     }}
                                 >
                                     <p className="mb-8 text-base leading-relaxed text-[var(--color-text-muted)] dark:text-gray-400">{currentCategory.description}</p>

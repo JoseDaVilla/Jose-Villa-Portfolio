@@ -4,7 +4,6 @@ import ProjectModal from './ProjectModal';
 import MagicBento from './MagicBento';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 import { useImagePreloader } from '../hooks/useImagePreloader';
-import { useTheme } from '../context/ThemeContext';
 
 // --- DATA ---
 const projectsData = [
@@ -173,8 +172,6 @@ const projectsData = [
 ];
 
 export default function Projects() {
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
     const [selectedProject, setSelectedProject] = useState(null);
 
     useImagePreloader(projectsData.flatMap(p => p.images));
@@ -205,9 +202,7 @@ export default function Projects() {
             id="projects"
             className="py-24 sm:py-32 relative transition-colors duration-300"
             style={{
-                background: isDark 
-                    ? 'linear-gradient(to bottom, #0f172a, #1e293b)' 
-                    : 'linear-gradient(to bottom, #ffffff, #f8fafc)'
+                background: 'linear-gradient(to bottom, #0f172a66, #1e293b5a)'
             }}
         >
             <div className="container px-4 mx-auto relative z-10">
@@ -220,13 +215,13 @@ export default function Projects() {
                 >
                     <h2 
                         className="text-4xl sm:text-5xl font-bold tracking-tight transition-colors"
-                        style={{ color: isDark ? '#ffffff' : '#111827' }}
+                        style={{ color: '#ffffff' }}
                     >
                         Featured Projects
                     </h2>
                     <p 
                         className="mt-4 text-lg max-w-2xl mx-auto"
-                        style={{ color: isDark ? '#94a3b8' : '#4b5563' }}
+                        style={{ color: '#94a3b8' }}
                     >
                         A curated selection of my work, showcasing my skills in web development, automation, and 3D graphics.
                     </p>

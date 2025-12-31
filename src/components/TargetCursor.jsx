@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useTheme } from '../context/ThemeContext';
 
 export default function TargetCursor({
     spinDuration = 2,
@@ -9,7 +8,6 @@ export default function TargetCursor({
     color = null,
     scopeSelector = '#projects' // Only show cursor in this section
 }) {
-    const { theme } = useTheme();
     const cursorRef = useRef(null);
     const cursorInnerRef = useRef(null);
     const mousePos = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
@@ -18,7 +16,7 @@ export default function TargetCursor({
     const isInScope = useRef(false);
     const animationFrameId = useRef(null);
 
-    const defaultColor = theme === 'dark' ? '#60a5fa' : '#3b82f6';
+    const defaultColor = '#60a5fa';
     const finalColor = color || defaultColor;
 
     useEffect(() => {

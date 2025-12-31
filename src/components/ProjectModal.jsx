@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
 import {
     SiReact, SiThreedotjs, SiTypescript, SiTailwindcss, SiJavascript, SiNextdotjs, 
     SiNodedotjs, SiExpress, SiMongodb, SiDocker, SiWebgl, SiGit, SiStripe,
@@ -100,7 +99,7 @@ const techLogoMap = {
     'Twilio': { icon: SiTwilio, color: '#FF2D55' }, // alias for Twilio API
 };
 
-function TechIcon({ tech, isDark }) {
+function TechIcon({ tech }) {
     const [showTooltip, setShowTooltip] = useState(false);
     const techInfo = techLogoMap[tech];
     
@@ -114,8 +113,8 @@ function TechIcon({ tech, isDark }) {
                 <div
                     className="flex items-center justify-center w-12 h-12 rounded-lg text-xs font-bold transition-transform hover:scale-110 cursor-help"
                     style={{
-                        background: isDark ? 'rgba(51, 65, 85, 0.6)' : '#f1f5f9',
-                        color: isDark ? '#94a3b8' : '#64748b'
+                        background: 'rgba(51, 65, 85, 0.6)',
+                        color: '#94a3b8'
                     }}
                 >
                     {tech.substring(0, 2).toUpperCase()}
@@ -129,7 +128,7 @@ function TechIcon({ tech, isDark }) {
                             transition={{ duration: 0.2 }}
                             className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
                             style={{
-                                background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                                background: 'rgba(15, 23, 42, 0.95)',
                                 color: '#ffffff',
                                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                             }}
@@ -140,7 +139,7 @@ function TechIcon({ tech, isDark }) {
                                 style={{
                                     borderLeft: '4px solid transparent',
                                     borderRight: '4px solid transparent',
-                                    borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                    borderTop: '4px solid rgba(15, 23, 42, 0.95)'
                                 }}
                             />
                         </motion.div>
@@ -169,7 +168,7 @@ function TechIcon({ tech, isDark }) {
                             transition={{ duration: 0.2 }}
                             className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
                             style={{
-                                background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                                background: 'rgba(15, 23, 42, 0.95)',
                                 color: '#ffffff',
                                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                             }}
@@ -180,7 +179,7 @@ function TechIcon({ tech, isDark }) {
                                 style={{
                                     borderLeft: '4px solid transparent',
                                     borderRight: '4px solid transparent',
-                                    borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                    borderTop: '4px solid rgba(15, 23, 42, 0.95)'
                                 }}
                             />
                         </motion.div>
@@ -200,8 +199,8 @@ function TechIcon({ tech, isDark }) {
                 <div
                     className="flex items-center justify-center w-12 h-12 rounded-lg text-xs font-bold transition-transform hover:scale-110 cursor-help"
                     style={{
-                        background: isDark ? 'rgba(51, 65, 85, 0.6)' : '#f1f5f9',
-                        color: isDark ? '#94a3b8' : '#64748b'
+                        background: 'rgba(51, 65, 85, 0.6)',
+                        color: '#94a3b8'
                     }}
                 >
                     {techInfo.text}
@@ -215,7 +214,7 @@ function TechIcon({ tech, isDark }) {
                             transition={{ duration: 0.2 }}
                             className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
                             style={{
-                                background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                                background: 'rgba(15, 23, 42, 0.95)',
                                 color: '#ffffff',
                                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                             }}
@@ -226,7 +225,7 @@ function TechIcon({ tech, isDark }) {
                                 style={{
                                     borderLeft: '4px solid transparent',
                                     borderRight: '4px solid transparent',
-                                    borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                    borderTop: '4px solid rgba(15, 23, 42, 0.95)'
                                 }}
                             />
                         </motion.div>
@@ -246,7 +245,7 @@ function TechIcon({ tech, isDark }) {
             <div className="flex items-center justify-center w-12 h-12 transition-transform hover:scale-110 cursor-help">
                 <Icon
                     className="w-8 h-8"
-                    style={{ color: isDark ? techInfo.color : (techInfo.color === '#FFFFFF' ? '#0f172a' : techInfo.color) }}
+                    style={{ color: techInfo.color }}
                 />
             </div>
             <AnimatePresence>
@@ -258,7 +257,7 @@ function TechIcon({ tech, isDark }) {
                         transition={{ duration: 0.2 }}
                         className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap pointer-events-none z-50"
                         style={{
-                            background: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)',
+                            background: 'rgba(15, 23, 42, 0.95)',
                             color: '#ffffff',
                             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                         }}
@@ -269,7 +268,7 @@ function TechIcon({ tech, isDark }) {
                             style={{
                                 borderLeft: '4px solid transparent',
                                 borderRight: '4px solid transparent',
-                                borderTop: `4px solid ${isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(0, 0, 0, 0.9)'}`
+                                borderTop: '4px solid rgba(15, 23, 42, 0.95)'
                             }}
                         />
                     </motion.div>
@@ -280,8 +279,6 @@ function TechIcon({ tech, isDark }) {
 }
 
 function ProjectModal({ project, onClose }) {
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
     const modalRef = useRef(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -317,7 +314,7 @@ function ProjectModal({ project, onClose }) {
         <motion.div
             className="fixed inset-0 z-30 flex items-center justify-center p-0 sm:p-4 backdrop-blur-md"
             style={{
-                backgroundColor: isDark ? 'rgba(15, 23, 42, 0.8)' : 'rgba(100, 116, 139, 0.4)'
+                backgroundColor: 'rgba(15, 23, 42, 0.8)'
             }}
             variants={backdropVariants}
             initial="hidden"
@@ -331,13 +328,9 @@ function ProjectModal({ project, onClose }) {
                 ref={modalRef}
                 className="relative w-full max-w-7xl max-h-[100vh] sm:max-h-[92vh] backdrop-blur-xl rounded-none sm:rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transition-colors"
                 style={{
-                    background: isDark 
-                        ? 'linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95))' 
-                        : 'linear-gradient(135deg, #ffffff, #f8fafc)',
-                    border: isDark ? '1px solid rgba(148, 163, 184, 0.1)' : '1px solid #e2e8f0',
-                    boxShadow: isDark 
-                        ? '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
-                        : '0 25px 50px -12px rgba(59, 130, 246, 0.2)'
+                    background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95))',
+                    border: '1px solid rgba(148, 163, 184, 0.1)',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
                 }}
                 variants={modalVariants}
                 onClick={e => e.stopPropagation()}
@@ -346,9 +339,7 @@ function ProjectModal({ project, onClose }) {
                 <div
                     className="relative w-full md:w-[58%] flex-shrink-0 flex items-center justify-center min-h-[45vh] md:min-h-0"
                     style={{
-                        background: isDark 
-                            ? 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6))' 
-                            : 'linear-gradient(to bottom right, #fafbfc, #f1f5f9)',
+                        background: 'linear-gradient(to bottom right, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6))',
                     }}
                 >
                     {project.iframeUrl ? (
@@ -381,9 +372,9 @@ function ProjectModal({ project, onClose }) {
                                         onClick={prevImage} 
                                         className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full hover:scale-110 transition-all shadow-xl z-10"
                                         style={{
-                                            backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #e2e8f0',
-                                            color: isDark ? '#60a5fa' : '#3b82f6'
+                                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                                            border: '1px solid rgba(148, 163, 184, 0.2)',
+                                            color: '#60a5fa'
                                         }}
                                     >
                                         <ChevronLeftIcon />
@@ -392,9 +383,9 @@ function ProjectModal({ project, onClose }) {
                                         onClick={nextImage} 
                                         className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full hover:scale-110 transition-all shadow-xl z-10"
                                         style={{
-                                            backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #e2e8f0',
-                                            color: isDark ? '#60a5fa' : '#3b82f6'
+                                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                                            border: '1px solid rgba(148, 163, 184, 0.2)',
+                                            color: '#60a5fa'
                                         }}
                                     >
                                         <ChevronRightIcon />
@@ -407,11 +398,11 @@ function ProjectModal({ project, onClose }) {
                                                 className="w-2 h-2 rounded-full transition-all duration-300"
                                                 style={{
                                                     backgroundColor: currentImageIndex === index 
-                                                        ? (isDark ? '#60a5fa' : '#3b82f6')
-                                                        : (isDark ? '#475569' : '#cbd5e1'),
+                                                        ? '#60a5fa'
+                                                        : '#475569',
                                                     transform: currentImageIndex === index ? 'scale(1.4)' : 'scale(1)',
                                                     boxShadow: currentImageIndex === index 
-                                                        ? `0 0 10px ${isDark ? '#60a5fa' : '#3b82f6'}`
+                                                        ? '0 0 10px #60a5fa'
                                                         : 'none'
                                                 }}
                                             />
@@ -427,11 +418,9 @@ function ProjectModal({ project, onClose }) {
                 <div 
                     className="flex-1 md:w-[42%] p-6 md:p-8 overflow-y-auto scrollbar-thin max-h-[50vh] md:max-h-none"
                     style={{
-                        background: isDark 
-                            ? 'rgba(15, 23, 42, 0.6)' 
-                            : '#ffffff',
+                        background: 'rgba(15, 23, 42, 0.6)',
                         scrollbarWidth: 'thin',
-                        scrollbarColor: isDark ? '#475569 transparent' : '#cbd5e1 transparent'
+                        scrollbarColor: '#475569 transparent'
                     }}
                 >
                     {/* Header */}
@@ -439,37 +428,37 @@ function ProjectModal({ project, onClose }) {
                         <span 
                             className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3"
                             style={{
-                                background: isDark ? 'rgba(96, 165, 250, 0.1)' : '#dbeafe',
-                                color: isDark ? '#60a5fa' : '#1e40af'
+                                background: 'rgba(96, 165, 250, 0.1)',
+                                color: '#60a5fa'
                             }}
                         >
                             {project.category}
                         </span>
                         <h2 
                             className="text-3xl font-bold mb-3"
-                            style={{ color: isDark ? '#f1f5f9' : '#0f172a' }}
+                            style={{ color: '#f1f5f9' }}
                         >
                             {project.title}
                         </h2>
                         <p 
                             className="leading-relaxed text-base"
-                            style={{ color: isDark ? '#94a3b8' : '#475569' }}
+                            style={{ color: '#94a3b8' }}
                         >
                             {project.description}
                         </p>
                     </div>
 
                     {/* Technologies with Icons */}
-                    <div className="mb-6 pb-6" style={{ borderBottom: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
+                    <div className="mb-6 pb-6" style={{ borderBottom: '1px solid #334155' }}>
                         <h3 
                             className="font-semibold text-sm uppercase tracking-wider mb-4"
-                            style={{ color: isDark ? '#cbd5e1' : '#64748b' }}
+                            style={{ color: '#cbd5e1' }}
                         >
                             Tech Stack
                         </h3>
                         <div className="flex flex-wrap gap-3">
                             {project.technologies.map(tech => (
-                                <TechIcon key={tech} tech={tech} isDark={isDark} />
+                                <TechIcon key={tech} tech={tech} />
                             ))}
                         </div>
                     </div>
@@ -478,7 +467,7 @@ function ProjectModal({ project, onClose }) {
                     <div className="mb-6">
                         <h3 
                             className="font-semibold text-sm uppercase tracking-wider mb-4"
-                            style={{ color: isDark ? '#cbd5e1' : '#64748b' }}
+                            style={{ color: '#cbd5e1' }}
                         >
                             Key Features
                         </h3>
@@ -487,11 +476,11 @@ function ProjectModal({ project, onClose }) {
                                 <li 
                                     key={index} 
                                     className="flex items-start gap-2 text-sm"
-                                    style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                                    style={{ color: '#cbd5e1' }}
                                 >
                                     <CheckCircleIcon 
                                         className="w-4 h-4 mt-0.5 flex-shrink-0" 
-                                        style={{ color: isDark ? '#60a5fa' : '#3b82f6' }}
+                                        style={{ color: '#60a5fa' }}
                                     />
                                     <span>{feature}</span>
                                 </li>
@@ -499,7 +488,7 @@ function ProjectModal({ project, onClose }) {
                             {project.features?.length > 6 && (
                                 <li 
                                     className="text-sm italic"
-                                    style={{ color: isDark ? '#64748b' : '#94a3b8' }}
+                                    style={{ color: '#64748b' }}
                                 >
                                     + {project.features.length - 6} more features
                                 </li>
@@ -508,13 +497,13 @@ function ProjectModal({ project, onClose }) {
                     </div>
 
                     {/* Links or Privacy Note */}
-                    <div className="mt-6 pt-6" style={{ borderTop: isDark ? '1px solid #334155' : '1px solid #e2e8f0' }}>
+                    <div className="mt-6 pt-6" style={{ borderTop: '1px solid #334155' }}>
                         {project.privacyNote && (!project.links?.github && !project.links?.live) ? (
                             <p 
                                 className="text-sm flex items-start gap-2 px-4 py-3 rounded-lg"
                                 style={{ 
-                                    background: isDark ? 'rgba(51, 65, 85, 0.3)' : '#f8fafc',
-                                    color: isDark ? '#94a3b8' : '#64748b'
+                                    background: 'rgba(51, 65, 85, 0.3)',
+                                    color: '#94a3b8'
                                 }}
                             >
                                 <span className="text-lg">🔒</span>
@@ -529,9 +518,9 @@ function ProjectModal({ project, onClose }) {
                                         rel="noopener noreferrer" 
                                         className="flex items-center gap-2 px-5 py-2.5 font-semibold rounded-xl transition-all hover:scale-105"
                                         style={{
-                                            background: isDark ? 'rgba(51, 65, 85, 0.8)' : '#f1f5f9',
-                                            color: isDark ? '#e2e8f0' : '#0f172a',
-                                            border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #cbd5e1'
+                                            background: 'rgba(51, 65, 85, 0.8)',
+                                            color: '#e2e8f0',
+                                            border: '1px solid rgba(148, 163, 184, 0.2)'
                                         }}
                                     >
                                         <GitHubIcon /> Code
@@ -562,9 +551,9 @@ function ProjectModal({ project, onClose }) {
                     type="button"
                     className="fixed md:absolute top-4 right-4 p-2.5 rounded-full hover:scale-110 transition-all z-50 shadow-xl"
                     style={{
-                        backgroundColor: isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-                        color: isDark ? '#60a5fa' : '#3b82f6',
-                        border: isDark ? '1px solid rgba(148, 163, 184, 0.2)' : '1px solid #e2e8f0'
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        color: '#60a5fa',
+                        border: '1px solid rgba(148, 163, 184, 0.2)'
                     }}
                     aria-label="Close modal"
                 >

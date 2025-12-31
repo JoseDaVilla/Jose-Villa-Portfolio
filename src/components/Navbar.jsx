@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext.jsx';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -10,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Navbar() {
     const [activeSection, setActiveSection] = useState('hero');
     const [modalOpen, setModalOpen] = useState(false);
-    const { theme } = useTheme();
     
     const navRef = useRef(null);
     const navItemsRef = useRef([]);
@@ -128,10 +126,8 @@ export default function Navbar() {
                 ref={indicatorRef}
                 className="absolute left-0 w-0.5 rounded-full transition-colors duration-300"
                 style={{
-                    backgroundColor: theme === 'dark' ? '#60a5fa' : '#3b82f6',
-                    boxShadow: theme === 'dark' 
-                        ? '0 0 10px rgba(96, 165, 250, 0.5)' 
-                        : '0 0 10px rgba(59, 130, 246, 0.3)'
+                    backgroundColor: '#60a5fa',
+                    boxShadow: '0 0 10px rgba(96, 165, 250, 0.5)'
                 }}
             />
 
@@ -143,9 +139,7 @@ export default function Navbar() {
                     ref={(el) => (navItemsRef.current[index] = el)}
                     className="group relative pl-4 py-2 text-sm font-medium tracking-wide transition-all duration-300"
                     style={{
-                        color: activeSection === item.sectionId
-                            ? (theme === 'dark' ? '#60a5fa' : '#3b82f6')
-                            : (theme === 'dark' ? '#64748b' : '#94a3b8'),
+                        color: activeSection === item.sectionId ? '#60a5fa' : '#64748b',
                         transform: 'translateX(-30px)',
                         opacity: 0
                     }}
@@ -154,12 +148,8 @@ export default function Navbar() {
                     <span 
                         className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full transition-all duration-300 group-hover:w-2 group-hover:h-2"
                         style={{
-                            backgroundColor: activeSection === item.sectionId
-                                ? (theme === 'dark' ? '#60a5fa' : '#3b82f6')
-                                : (theme === 'dark' ? '#475569' : '#cbd5e1'),
-                            boxShadow: activeSection === item.sectionId
-                                ? (theme === 'dark' ? '0 0 8px rgba(96, 165, 250, 0.6)' : '0 0 8px rgba(59, 130, 246, 0.4)')
-                                : 'none'
+                            backgroundColor: activeSection === item.sectionId ? '#60a5fa' : '#475569',
+                            boxShadow: activeSection === item.sectionId ? '0 0 8px rgba(96, 165, 250, 0.6)' : 'none'
                         }}
                     />
                     

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext';
 
 // --- Custom Hook for the 3D Card Effect (Unchanged) ---
 const use3dCardEffect = () => {
@@ -63,21 +62,19 @@ const ZapIcon = (props) => (
 
 export default function AboutMe() {
     const card3d = use3dCardEffect();
-    const { theme } = useTheme();
-    const isDark = theme === 'dark';
  
     return (
         <section
             id="aboutme"
             className="py-24 sm:py-32 relative overflow-hidden transition-colors duration-300"
             style={{
-                background: isDark ? 'transparent' : 'transparent',
-                color: isDark ? '#ffffff' : 'var(--color-text-primary)'
+                background: 'transparent',
+                color: '#ffffff'
             }}
         >
             <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem] rounded-full blur-3xl opacity-50 pointer-events-none z-5"
-                style={{ background: isDark ? 'rgba(6,182,129,0.06)' : 'rgba(16,185,129,0.06)' }}
+                style={{ background: 'rgba(6,182,129,0.06)' }}
             />
  
             <div className="container px-4 mx-auto relative z-10">
@@ -90,15 +87,15 @@ export default function AboutMe() {
                 >
                     <h2 
                         className="text-4xl sm:text-5xl font-thin tracking-[0.2em] uppercase"
-                        style={{ textShadow: '0 0 15px rgba(16, 185, 129, 0.25)', color: isDark ? '#ffffff' : '#0f172a' }}
+                        style={{ textShadow: '0 0 15px rgba(16, 185, 129, 0.25)', color: '#ffffff' }}
                     >
                         About Me
                     </h2>
                     <p
                         className="mt-4 text-md max-w-2xl mx-auto font-light tracking-wider opacity-80"
-                        style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                        style={{ color: '#cbd5e1' }}
                     >
-                        Here’s a little bit about my journey and passions.
+                        I build scalable digital products that solve real business problems.
                     </p>
                 </motion.div>
  
@@ -114,7 +111,7 @@ export default function AboutMe() {
                             {/* decorative background behind the card */}
                             <div
                                 className="absolute inset-0 rounded-full blur-3xl opacity-50 -z-10"
-                                style={{ background: isDark ? 'rgba(6,182,129,0.06)' : 'rgba(16,185,129,0.06)' }}
+                                style={{ background: 'rgba(6,182,129,0.06)' }}
                             />
                             <motion.div
                                 style={{ ...card3d.style, borderRadius: '9999px' }}
@@ -129,7 +126,7 @@ export default function AboutMe() {
                                     aria-label="A creative workspace representing Jose Villa's work"
                                     className="w-full h-full object-cover"
                                 />
-                                <div className="absolute inset-0" style={{ background: isDark ? 'linear-gradient(to top, rgba(0,0,0,0.25), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.12), transparent)' }} />
+                                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.25), transparent)' }} />
                             </motion.div>
                         </div>
                      </motion.div>
@@ -143,36 +140,33 @@ export default function AboutMe() {
                     >
                         <h3
                             className="text-2xl md:text-3xl font-bold mb-6 leading-snug"
-                            style={{ color: isDark ? '#ffffff' : '#0f172a' }}
+                            style={{ color: '#ffffff' }}
                         >
-                            I build digital tools that are effective, engaging, and easy to use.
+                            Building reliable software that automates workflows and solves complex business challenges.
                         </h3>
  
                         <div
                             className="space-y-4 mb-8 leading-relaxed font-light"
-                            style={{ color: isDark ? '#cbd5e1' : '#475569' }}
+                            style={{ color: '#cbd5e1' }}
                         >
                             <p>
-                                I'm <strong className="font-semibold" style={{ color: isDark ? '#ffffff' : '#0f172a' }}>Jose Daniel Villa</strong>, a 23-year-old Fullstack Developer from <strong className="font-semibold">
+                                I'm <strong className="font-semibold" style={{ color: '#ffffff' }}>Jose Daniel Villa</strong>, a 24-year-old Full-Stack Developer from <strong className="font-semibold">
                                     <span className="text-amber-400">Colo</span>
                                     <span className="text-blue-400">mb</span>
                                     <span className="text-red-400">ia</span>
-                                </strong>. I love bringing ideas to life through technology, especially by building digital tools that are both useful and intuitive.
+                                </strong>, focused on <strong className="font-semibold" style={{ color: '#ffffff' }}>B2B automation, dashboards, analytics, web & mobile apps, and data-driven systems</strong>. I help companies streamline operations by designing reliable software that automates workflows, integrates APIs, and turns complex processes into simple, efficient solutions.
                             </p>
                             <p>
-                                Lately, I've become fully passionate about 3D experiences and how they can solve real needs and elevate website interactions to a whole new level. I also enjoy designing and tailoring automations — composing workflows that combine APIs, webhooks, serverless functions and no-code platforms — to automate repetitive routines, provide configurable options, and solve recurring problems across systems.
-                            </p>
-                            <p>
-                                When I'm not coding, you'll find me drawing, painting, or making music. I enjoy going to the gym, learning new languages, and I'm always curious to explore something new—whether it's a creative hobby, a fresh tech challenge, or prototyping an automation to streamline daily work.
+                                I work closely with clients and teams to translate business goals into clean, high-performing products — combining strong engineering, thoughtful UI, and practical problem-solving.
                             </p>
                         </div>
                         
                         <div
                             className="backdrop-blur-lg p-6 rounded-xl transition-colors"
                             style={{
-                                background: isDark ? 'rgba(16,23,39,0.45)' : '#ffffff',
-                                border: isDark ? '1px solid rgba(16,185,129,0.12)' : '1px solid rgba(15,23,42,0.04)',
-                                boxShadow: isDark ? '0 10px 30px rgba(6,182,129,0.06)' : '0 6px 20px rgba(12,16,27,0.06)'
+                                background: 'rgba(16,23,39,0.45)',
+                                border: '1px solid rgba(16,185,129,0.12)',
+                                boxShadow: '0 10px 30px rgba(6,182,129,0.06)'
                             }}
                         >
                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
@@ -187,15 +181,15 @@ export default function AboutMe() {
                                          <div
                                              className="p-2 rounded-lg"
                                              style={{
-                                                 background: isDark ? 'rgba(6,182,129,0.06)' : '#ecfdf5',
-                                                 border: isDark ? '1px solid rgba(6,182,129,0.12)' : '1px solid rgba(16,185,129,0.12)'
+                                                 background: 'rgba(6,182,129,0.06)',
+                                                 border: '1px solid rgba(6,182,129,0.12)'
                                              }}
                                          >
-                                             <item.icon className="w-6 h-6" style={{ color: isDark ? '#34d399' : '#059669' }} />
+                                             <item.icon className="w-6 h-6" style={{ color: '#34d399' }} />
                                          </div>
                                          <div>
-                                             <h4 style={{ color: isDark ? '#f8fafc' : '#0f172a' }} className="font-semibold">{item.label}</h4>
-                                             <p className="text-sm" style={{ color: isDark ? '#cbd5e1' : '#475569' }}>{item.value}</p>
+                                             <h4 style={{ color: '#f8fafc' }} className="font-semibold">{item.label}</h4>
+                                             <p className="text-sm" style={{ color: '#cbd5e1' }}>{item.value}</p>
                                          </div>
                                      </div>
                                  ))}

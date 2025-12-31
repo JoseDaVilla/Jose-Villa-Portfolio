@@ -32,31 +32,15 @@ function CenterGlow({ start = 'rgba(96,165,250,0.20)', middle = 'rgba(96,165,250
 
 // --- Main Hero Component ---
 export default function Hero() {
-    const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
     const [showSubtitle, setShowSubtitle] = useState(false);
     const [showCTA, setShowCTA] = useState(false);
 
-    useEffect(() => {
-        const observer = new MutationObserver(() => {
-            setIsDark(document.documentElement.classList.contains('dark'));
-        });
-
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
-
-        return () => observer.disconnect();
-    }, []);
-
-    // Use the selected hero color (keeps consistency with App sectionColors)
-    const heroBase = '#60a5fa'; // selected hero color
-    const textColor = isDark ? '#ffffff' : '#111827';
-    const mutedColor = isDark ? '#9ca3af' : '#4b5563';
-    // Compose soft glow stops (lighter for light mode, slightly richer in dark)
-    const glowStart = isDark ? 'rgba(96,165,250,0.14)' : 'rgba(96,165,250,0.22)';
-    const glowMiddle = isDark ? 'rgba(96,165,250,0.09)' : 'rgba(96,165,250,0.12)';
-    const glowEnd = isDark ? 'rgba(96,165,250,0.04)' : 'rgba(96,165,250,0.06)';
+    // Dark theme colors only
+    const textColor = '#ffffff';
+    const mutedColor = '#9ca3af';
+    const glowStart = 'rgba(96,165,250,0.14)';
+    const glowMiddle = 'rgba(96,165,250,0.09)';
+    const glowEnd = 'rgba(96,165,250,0.04)';
 
     const handleTitleComplete = () => {
         setTimeout(() => setShowSubtitle(true), 200);
@@ -69,7 +53,7 @@ export default function Hero() {
     return (
         <section
             id="hero"
-            className="relative h-screen overflow-hidden cursor-crosshair transition-colors duration-300 bg-gradient-to-b from-white via-[#eef2ff] to-[#f7f9fc] dark:bg-transparent dark:from-transparent dark:via-transparent dark:to-transparent"
+            className="relative h-screen overflow-hidden cursor-crosshair transition-colors duration-300 bg-transparent"
         >
 
             {/* pass theme-aware hero color stops */}
@@ -94,7 +78,7 @@ export default function Hero() {
                         onLetterAnimationComplete={handleTitleComplete}
                         style={{
                             color: textColor,
-                            textShadow: isDark ? `0 0 14px rgba(96,165,250,0.14)` : `0 4px 20px rgba(96,165,250,0.06)`,
+                            textShadow: '0 0 14px rgba(96,165,250,0.14)',
                             marginRight: '-0.5em'
                         }}
                     />
