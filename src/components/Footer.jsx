@@ -25,8 +25,8 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
     
     const socialLinks = [
-        { name: 'GitHub', icon: GitHubIcon, url: 'https://github.com/your-username' },
-        { name: 'LinkedIn', icon: LinkedInIcon, url: 'https://linkedin.com/in/your-profile' },
+        { name: 'GitHub', icon: GitHubIcon, url: 'https://github.com/JoseDaVilla' },
+        { name: 'LinkedIn', icon: LinkedInIcon, url: 'https://linkedin.com/in/jose-daniel-villa-712133204' },
     ];
 
     const scrollToTop = (e) => {

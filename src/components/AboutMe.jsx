@@ -120,7 +120,7 @@ export default function AboutMe() {
                                 aria-label="Profile artwork"
                             >
                                 <img
-                                    src="/images/projects/avatar.png"
+                                    src="/yo.png"
                                     alt="A creative workspace representing Jose Villa's work"
                                     title="A creative workspace representing Jose Villa's work"
                                     aria-label="A creative workspace representing Jose Villa's work"

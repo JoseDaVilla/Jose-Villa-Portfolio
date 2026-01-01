@@ -275,7 +275,7 @@ export default function Contact() {
                                         ></textarea>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-                                        <button type="submit" disabled={status === 'sending'} className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-[var(--color-button-primary)] text-white font-semibold rounded-lg shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        <button type="submit" disabled={status === 'sending'} className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-[var(--color-button-primary)] text-white font-semibold rounded-lg shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shimmer-button inline-flex items-center justify-center gap-2.5 bg-violet-600 text-white px-8 py-3.5 rounded-lg font-semibold shadow-lg shadow-violet-600/25 hover:bg-violet-700 hover:shadow-violet-600/40 transition-all duration-100 pointer-events-auto">
                                             {status === 'sending' ? 'Sending...' : 'Send Message'}
                                             <Send className="h-5 w-5" />
                                         </button>
