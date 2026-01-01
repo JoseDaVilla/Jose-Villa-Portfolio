@@ -12,6 +12,9 @@ const GitHubIcon = (props) => (
 const LinkedInIcon = (props) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
 );
+const FileTextIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+);
 
 
 function CenterGlow({ start = 'rgba(96,165,250,0.20)', middle = 'rgba(96,165,250,0.12)', end = 'rgba(96,165,250,0.06)' }) {
@@ -43,11 +46,11 @@ export default function Hero() {
     const glowEnd = 'rgba(96,165,250,0.04)';
 
     const handleTitleComplete = () => {
-        setTimeout(() => setShowSubtitle(true), 200);
+        setTimeout(() => setShowSubtitle(true), 100);
     };
 
     const handleSubtitleComplete = () => {
-        setTimeout(() => setShowCTA(true), 300);
+        setTimeout(() => setShowCTA(true), 150);
     };
 
     return (
@@ -64,41 +67,41 @@ export default function Hero() {
                 <div className="max-w-5xl">
                     <SplitText
                         text="JOSE VILLA"
-                        className="text-4xl sm:text-5xl lg:text-7xl font-thin tracking-[0.5em] sm:tracking-[0.5em] uppercase transition-colors duration-300"
-                        delay={300}
-                        duration={0.4}
+                        className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-thin tracking-[0.3em] sm:tracking-[0.4em] lg:tracking-[0.5em] uppercase transition-colors duration-300"
+                        delay={150}
+                        duration={0.3}
                         ease="power3.out"
                         splitType="chars"
-                        from={{ opacity: 0, y: 60, rotateX: -90 }}
+                        from={{ opacity: 0, y: 40, rotateX: -90 }}
                         to={{ opacity: 1, y: 0, rotateX: 0 }}
                         threshold={0.1}
                         rootMargin="-50px"
                         textAlign="center"
-                        stagger={0.05}
+                        stagger={0.04}
                         onLetterAnimationComplete={handleTitleComplete}
                         style={{
                             color: textColor,
                             textShadow: '0 0 14px rgba(96,165,250,0.14)',
-                            marginRight: '-0.5em'
+                            marginRight: '-0.3em'
                         }}
                     />
 
                     {/* Reserve space for subtitle to prevent layout shift */}
-                    <div className="mt-6 overflow-hidden min-h-[2rem]">
+                    <div className="mt-4 sm:mt-6 overflow-hidden min-h-[1.5rem] sm:min-h-[2rem]">
                         <div style={{ opacity: showSubtitle ? 1 : 0, transition: 'opacity 0.3s ease' }}>
                             <SplitText
                                 text="CREATIVE | TECHNOLOGIST | DEVELOPER"
-                                className="text-sm font-light tracking-[0.3em] uppercase transition-colors duration-300"
+                                className="text-xs sm:text-sm font-light tracking-[0.2em] sm:tracking-[0.3em] uppercase transition-colors duration-300"
                                 delay={0}
-                                duration={0.5}
+                                duration={0.4}
                                 ease="power2.out"
                                 splitType="chars"
-                                from={{ opacity: 0, y: 20 }}
+                                from={{ opacity: 0, y: 15 }}
                                 to={{ opacity: 1, y: 0 }}
                                 threshold={0.1}
                                 rootMargin="-50px"
                                 textAlign="center"
-                                stagger={0.02}
+                                stagger={0.015}
                                 onLetterAnimationComplete={handleSubtitleComplete}
                                 style={{ color: mutedColor }}
                             />
@@ -106,50 +109,96 @@ export default function Hero() {
                     </div>
 
                     {/* Reserve space for CTA buttons */}
-                    <div className="mt-10 min-h-[4rem]">
+                    <div className="mt-8 sm:mt-10 min-h-[4rem]">
                         {showCTA && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, ease: 'easeOut' }}
-                                className="flex flex-wrap justify-center items-center gap-4"
-                            >
-                                <motion.a
-                                    href="#contact"
-                                    className="inline-flex items-center justify-center gap-2 bg-indigo-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-[var(--color-button-primary-hover)] transition-all duration-300 pointer-events-auto"
-                                    whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(96, 165, 250, 0.3)' }}
-                                    whileTap={{ scale: 0.95 }}
+                            <>
+                                <style>{`
+                                    @keyframes shimmer {
+                                        0% {
+                                            left: -100%;
+                                        }
+                                        100% {
+                                            left: 100%;
+                                        }
+                                    }
+                                    .shimmer-button {
+                                        position: relative;
+                                        overflow: hidden;
+                                    }
+                                    .shimmer-button::before {
+                                        content: '';
+                                        position: absolute;
+                                        top: 0;
+                                        left: -100%;
+                                        width: 50%;
+                                        height: 100%;
+                                        background: linear-gradient(
+                                            90deg,
+                                            transparent 0%,
+                                            rgba(255, 255, 255, 0.15) 50%,
+                                            transparent 100%
+                                        );
+                                        transform: skewX(-20deg);
+                                        animation: shimmer 2s ease-in-out infinite;
+                                        animation-delay: 1s;
+                                        pointer-events: none;
+                                    }
+                                    .shimmer-button:hover::before {
+                                        animation: shimmer 2s ease-in-out infinite;
+                                    }
+                                `}</style>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                                    className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-4"
                                 >
-                                    <MailIcon />
-                                    Get in Touch
-                                </motion.a>
-                                <div className="flex items-center gap-4 pointer-events-auto">
                                     <motion.a
-                                        href="https://github.com/JoseDaVilla"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:text-[var(--color-accent)] transition-colors duration-300"
-                                        title="GitHub"
-                                        style={{ color: mutedColor }}
-                                        whileHover={{ scale: 1.1, y: -2 }}
-                                        whileTap={{ scale: 0.9 }}
+                                        href="#contact"
+                                        className="shimmer-button inline-flex items-center justify-center gap-2.5 bg-violet-600 text-white px-8 py-3.5 rounded-lg font-semibold shadow-lg shadow-violet-600/25 hover:bg-violet-700 hover:shadow-violet-600/40 transition-all duration-200 pointer-events-auto"
+                                        whileHover={{ scale: 1.03, y: -1 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
-                                        <GitHubIcon className="w-8 h-8" />
+                                        <MailIcon />
+                                        <span>Get in Touch</span>
                                     </motion.a>
                                     <motion.a
-                                        href="https://www.linkedin.com/in/jose-daniel-villa-712133204"
+                                        href="/Jose Daniel Villa CV.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="hover:text-[var(--color-accent)] transition-colors duration-300"
-                                        title="LinkedIn"
-                                        style={{ color: mutedColor }}
-                                        whileHover={{ scale: 1.1, y: -2 }}
-                                        whileTap={{ scale: 0.9 }}
+                                        className="inline-flex items-center justify-center gap-2.5 bg-slate-800 text-white px-8 py-3.5 rounded-lg font-semibold border border-slate-700 hover:bg-slate-700 hover:border-slate-600 transition-all duration-200 pointer-events-auto"
+                                        whileHover={{ scale: 1.03, y: -1 }}
+                                        whileTap={{ scale: 0.98 }}
                                     >
-                                        <LinkedInIcon className="w-8 h-8" />
+                                        <FileTextIcon />
+                                        <span>View CV</span>
                                     </motion.a>
-                                </div>
-                            </motion.div>
+                                    <div className="flex items-center gap-4 sm:gap-5 pointer-events-auto mt-2 sm:mt-0">
+                                        <motion.a
+                                            href="https://github.com/JoseDaVilla"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-slate-400 hover:text-violet-400 transition-colors duration-200 p-2 rounded-lg hover:bg-slate-800/50"
+                                            title="GitHub"
+                                            whileHover={{ scale: 1.1, y: -2 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <GitHubIcon className="w-7 h-7 sm:w-8 sm:h-8" />
+                                        </motion.a>
+                                        <motion.a
+                                            href="https://www.linkedin.com/in/jose-daniel-villa-712133204"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-slate-400 hover:text-violet-400 transition-colors duration-200 p-2 rounded-lg hover:bg-slate-800/50"
+                                            title="LinkedIn"
+                                            whileHover={{ scale: 1.1, y: -2 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            <LinkedInIcon className="w-7 h-7 sm:w-8 sm:h-8" />
+                                        </motion.a>
+                                    </div>
+                                </motion.div>
+                            </>
                         )}
                     </div>
                 </div>
